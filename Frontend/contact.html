@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Travel Community Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background-color: #0a0a0a;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .section-header p {
+            color: #ccc;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #FF9933;
+            color: #000;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background-color: #e67e22;
+            transform: translateY(-3px);
+        }
+
+        .btn.outline {
+            background-color: transparent;
+            border: 2px solid #FF9933;
+            color: #FF9933;
+        }
+
+        .btn.outline:hover {
+            background-color: #FF9933;
+            color: #000;
+        }
+
+        .parallax {
+            position: relative;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 5rem 1rem;
+            color: #fff;
+        }
+
+        /* Contact Header Parallax Section */
+        .contact-header {
+            background-image: url('contact-parellex1.jpg');
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .contact-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Contact Form Section */
+        .contact-section {
+            background-color: #111;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            color: #FF9933;
+        }
+
+        .contact-info p {
+            color: #ccc;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-methods {
+            margin-bottom: 2rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            background-color: #1a1a1a;
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-method:hover {
+            transform: translateY(-5px);
+        }
+
+        .method-icon {
+            margin-right: 1.5rem;
+            font-size: 1.8rem;
+            color: #FF9933;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .method-details h4 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 0.5rem;
+        }
+
+        .method-details p, .method-details a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .method-details a:hover {
+            color: #FF9933;
+        }
+
+        .social-connect {
+            margin-top: 2rem;
+        }
+
+        .social-connect h4 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: #1a1a1a;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: #FF9933;
+            color: #000;
+            transform: translateY(-5px);
+        }
+
+        .contact-form {
+            background-color: #1a1a1a;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            color: #FF9933;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #FF9933;
+            box-shadow: 0 0 0 2px rgba(255, 153, 51, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background-color: #0a0a0a;
+        }
+
+        .accordion {
+            margin-top: 2rem;
+        }
+
+        .accordion-item {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: #222;
+        }
+
+        .accordion-icon {
+            font-size: 1.2rem;
+            color: #FF9933;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.5rem;
+        }
+
+        .accordion-content-inner {
+            padding-bottom: 1.5rem;
+            color: #ccc;
+        }
+
+        .accordion-item.active .accordion-header {
+            background-color: #222;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 300px;
+        }
+
+        /* Office Locations Section */
+        .locations-section {
+            background-color: #111;
+        }
+
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .location-card {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .location-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .location-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .location-card:hover .location-image img {
+            transform: scale(1.1);
+        }
+
+        .location-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .location-details {
+            padding: 1.5rem;
+        }
+
+        .location-details h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+            color: #FF9933;
+        }
+
+        .location-info {
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .location-info i {
+            margin-right: 0.5rem;
+            color: #FF9933;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Partners Section */
+        .partners-section {
+            background-color: #0a0a0a;
+            text-align: center;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            align-items: center;
+        }
+
+        .partner-logo {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            height: 100px;
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: #222;
+        }
+
+        .partner-logo img {
+            max-width: 100%;
+            max-height: 60px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .partner-logo:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background-image: url('contact-parellex2.jpg');
+            padding: 0;
+        }
+
+        .newsletter-content {
+            position: relative;
+            z-index: 2;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .newsletter-form {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            .locations-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .partners-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .contact-header h1 {
+                font-size: 2.5rem;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .newsletter-input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .locations-grid {
+                grid-template-columns: 1fr;
+            }
+            .partners-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        <img src="about-parellex1.jpg" height="412" width="735"/><img src="contact-parellex1.jpg" height="920"
+                                                                      width="736"/></style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- Contact Header Parallax Section -->
+<section class="contact-header parallax">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1>Contact Us</h1>
+        <p>Have questions, feedback, or want to collaborate? We'd love to hear from you!</p>
+        <div class="header-buttons">
+            <a href="#contact-form" class="btn">Send Message</a>
+            <a href="#faq" class="btn outline">View FAQs</a>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Info & Form Section -->
+<section class="contact-section" id="contact-form">
+    <div class="container">
+        <div class="section-header">
+            <h2>Get in Touch</h2>
+            <p>We're here to answer your questions and help you get the most out of our travel community</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div>
+                    <h3>Let's Connect</h3>
+                    <p>Whether you have questions about our platform, want to explore partnership opportunities, or just want to say hello, we're here to help.</p>
+
+                    <div class="contact-methods">
+                        <!-- Email -->
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4>Email Us</h4>
+                                <p><a href="mailto:hello@travelcommunity.com">hello@travelcommunity.com</a></p>
+                            </div>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4>Call Us</h4>
+                                <p><a href="tel:+91987654321">+91 98765 43210</a></p>
+                            </div>
+                        </div>
+
+                        <!-- Headquarters -->
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4>Headquarters</h4>
+                                <p>MG Road, Bangalore<br>Karnataka, India 560001</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="social-connect">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h3>Send Us a Message</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" id="subject" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="form-label">Your Message</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section" id="faq">
+    <div class="container">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to the most common questions about our platform</p>
+        </div>
+
+        <div class="accordion">
+            <!-- FAQ Item 1 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>How do I create an account?</span>
+                    <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        Creating an account is simple! Click the "Sign Up" button in the top right corner of our website. You can register using your email, or sign up with your Google or Facebook accounts. Once you've verified your email address, you'll be able to set up your profile and start connecting with our community.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 2 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>What types of collaborations can I find on the platform?</span>
+                    <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        Our platform offers various collaboration opportunities including: content creation partnerships with hotels and tour companies, joint blogging ventures, photography assignments, guest posting, local guide partnerships, and sponsored trips. The types of collaborations are constantly expanding as our community grows!
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Is there a fee to join the travel community?</span>
+                    <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        Basic membership is completely free and gives you access to community discussions, events, and basic networking features. We also offer a Premium tier with additional benefits including enhanced profile visibility, advanced search filters, and direct messaging to businesses and influencers. You can compare plan features on our Pricing page.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 4 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>How can local businesses join the platform?</span>
+                    <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        Local businesses can register for a Business account that includes features specifically designed for tourism enterprises. After creating your account, you'll need to complete a verification process to confirm your business details. Once verified, you can create your business profile, list events, and connect with content creators for potential collaborations.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 5 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>How do you verify members of the community?</span>
+                    <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        We take trust seriously in our community. All members go through a basic verification process that confirms their email and identity. For content creators and local experts who want to be featured or offer services, we have an additional verification process that may include reviewing their portfolio, checking references, and confirming their qualifications in specific areas.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Office Locations Section -->
+<section class="locations-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our Offices</h2>
+            <p>Visit us around the world</p>
+        </div>
+
+        <div class="locations-grid">
+            <!-- Location 1 -->
+            <div class="location-card">
+                <div class="location-image">
+                    <img src="contact-Bangalore.jpg" alt="Bangalore Office">
+                    <div class="location-overlay"></div>
+                </div>
+                <div class="location-details">
+                    <h3>Bangalore (HQ)</h3>
+                    <div class="location-info">
+                        <p><i class="fas fa-map-marker-alt"></i> MG Road, Bangalore, Karnataka</p>
+                        <p><i class="fas fa-phone-alt"></i> +91 98765 43210</p>
+                        <p><i class="fas fa-envelope"></i> bangalore@travelcommunity.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location 2 -->
+            <div class="location-card">
+                <div class="location-image">
+                    <img src="contact-New%20York.jpg" alt="New York Office">
+                    <div class="location-overlay"></div>
+                </div>
+                <div class="location-details">
+                    <h3>New York</h3>
+                    <div class="location-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Manhattan, New York City</p>
+                        <p><i class="fas fa-phone-alt"></i> +1 212 555 6789</p>
+                        <p><i class="fas fa-envelope"></i> nyc@travelcommunity.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location 3 -->
+            <div class="location-card">
+                <div class="location-image">
+                    <img src="contact-singapore.jpg" alt="Singapore Office">
+                    <div class="location-overlay"></div>
+                </div>
+                <div class="location-details">
+                    <h3>Singapore</h3>
+                    <div class="location-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Marina Bay, Singapore</p>
+                        <p><i class="fas fa-phone-alt"></i> +65 9876 5432</p>
+                        <p><i class="fas fa-envelope"></i> singapore@travelcommunity.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Parallax Section -->
+<section class="newsletter-section parallax">
+    <div class="overlay"></div>
+    <div class="newsletter-content">
+        <div class="container">
+            <div class="section-header">
+                <h2>Stay Connected</h2>
+                <p>Subscribe to our newsletter for the latest updates, travel tips, and community events</p>
+            </div>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" class="newsletter-input" required>
+                <button type="submit" class="btn">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<!-- Including CSS, Navbar and Footer -->
+<link rel="stylesheet" href="css.css">
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('DOM fully loaded and parsed.');
+
+        // Load external files (navbar and footer)
+        loadExternalContent('navbar.html', 'nav-placeholder');
+        loadExternalContent('footer.html', 'footer-placeholder');
+
+        // Initialize GSAP animations
+        gsap.registerPlugin(ScrollTrigger);
+        initializeGSAPAnimations();
+
+        // Initialize FAQ accordion
+        initializeAccordion();
+
+        // Handle contact form submission
+        setupContactFormSubmission();
+    });
+
+    // Load external content
+    function loadExternalContent(url, placeholderId) {
+        fetch(url)
+            .then(response => {
+                console.log(`Loaded ${url} successfully`);
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById(placeholderId).innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error loading ' + url + ':', error);
+            });
+    }
+
+    // GSAP animations
+    function initializeGSAPAnimations() {
+        console.log('Initializing GSAP animations...');
+        gsap.from('.contact-method', {
+            opacity: 0,
+            y: 30,
+            stagger: 0.2,
+            duration: 0.8,
+            scrollTrigger: {
+                trigger: '.contact-methods',
+                start: 'top 80%',
+            }
+        });
+
+        gsap.from('.social-icon', {
+            opacity: 0,
+            y: 20,
+            stagger: 0.1,
+            duration: 0.5,
+            scrollTrigger: {
+                trigger: '.social-connect',
+                start: 'top 90%',
+            }
+        });
+
+        gsap.from('.contact-form', {
+            opacity: 0,
+            x: 50,
+            duration: 1,
+            scrollTrigger: {
+                trigger: '.contact-form',
+                start: 'top 80%',
+            }
+        });
+
+        gsap.from('.accordion-item', {
+            opacity: 0,
+            y: 30,
+            stagger: 0.2,
+            duration: 0.8,
+            scrollTrigger: {
+                trigger: '.accordion',
+                start: 'top 80%',
+            }
+        });
+
+        gsap.from('.location-card', {
+            opacity: 0,
+            y: 30,
+            stagger: 0.2,
+            duration: 0.8,
+            scrollTrigger: {
+                trigger: '.locations-grid',
+                start: 'top 80%',
+            }
+        });
+    }
+
+    // Accordion
+    function initializeAccordion() {
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        console.log(`Found ${accordionItems.length} accordion items`);
+
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            header.addEventListener('click', () => {
+                item.classList.toggle('active');
+                console.log('Accordion toggled:', item);
+            });
+        });
+    }
+
+    // Contact form submission
+
+    function setupContactFormSubmission() {
+        const contactForm = document.getElementById('contactForm');
+
+        if (!contactForm) {
+            console.error('❌ contactForm not found in DOM!');
+            return;
+        }
+
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const data = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+            };
+
+            console.log('📤 Sending data:', data);
+
+            fetch('http://localhost:5000/api/contact/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(async response => {
+                const contentType = response.headers.get('content-type');
+                const text = await response.text();
+                console.log('📥 Raw response:', text);
+
+                if (contentType && contentType.includes('application/json')) {
+                    const json = JSON.parse(text);
+                    console.log('✅ Parsed JSON:', json);
+                    if (json.success) {
+                        alert('✅ Message sent successfully!');
+                        contactForm.reset();
+                    } else {
+                        alert('⚠️ Message failed: ' + json.message);
+                    }
+                } else {
+                    throw new Error('Expected JSON, received HTML or something else');
+                }
+            })
+            .catch(error => {
+                console.error('❌ Error during fetch:', error);
+                alert('Something went wrong. Check the console.');
+            });
+        });
+    }
+
+
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Events - Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            background-color: #000;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #FF9933;
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #FFA500;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 153, 51, 0.3);
+        }
+
+        /* Browse Events Header */
+        .browse-header {
+            background-image: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94');
+            height: 50vh;
+            position: relative;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .browse-header .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .browse-header .content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        .browse-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .browse-header p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 2rem 0;
+            position: sticky;
+            top: 80px;
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .advanced-filters {
+            display: none;
+        }
+
+        .advanced-filters.active {
+            display: block;
+            margin-top: 1.5rem;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .filter-item {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filter-item select,
+        .filter-item input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #222;
+            color: #fff;
+        }
+
+        .filter-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .toggle-advanced {
+            background: transparent;
+            border: none;
+            color: #FF9933;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .toggle-advanced i {
+            margin-left: 0.5rem;
+        }
+
+        /* Time Period Sections */
+        .time-period {
+            padding: 3rem 0;
+        }
+
+        .time-period:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+
+        .period-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .period-header h2 {
+            font-size: 2rem;
+            font-family: 'Montserrat', sans-serif;
+            margin-right: 1rem;
+        }
+
+        .period-header .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #FF9933, transparent);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .event-card {
+            background-color: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .event-image {
+            height: 200px;
+            position: relative;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .event-date {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FF9933;
+            color: #000;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-weight: 700;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #E91E63;
+            color: #fff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+        }
+
+        .event-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .event-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .event-meta i {
+            margin-right: 0.3rem;
+            color: #FF9933;
+        }
+
+        .event-description {
+            margin-bottom: 1rem;
+            color: #aaa;
+        }
+
+        .event-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background-color: #333;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .tag.adventure {
+            background-color: #e74c3c;
+        }
+
+        .tag.food {
+            background-color: #f39c12;
+        }
+
+        .tag.culture {
+            background-color: #9b59b6;
+        }
+
+        .tag.photography {
+            background-color: #3498db;
+        }
+
+        .tag.art {
+            background-color: #2ecc71;
+        }
+
+        .tag.workshop {
+            background-color: #1abc9c;
+        }
+
+        .event-host {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+        }
+
+        .host-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 0.8rem;
+        }
+
+        .host-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .host-info span {
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .host-name {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .host-type {
+            color: #ccc;
+            font-size: 0.8rem;
+        }
+
+        /* Load More Section */
+        .load-more {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .events-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .browse-header h1 {
+                font-size: 2.5rem;
+            }
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            .filters {
+                flex-direction: column;
+            }
+            .filter-item {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .event-host {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .host-avatar {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- Browse Events Header -->
+<section class="browse-header">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1>Browse Events</h1>
+        <p>Discover authentic experiences and connect with fellow travelers and locals</p>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="filter-section">
+    <div class="container">
+        <div class="filters">
+            <div class="filter-item">
+                <select id="location-filter">
+                    <option value="">All Locations</option>
+                    <option value="delhi">Delhi</option>
+                    <option value="mumbai">Mumbai</option>
+                    <option value="kolkata">Kolkata</option>
+                    <option value="jaipur">Jaipur</option>
+                    <option value="goa">Goa</option>
+                    <option value="kerala">Kerala</option>
+                    <option value="varanasi">Varanasi</option>
+                    <option value="manali">Manali</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <input type="date" id="date-filter">
+            </div>
+            <div class="filter-item">
+                <select id="type-filter">
+                    <option value="">All Event Types</option>
+                    <option value="culture">Cultural Experience</option>
+                    <option value="food">Food & Cuisine</option>
+                    <option value="adventure">Adventure & Outdoors</option>
+                    <option value="photography">Photography Walk</option>
+                    <option value="art">Art & Craft</option>
+                    <option value="workshop">Workshop</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <select id="host-filter">
+                    <option value="">All Hosts</option>
+                    <option value="local">Local Guide</option>
+                    <option value="blogger">Travel Blogger</option>
+                    <option value="business">Local Business</option>
+                    <option value="expert">Subject Expert</option>
+                </select>
+            </div>
+        </div>
+        <button class="toggle-advanced" id="toggle-advanced">
+            Advanced Filters <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="advanced-filters" id="advanced-filters">
+            <div class="filters">
+                <div class="filter-item">
+                    <select id="price-filter">
+                        <option value="">Any Price</option>
+                        <option value="free">Free</option>
+                        <option value="paid">Paid</option>
+                        <option value="0-500">₹0 - ₹500</option>
+                        <option value="500-1000">₹500 - ₹1000</option>
+                        <option value="1000+">₹1000+</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <select id="duration-filter">
+                        <option value="">Any Duration</option>
+                        <option value="short">Short (1-2 hours)</option>
+                        <option value="medium">Medium (3-5 hours)</option>
+                        <option value="long">Long (6+ hours)</option>
+                        <option value="multiday">Multi-day</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <select id="group-size-filter">
+                        <option value="">Any Group Size</option>
+                        <option value="small">Small (1-5 people)</option>
+                        <option value="medium">Medium (6-15 people)</option>
+                        <option value="large">Large (16+ people)</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <select id="featured-filter">
+                        <option value="">All Events</option>
+                        <option value="featured">Featured Only</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="filter-actions">
+            <button class="btn" id="apply-filters">Apply Filters</button>
+        </div>
+    </div>
+</section>
+
+<!-- Today's Events Section -->
+<section class="time-period" id="today">
+    <div class="container">
+        <div class="period-header">
+            <h2>Today</h2>
+            <div class="line"></div>
+        </div>
+        <div class="events-grid">
+            <!-- Event Card 1 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1515669097368-22e68427d265" alt="Morning Yoga by the Ganges">
+                    <div class="event-date">Today, 6:00 AM</div>
+                    <div class="featured-badge">Featured</div>
+                </div>
+                <div class="event-content">
+                    <h3>Morning Yoga by the Ganges</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Assi Ghat, Varanasi</span>
+                        <span><i class="fas fa-users"></i> 5 spots left</span>
+                    </div>
+                    <div class="event-description">
+                        Start your day with a rejuvenating yoga session as the sun rises over the holy Ganges River.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag culture">Culture</span>
+                        <span class="tag workshop">Workshop</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Ananya Mishra</span>
+                            <span class="host-type">Yoga Instructor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 2 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1527686520962-ddebd2c8ef04" alt="South Mumbai Heritage Walk">
+                    <div class="event-date">Today, 9:00 AM</div>
+                </div>
+                <div class="event-content">
+                    <h3>South Mumbai Heritage Walk</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Gateway of India, Mumbai</span>
+                        <span><i class="fas fa-users"></i> 8 spots left</span>
+                    </div>
+                    <div class="event-description">
+                        Explore Mumbai's colonial architecture and hidden stories with a knowledgeable local historian.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag culture">Culture</span>
+                        <span class="tag photography">Photography</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Dr. Ajay Karnik</span>
+                            <span class="host-type">Historian</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 3 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0" alt="Delhi Street Food Tour">
+                    <div class="event-date">Today, 5:00 PM</div>
+                </div>
+                <div class="event-content">
+                    <h3>Delhi Street Food Tour</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Connaught Place, Delhi</span>
+                        <span><i class="fas fa-users"></i> 3 spots left</span>
+                    </div>
+                    <div class="event-description">
+                        Sample the best street food Delhi has to offer with our curated evening food walk.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag food">Food</span>
+                        <span class="tag culture">Culture</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Vicky Kaushal</span>
+                            <span class="host-type">Food Blogger</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- This Week's Events Section -->
+<section class="time-period" id="this-week">
+    <div class="container">
+        <div class="period-header">
+            <h2>This Week</h2>
+            <div class="line"></div>
+        </div>
+        <div class="events-grid">
+            <!-- Event Card 1 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205" alt="Sustainable Goa Beach Cleanup">
+                    <div class="event-date">Apr 10</div>
+                </div>
+                <div class="event-content">
+                    <h3>Sustainable Goa Beach Cleanup</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 7:30 AM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Anjuna Beach, Goa</span>
+                    </div>
+                    <div class="event-description">
+                        Join fellow travelers and locals in preserving Goa's beautiful beaches while learning about marine conservation.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag adventure">Adventure</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Meera D'Souza</span>
+                            <span class="host-type">Environmental Activist</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 2 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1589118949245-7d38baf380d6" alt="Pottery Workshop in Jaipur">
+                    <div class="event-date">Apr 11</div>
+                </div>
+                <div class="event-content">
+                    <h3>Traditional Pottery Workshop</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 11:00 AM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Sanganer, Jaipur</span>
+                    </div>
+                    <div class="event-description">
+                        Learn the art of traditional Rajasthani pottery from master craftsmen in this hands-on workshop.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag art">Art</span>
+                        <span class="tag workshop">Workshop</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Ranjeet Kumawat</span>
+                            <span class="host-type">Master Potter</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 3 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1526057565006-20955f157a7e" alt="Kolkata Book Market Tour">
+                    <div class="event-date">Apr 12</div>
+                    <div class="featured-badge">Featured</div>
+                </div>
+                <div class="event-content">
+                    <h3>Kolkata College Street Book Market Tour</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 2:00 PM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> College Street, Kolkata</span>
+                    </div>
+                    <div class="event-description">
+                        Explore Asia's largest book market and discover hidden literary treasures with a local literature professor.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag culture">Culture</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Prof. Arunava Sen</span>
+                            <span class="host-type">Literature Professor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 4 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836" alt="Kerala Cooking Class">
+                    <div class="event-date">Apr 13</div>
+                </div>
+                <div class="event-content">
+                    <h3>Traditional Kerala Cooking Class</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 10:00 AM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Fort Kochi, Kerala</span>
+                    </div>
+                    <div class="event-description">
+                        Master the art of authentic Kerala cuisine with a hands-on cooking class led by a local chef.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag food">Food</span>
+                        <span class="tag workshop">Workshop</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Sara Thomas</span>
+                            <span class="host-type">Chef & Food Writer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Later This Month Section -->
+<section class="time-period" id="this-month">
+    <div class="container">
+        <div class="period-header">
+            <h2>Later This Month</h2>
+            <div class="line"></div>
+        </div>
+        <div class="events-grid">
+            <!-- Event Card 1 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1561030811-2c7b215cfba9" alt="Holi Festival Experience">
+                    <div class="event-date">Apr 18</div>
+                </div>
+                <div class="event-content">
+                    <h3>Traditional Holi Celebration</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 9:00 AM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Vrindavan, Uttar Pradesh</span>
+                    </div>
+                    <div class="event-description">
+                        Experience the true spirit of Holi with a local family in one of the most vibrant celebrations in India.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag culture">Culture</span>
+                        <span class="tag photography">Photography</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Rahul Verma</span>
+                            <span class="host-type">Cultural Guide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 2 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1518730518541-d0843268c287" alt="Mumbai by Night Photography">
+                    <div class="event-date">Apr 20</div>
+                    <div class="featured-badge">Featured</div>
+                </div>
+                <div class="event-content">
+                    <h3>Mumbai by Night Photography Tour</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 7:00 PM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Marine Drive, Mumbai</span>
+                    </div>
+                    <div class="event-description">
+                        Capture the glittering cityscape of Mumbai after dark with tips from a professional photographer.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag photography">Photography</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Vivek Shah</span>
+                            <span class="host-type">Photographer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 3 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077" alt="Manali Adventure Trek">
+                    <div class="event-date">Apr 25</div>
+                </div>
+                <div class="event-content">
+                    <h3>Himalayan Adventure Trek</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 6:00 AM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Old Manali, Himachal Pradesh</span>
+                    </div>
+                    <div class="event-description">
+                        Embark on a thrilling trek through the Himalayan foothills and discover breathtaking landscapes.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag adventure">Adventure</span>
+                        <span class="tag photography">Photography</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Dawa Sherpa</span>
+                            <span class="host-type">Mountain Guide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Load More Section -->
+<section class="load-more">
+    <div class="container">
+        <button class="btn" id="load-more-btn">Load More Events</button>
+    </div>
+</section>
+
+<!-- Footer Placeholder -->
+<div id="footer-placeholder"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load navbar and footer
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('nav-placeholder').innerHTML = data;
+            });
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // Toggle advanced filters
+        const toggleAdvanced = document.getElementById('toggle-advanced');
+        const advancedFilters = document.getElementById('advanced-filters');
+
+        toggleAdvanced.addEventListener('click', function() {
+            advancedFilters.classList.toggle('active');
+            if (advancedFilters.classList.contains('active')) {
+                toggleAdvanced.innerHTML = 'Hide Advanced Filters <i class="fas fa-chevron-up"></i>';
+            } else {
+                toggleAdvanced.innerHTML = 'Advanced Filters <i class="fas fa-chevron-down"></i>';
+            }
+        });
+
+        // Animation for event cards
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from('.event-card', {
+            opacity: 0,
+            y: 50,
+            stagger: 0.1,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.events-grid',
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            }
+        });
+
+        // Filter functionality
+        const applyFilters = document.getElementById('apply-filters');
+        applyFilters.addEventListener('click', function() {
+            // This would typically involve fetching filtered data from a server
+            // For demo purposes, we'll just show an alert
+            alert('Filters applied! In a real application, this would refresh the events list.');
+        });
+
+        // Load more functionality
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        loadMoreBtn.addEventListener('click', function() {
+            // This would typically load more events from a server
+            // For demo purposes, we'll just show an alert
+            alert('In a real application, this would load more events.');
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offbeat Adventures in India | Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        /* Additional styles for offbeat adventures page */
+        .parallax-section {
+          position: relative;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-attachment: scroll;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          overflow: hidden;
+        }
+
+        .parallax-content {
+          text-align: center;
+          max-width: 900px;
+          padding: 0 2rem;
+          z-index: 2;
+        }
+
+        .black-frame {
+          background-color: #000;
+          padding: 8rem 0;
+          position: relative;
+        }
+
+        .frame-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          text-align: center;
+        }
+
+        .adventures-section {
+          background-color: #000;
+          padding: 5rem 0;
+        }
+
+        .adventures-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        .adventure-card {
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          padding: 2rem;
+          margin-bottom: 2rem;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .adventure-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .adventure-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+        }
+
+        .adventure-destination {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #FF9933;
+        }
+
+        .adventure-type {
+          background-color: rgba(255, 153, 51, 0.2);
+          color: #FF9933;
+          padding: 0.5rem 1rem;
+          border-radius: 20px;
+          font-size: 0.9rem;
+        }
+
+        .adventure-content {
+          margin-bottom: 1.5rem;
+        }
+
+        .adventure-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .adventure-meta {
+          font-size: 0.9rem;
+          color: #ccc;
+        }
+
+        .cta-section {
+          background-color: #000;
+          padding: 5rem 0;
+          text-align: center;
+        }
+
+        @media (max-width: 768px) {
+          .adventure-header {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          .adventure-type {
+            margin-top: 0.5rem;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Include navbar.html using fetch API -->
+<div id="navbar-container"></div>
+
+<!-- Hero Parallax Section -->
+<section class="parallax-section" style="background-image: url('of1.jpg');">
+    <div class="parallax-content">
+        <h1>Offbeat Adventures in India</h1>
+        <p>Discover India's hidden gems and lesser-known experiences that most tourists never see.</p>
+    </div>
+</section>
+
+<!-- Black Frame Section - Introduction -->
+<section class="black-frame">
+    <div class="frame-container">
+        <h2>Beyond the Beaten Path</h2>
+        <p>India is a land of endless discoveries where ancient traditions meet breathtaking landscapes. Step away from the typical tourist circuit and immerse yourself in authentic experiences, guided by locals who know their homeland intimately. These offbeat adventures reveal the true heart and soul of incredible India - from secret mountain trails to hidden festivals, forgotten temples, and culinary delights tucked away in narrow lanes.</p>
+    </div>
+</section>
+
+<!-- Adventures Section -->
+<section class="adventures-section">
+    <div class="adventures-container">
+        <h2 class="mb-5">Extraordinary Journeys Await</h2>
+
+        <!-- Adventure 1 -->
+        <div class="adventure-card">
+            <div class="adventure-header">
+                <h3 class="adventure-destination">Spiti Valley, Himachal Pradesh</h3>
+                <span class="adventure-type">Mountain Expedition</span>
+            </div>
+            <div class="adventure-content">
+                <p>Journey through India's Tibetan borderlands in the remote Spiti Valley, where ancient monasteries cling to rugged cliffs and stars shine with extraordinary clarity in the night sky. Visit the 1000-year-old Tabo Monastery, often called the 'Ajanta of the Himalayas,' and spend time with local families in the highest inhabited villages in the world. Experience traditional Spitian cuisine and learn about the unique Buddhist culture that has remained unchanged for centuries.</p>
+            </div>
+            <div class="adventure-footer">
+                <span class="adventure-meta">Best Time: June to September • Duration: 7-10 days</span>
+                <a href="#" class="btn">Read Story</a>
+            </div>
+        </div>
+
+        <!-- Adventure 2 -->
+        <div class="adventure-card">
+            <div class="adventure-header">
+                <h3 class="adventure-destination">Majuli Island, Assam</h3>
+                <span class="adventure-type">Cultural Immersion</span>
+            </div>
+            <div class="adventure-content">
+                <p>Set foot on the world's largest river island in the mighty Brahmaputra, where the unique Mishing tribe has preserved their traditional way of life for generations. Stay in traditional bamboo stilt houses, learn the art of mask-making from master craftsmen at the Satras (monastery-institutions), and witness the rhythmic Sattriya dance performances that tell ancient stories. Paddle through water hyacinth in traditional boats and enjoy community meals featuring delicacies like fish wrapped in banana leaves and khar (alkaline curry).</p>
+            </div>
+            <div class="adventure-footer">
+                <span class="adventure-meta">Best Time: October to March • Duration: 3-4 days</span>
+                <a href="#" class="btn">Read Story</a>
+            </div>
+        </div>
+
+        <!-- Adventure 3 -->
+        <div class="adventure-card">
+            <div class="adventure-header">
+                <h3 class="adventure-destination">Neelakurinji Bloom, Western Ghats</h3>
+                <span class="adventure-type">Natural Wonder</span>
+            </div>
+            <div class="adventure-content">
+                <p>Witness one of nature's rarest spectacles as the Neelakurinji flowers bloom once every 12 years, turning the hills of Munnar into a sea of blue. Trek through lesser-known paths in the Shola forests with tribal guides who share ancient knowledge of medicinal plants and wildlife. Camp under the stars amidst the blooming hillsides, listening to folktales of the Muthuvan tribe who consider these flowers sacred. Learn about the complex ecology of the Western Ghats biodiversity hotspot while experiencing a phenomenon few travelers ever get to see.</p>
+            </div>
+            <div class="adventure-footer">
+                <span class="adventure-meta">Next Bloom: 2030 • Duration: 4-5 days</span>
+                <a href="#" class="btn">Read Story</a>
+            </div>
+        </div>
+
+        <!-- Adventure 4 -->
+        <div class="adventure-card">
+            <div class="adventure-header">
+                <h3 class="adventure-destination">Mechuka Valley, Arunachal Pradesh</h3>
+                <span class="adventure-type">Remote Exploration</span>
+            </div>
+            <div class="adventure-content">
+                <p>Journey to one of India's most secluded valleys, just 29 kilometers from the Indo-Tibetan border. This hidden paradise is home to the Memba tribe, who practice an intriguing blend of animistic rituals and Tibetan Buddhism. Trek through pristine forests to discover ancient prayer flags fluttering over crystalline streams, visit the 400-year-old Samten Yongcha monastery, and sample unique delicacies like yak butter tea and thukpa. Stay with local families in traditional wooden homes and learn about their sustainable mountain lifestyle that has adapted to one of India's most challenging terrains.</p>
+            </div>
+            <div class="adventure-footer">
+                <span class="adventure-meta">Best Time: April to June, September to October • Duration: 6-8 days</span>
+                <a href="#" class="btn">Read Story</a>
+            </div>
+        </div>
+
+        <!-- Adventure 5 -->
+        <div class="adventure-card">
+            <div class="adventure-header">
+                <h3 class="adventure-destination">Chettinad Region, Tamil Nadu</h3>
+                <span class="adventure-type">Architectural & Culinary</span>
+            </div>
+            <div class="adventure-content">
+                <p>Explore the forgotten grandeur of the Nattukottai Chettiars in this region of thousand-pillared mansions and culinary excellence. Wander through palatial homes adorned with Burmese teak, Italian marble, and Belgian glass – testament to the wealth of trading communities that once connected South India to Southeast Asia. Learn traditional tile-making from artisans whose patterns have decorated these mansions for centuries. Sample the legendary Chettinad cuisine known for its complex spicing and techniques, with dishes like Kavuni Arisi (black rice pudding) and Nandu Kuzhambu (crab curry) that showcase culinary traditions preserved through generations.</p>
+            </div>
+            <div class="adventure-footer">
+                <span class="adventure-meta">Best Time: Year-round • Duration: 3-4 days</span>
+                <a href="#" class="btn">Read Story</a>
+            </div>
+        </div>
+
+        <!-- Adventure 6 -->
+        <div class="adventure-card">
+            <div class="adventure-header">
+                <h3 class="adventure-destination">Hornbill Festival, Nagaland</h3>
+                <span class="adventure-type">Tribal Celebration</span>
+            </div>
+            <div class="adventure-content">
+                <p>Experience the 'Festival of Festivals' where 16 major Naga tribes gather to celebrate their unique heritage through dance, music, and traditional games. Beyond the main festivities at Kisama Heritage Village, join local guides who take you to authentic Morung (bachelor dormitories) in remote villages where warriors still preserve ancient knowledge. Participate in traditional rice beer brewing sessions, learn archery from master hunters, and witness intricate wood carving techniques passed down through generations. Sample exotic delicacies like smoked pork with axone (fermented soybean) and wild foraged herbs prepared using traditional methods.</p>
+            </div>
+            <div class="adventure-footer">
+                <span class="adventure-meta">Annual Event: December 1-10 • Duration: 5-7 days</span>
+                <a href="#" class="btn">Read Story</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Parallax Section - Mid Page -->
+<section class="parallax-section" style="background-image: url('of2.jpg');">
+    <div class="parallax-content">
+        <h1>Stories from Beyond the Guidebooks</h1>
+        <p>Authentic experiences shared by travelers who ventured off the tourist trail.</p>
+    </div>
+</section>
+
+<!-- More Adventures Section -->
+<section class="adventures-section">
+    <div class="adventures-container">
+        <!-- Adventure 7 -->
+        <div class="adventure-card">
+            <div class="adventure-header">
+                <h3 class="adventure-destination">Rann of Kutch, Gujarat</h3>
+                <span class="adventure-type">Desert Culture</span>
+            </div>
+            <div class="adventure-content">
+                <p>Venture beyond the commercialized Rann Utsav to discover the authentic nomadic culture of the Kutch region. Stay with Rabari herders in traditional bhungas (circular mud houses with mirrored interiors) and learn the intricate art of Kutchi embroidery, which tells stories of migration and mythology. Join local artisans in creating Rogan art, a 300-year-old craft practice where paint made from castor oil is transformed into stunning textiles. Experience the haunting folk music of the Manganiyars under the full moon on the vast salt desert, and search for flamingos and wild asses in the Little Rann sanctuary with local conservationists.</p>
+            </div>
+            <div class="adventure-footer">
+                <span class="adventure-meta">Best Time: November to February • Duration: 5-6 days</span>
+                <a href="#" class="btn">Read Story</a>
+            </div>
+        </div>
+
+        <!-- Adventure 8 -->
+        <div class="adventure-card">
+            <div class="adventure-header">
+                <h3 class="adventure-destination">Phuktal Monastery Trek, Ladakh</h3>
+                <span class="adventure-type">Spiritual Journey</span>
+            </div>
+            <div class="adventure-content">
+                <p>Embark on a challenging trek to one of the most isolated monasteries in the world, built into a cliff face in the remote Zanskar Valley. Follow ancient trade routes through breathtaking gorges, crossing rope bridges over the turquoise Zanskar River. Stay in tiny mountain hamlets where traditional Ladakhi culture remains untouched by modernization, and learn about the 2500-year-old medicinal practices preserved by monks. Participate in early morning prayers and meditation sessions at Phuktal, where the sound of chanting echoes through caves that have been places of worship since the 12th century.</p>
+            </div>
+            <div class="adventure-footer">
+                <span class="adventure-meta">Best Time: June to September • Duration: 8-10 days</span>
+                <a href="#" class="btn">Read Story</a>
+            </div>
+        </div>
+
+        <!-- Adventure 9 -->
+        <div class="adventure-card">
+            <div class="adventure-header">
+                <h3 class="adventure-destination">Magnetic Hill Road Trip, Meghalaya</h3>
+                <span class="adventure-type">Natural Wonders</span>
+            </div>
+            <div class="adventure-content">
+                <p>Drive through the living root bridges and sacred forests of Meghalaya, exploring a landscape where the Khasi and Garo tribes have developed a unique relationship with nature. Trek to the double-decker living root bridge in Nongriat village, swim in secret blue pools known only to locals, and descend into unexplored caves with indigenous guides who share legends of forest spirits. Visit the cleanest village in Asia, Mawlynnong, and learn about traditional Khasi agriculture and forest conservation practices. Experience the legendary monsoon rains in Cherrapunji, one of the wettest places on earth, while staying in traditional community-run homestays.</p>
+            </div>
+            <div class="adventure-footer">
+                <span class="adventure-meta">Best Time: October to May • Duration: 6-7 days</span>
+                <a href="#" class="btn">Read Story</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Ready to Explore India's Hidden Treasures?</h2>
+        <p>Connect with local guides who know the secrets of these extraordinary destinations</p>
+        <a href="#" class="btn">Discover More Adventures</a>
+    </div>
+</section>
+
+<!-- Final Parallax Section -->
+<section class="parallax-section" style="background-image: url('of3.webp');">
+    <div class="parallax-content">
+        <h1>Experience the India Few Ever See</h1>
+        <p>Every journey becomes a story worth telling.</p>
+    </div>
+</section>
+
+<!-- Include footer.html using fetch API -->
+<div id="footer-container"></div>
+
+<script>
+    // Load navbar and footer components
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to fetch and insert HTML content
+      async function includeHTML(url, targetElementId) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.status}`);
+          }
+          const html = await response.text();
+          document.getElementById(targetElementId).innerHTML = html;
+
+          // Execute any scripts in the included HTML
+          const scripts = document.getElementById(targetElementId).getElementsByTagName('script');
+          for (let i = 0; i < scripts.length; i++) {
+            const script = document.createElement('script');
+            script.textContent = scripts[i].textContent;
+            document.body.appendChild(script);
+          }
+        } catch (error) {
+          console.error(`Error including HTML from ${url}:`, error);
+        }
+      }
+
+      // Include navbar and footer
+      includeHTML('navbar.html', 'navbar-container');
+      includeHTML('footer.html', 'footer-container');
+
+      // Add scroll event listener for parallax effect
+      window.addEventListener('scroll', function() {
+        const parallaxSections = document.querySelectorAll('.parallax-section');
+
+        parallaxSections.forEach(section => {
+          const distance = window.scrollY;
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+
+          if (distance > sectionTop - window.innerHeight && distance < sectionTop + sectionHeight) {
+            // Create subtle parallax effect without using fixed attachment
+            const yPos = -(distance - sectionTop) * 0.15;
+            section.style.backgroundPosition = `center ${yPos}px`;
+          }
+        });
+      });
+    });
+</script>
+</body>
+</html>

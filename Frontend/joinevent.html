@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details - Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            background-color: #000;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #FF9933;
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #FFFFFF;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 153, 51, 0.3);
+        }
+
+        .btn.outline {
+            background: transparent;
+            border: 2px solid #FF9933;
+            color: #FF9933;
+        }
+
+        .btn.outline:hover {
+            background: #FF9933;
+            color: #000;
+        }
+
+        .btn.danger {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+
+        .btn.danger:hover {
+            background-color: #c0392b;
+        }
+
+        /* Event Detail Header */
+        .event-detail-header {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('e10.jpg');
+            height: 60vh;
+            position: relative;
+            background-attachment: scroll;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .event-detail-header .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+            z-index: 1;
+        }
+
+        .event-detail-header .content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        .event-detail-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .event-detail-header p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Event Details Section */
+        .event-details-section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, #FF9933, #FFFFFF, #138808);
+        }
+
+        .event-details-container {
+            background-color: #111;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1.5rem;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            width: 30%;
+            font-weight: 700;
+            color: #FF9933;
+        }
+
+        .detail-content {
+            width: 70%;
+        }
+
+        .event-status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-upcoming {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+
+        .event-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background-color: #333;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .tag.food {
+            background-color: #f39c12;
+        }
+
+        .tag.culture {
+            background-color: #9b59b6;
+        }
+
+        .host-info {
+            background-color: #222;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .host-info h3 {
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            color: #FF9933;
+        }
+
+        .host-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .host-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .host-meta i {
+            color: #FF9933;
+            width: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .event-detail-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .detail-row {
+                flex-direction: column;
+            }
+
+            .detail-label, .detail-content {
+                width: 100%;
+            }
+
+            .detail-label {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- Event Detail Header -->
+<section class="event-detail-header">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1>Old Delhi Food Walk</h1>
+        <p>Explore the bustling streets of Old Delhi and discover authentic flavors from century-old eateries</p>
+    </div>
+</section>
+
+<!-- Event Details Section -->
+<section class="event-details-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Event Details</h2>
+        </div>
+        <div class="event-details-container">
+            <div class="detail-row">
+                <div class="detail-label">Status</div>
+                <div class="detail-content">
+                    <span class="event-status status-upcoming">Upcoming</span>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Date & Time</div>
+                <div class="detail-content">
+                    <p><i class="far fa-calendar-alt"></i> May 15, 2025</p>
+                    <p><i class="far fa-clock"></i> 6:00 PM - 9:00 PM</p>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Location</div>
+                <div class="detail-content">
+                    <p><i class="fas fa-map-marker-alt"></i> Chandni Chowk, Delhi</p>
+                    <p>Meeting Point: Outside Jama Masjid Gate No. 3</p>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Description</div>
+                <div class="detail-content">
+                    <p>Join us for an unforgettable culinary adventure through the historic lanes of Old Delhi. This guided food walk takes you to 6-7 authentic eateries that have been serving delicious food for generations.</p>
+                    <p>You'll get to taste a variety of dishes including:</p>
+                    <ul>
+                        <li>Famous Dahi Bhalla</li>
+                        <li>Jalebi and Rabri</li>
+                        <li>Authentic Mughlai curries</li>
+                        <li>Old Delhi's special Kebabs</li>
+                        <li>Traditional sweets and desserts</li>
+                    </ul>
+                    <p>Our local food expert will share fascinating stories about the history and culture of this gastronomic paradise.</p>
+                    <div class="event-tags">
+                        <span class="tag food">Food</span>
+                        <span class="tag culture">Culture</span>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Includes</div>
+                <div class="detail-content">
+                    <ul>
+                        <li>Food tastings at 6-7 eateries</li>
+                        <li>Bottled water</li>
+                        <li>Local guide</li>
+                        <li>Cultural insights and history</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">What to Bring</div>
+                <div class="detail-content">
+                    <ul>
+                        <li>Comfortable walking shoes</li>
+                        <li>Camera</li>
+                        <li>Appetite for adventure</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Group Size</div>
+                <div class="detail-content">
+                    <p>Maximum 12 participants</p>
+                    <p>Current Attendees: 8/12</p>
+                </div>
+            </div>
+
+            <div class="host-info">
+                <h3>About Your Host</h3>
+                <div class="host-details">
+                    <h4>Rajiv Sharma</h4>
+                    <p class="host-type">Local Food Guide</p>
+                    <div class="host-meta">
+                        <i class="fas fa-star"></i>
+                        <span>4.9 rating (120+ reviews)</span>
+                    </div>
+                    <div class="host-meta">
+                        <i class="fas fa-certificate"></i>
+                        <span>Certified Culinary Expert</span>
+                    </div>
+                    <div class="host-meta">
+                        <i class="fas fa-language"></i>
+                        <span>Languages: English, Hindi</span>
+                    </div>
+                    <p class="host-bio">
+                        Rajiv has been conducting food tours in Old Delhi for over 8 years. Born and raised in the area, he has intimate knowledge of hidden food spots and personal relationships with many of the vendors. His passion for Delhi's food culture is infectious, and he loves sharing the stories behind each dish.
+                    </p>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="#" class="btn danger">Cancel Participation</a>
+                <a href="contact.html" class="btn outline">Contact Host</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Include header and footer -->
+<script>
+    // Load header and footer
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('nav-placeholder').innerHTML = data;
+        });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animation for section headers
+        gsap.utils.toArray('.section-header').forEach(header => {
+            gsap.from(header, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: header,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Animation for details container
+        gsap.from('.event-details-container', {
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            scrollTrigger: {
+                trigger: '.event-details-container',
+                start: "top 85%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // Animation for host info
+        gsap.from('.host-info', {
+            opacity: 0,
+            y: 30,
+            duration: 0.6,
+            delay: 0.3,
+            scrollTrigger: {
+                trigger: '.host-info',
+                start: "top 85%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // Animation for action buttons
+        gsap.from('.action-buttons', {
+            opacity: 0,
+            y: 20,
+            duration: 0.5,
+            delay: 0.5,
+            scrollTrigger: {
+                trigger: '.action-buttons',
+                start: "top 90%",
+                toggleActions: "play none none reverse"
+            }
+        });
+    });
+</script>
+
+<!-- Add footer placeholder -->
+<div id="footer-placeholder"></div>
+
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Ambassador Program | Local Lens India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .intro {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .intro-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .intro-text {
+            flex: 1;
+            padding-right: 2rem;
+        }
+        
+        .benefits {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .benefits h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #FF6B00; /* Orange heading */
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .benefit-card {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .benefit-card h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .program-details {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .program-details h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #FF6B00; /* Orange heading */
+        }
+        
+        .program-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .program-column {
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #333;
+            background-color: #111;
+        }
+        
+        .program-column h3 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .eligibility {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .eligibility h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .eligibility-list {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #111;
+            padding: 2rem;
+            border: 1px solid #333;
+        }
+        
+        .eligibility-list ul {
+            margin-left: 2rem;
+        }
+        
+        .eligibility-list li {
+            margin-bottom: 1rem;
+        }
+        
+        .application {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .application h2 {
+            margin-bottom: 1rem;
+            color: #FF6B00; /* Orange heading */
+        }
+        
+        .application p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .featured-destinations {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .featured-destinations h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #FF6B00; /* Orange heading */
+        }
+        
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .destination-card {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .destination-card h3 {
+            margin-bottom: 1rem;
+        }
+        
+        /* Button styles */
+        .btn-orange {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #FF6B00;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin: 10px 5px;
+        }
+        
+        .btn-orange:hover {
+            background-color: #E55F00;
+        }
+        
+        .btn-white {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin: 10px 5px;
+        }
+        
+        .btn-white:hover {
+            background-color: #fff;
+            color: #000;
+        }
+        
+        @media (max-width: 768px) {
+            .intro-container {
+                flex-direction: column;
+            }
+            
+            .intro-text {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include the navbar dynamically -->
+    <div id="navbar-container"></div>
+
+    <!-- Hero Section -->
+    <section class="hero parallax" style="background-image: url('/api/placeholder/1200/800');">
+        <div class="overlay"></div>
+        <div class="hero-content parallax-content">
+            <h1>Become a Local Lens India Ambassador</h1>
+            <p>Join our network of passionate storytellers showcasing the vibrant colors, rich traditions, and hidden treasures of incredible India.</p>
+            <a href="#apply" class="btn-orange">Apply Now</a>
+            <a href="#details" class="btn-white">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="intro">
+        <div class="container intro-container">
+            <div class="intro-text">
+                <h2 style="color: #FF6B00;">Share India's Extraordinary Stories</h2>
+                <p>As a Local Lens India Ambassador, you'll create authentic content highlighting India's diverse landscapes, from the snow-capped Himalayas to the serene backwaters of Kerala. You'll connect with local communities, explore off-the-beaten-path destinations, and capture the essence of India that goes beyond the usual tourist attractions.</p>
+                <p>Our ambassador program provides unique access to exclusive experiences, partnerships with premium brands, and a platform to amplify your voice as a storyteller of India's magical destinations.</p>
+                <div class="button-group">
+                    <a href="#benefits" class="btn-white">See Benefits</a>
+                    <a href="#eligibility" class="btn-orange">Check Eligibility</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits" id="benefits">
+        <div class="container">
+            <h2>Ambassador Benefits</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h3>Exclusive Access</h3>
+                    <p>Gain privileged access to heritage properties, private ceremonies at temples, and behind-the-scenes cultural experiences across India's most iconic and hidden destinations.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>Premium Partnerships</h3>
+                    <p>Collaborate with luxury hotel chains like Taj and Oberoi, leading adventure outfitters, traditional artisans, and Indian travel gear brands for sponsored content opportunities.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>Content Amplification</h3>
+                    <p>Your stories will be featured across our platform and partner networks, reaching millions of travelers interested in authentic Indian experiences.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>Professional Development</h3>
+                    <p>Access workshops with Indian photographers, writers, and cultural experts to enhance your storytelling skills and deepen your understanding of India's diverse regions.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#apply" class="btn-orange">Join Our Team</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Program Details Section -->
+    <section class="program-details" id="details">
+        <div class="container">
+            <h2>Program Details</h2>
+            <div class="program-container">
+                <div class="program-column">
+                    <h3>Duration</h3>
+                    <p>12-month commitment with opportunity for renewal</p>
+                    <p>Quarterly content creation targets</p>
+                    <p>Bi-annual ambassador retreats in different regions of India</p>
+                </div>
+                <div class="program-column">
+                    <h3>Commitment</h3>
+                    <p>Create minimum 3 high-quality content pieces monthly</p>
+                    <p>Participate in 2 sponsored campaigns annually</p>
+                    <p>Attend virtual ambassador meetings and knowledge sharing sessions</p>
+                </div>
+                <div class="program-column">
+                    <h3>Perks</h3>
+                    <p>Complimentary stays at partner properties across India</p>
+                    <p>Travel stipend for featured destination coverage</p>
+                    <p>Ambassador welcome kit with Indian travel essentials</p>
+                    <p>Recognition as official Local Lens India voice</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#eligibility" class="btn-white">Check Eligibility</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eligibility Section -->
+    <section class="eligibility" id="eligibility">
+        <div class="container">
+            <h2 style="color: #FF6B00;">Ambassador Eligibility</h2>
+            <div class="eligibility-list">
+                <ul>
+                    <li>Established content creator with authentic storytelling approach and engaged audience</li>
+                    <li>Genuine passion for India's diverse cultures, landscapes, and experiences</li>
+                    <li>Previous experience traveling within India and understanding of cultural contexts</li>
+                    <li>High-quality photography, videography, and/or writing skills</li>
+                    <li>Commitment to responsible tourism practices and respectful cultural representation</li>
+                    <li>Ability to commit to the full 12-month ambassador program</li>
+                    <li>Willingness to explore beyond mainstream destinations and highlight lesser-known aspects of India</li>
+                </ul>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#apply" class="btn-orange">I'm Eligible - Apply Now</a>
+                <a href="#" class="btn-white">Have Questions?</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Destinations Section -->
+    <section class="featured-destinations">
+        <div class="container">
+            <h2>Featured Ambassador Destinations</h2>
+            <div class="destinations-grid">
+                <div class="destination-card">
+                    <h3>Spiritual India</h3>
+                    <p>Document the spiritual energy of Varanasi's ghats at dawn, meditation retreats in Rishikesh, ancient temples of Khajuraho, and the peaceful ambiance of Sarnath where Buddha gave his first sermon.</p>
+                </div>
+                <div class="destination-card">
+                    <h3>Himalayan Escapes</h3>
+                    <p>Capture the monasteries of Ladakh, secluded villages of Spiti Valley, trekking trails of Uttarakhand, and the living root bridges of Meghalaya's cloud forests.</p>
+                </div>
+                <div class="destination-card">
+                    <h3>Cultural Immersions</h3>
+                    <p>Experience the Pushkar Camel Fair, Hornbill Festival in Nagaland, Onam celebrations in Kerala, and the artistic heritage of Rajasthan's havelis and craft villages.</p>
+                </div>
+                <div class="destination-card">
+                    <h3>Culinary Journeys</h3>
+                    <p>Explore the street food of Old Delhi, spice plantations of Coorg, fishing communities of coastal Tamil Nadu, and the traditional cooking techniques of Gujarat's Kutch region.</p>
+                </div>
+                <div class="destination-card">
+                    <h3>Hidden Treasures</h3>
+                    <p>Discover the coffee estates of Chikmagalur, ancient step wells of Gujarat, forgotten forts of Madhya Pradesh, and the pristine beaches of the Andaman Islands.</p>
+                </div>
+                <div class="destination-card">
+                    <h3>Urban Narratives</h3>
+                    <p>Tell stories of urban transformation in Mumbai's neighborhoods, Kolkata's artistic renaissance, Hyderabad's tech-meets-tradition evolution, and Jaipur's design innovation.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#" class="btn-white">Explore More Destinations</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Section -->
+    <section class="application" id="apply">
+        <div class="container">
+            <h2>Ready to Represent Local Lens India?</h2>
+            <p>We're looking for authentic voices to share the incredible stories of India with the world. If you're passionate about showcasing the true essence of this magnificent country, we want to hear from you.</p>
+            <a href="#" class="btn-orange">Apply to be an Ambassador</a>
+            <a href="#" class="btn-white">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- Include the footer dynamically -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Function to load components dynamically
+        async function loadComponent(url, containerId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${url}`);
+                }
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading component from ${url}:`, error);
+            }
+        }
+
+        // Load components when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            loadComponent('navbar.html', 'navbar-container');
+            loadComponent('footer.html', 'footer-container');
+        });
+    </script>
+</body>
+</html>

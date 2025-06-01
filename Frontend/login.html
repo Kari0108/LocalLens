@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Local Lens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        .login-section {
+            min-height: 100vh;
+            padding: 120px 0 60px;
+            background-color: #000;
+            background-image: url('travel-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .login-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .login-header p {
+            color: #aaa;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #fff;
+            outline: none;
+        }
+
+        /* Password toggle button styles */
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 41px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 10;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .password-toggle:hover {
+            color: #fff;
+        }
+
+        .password-field-container {
+            position: relative;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-group input {
+            margin-right: 8px;
+        }
+
+        .checkbox-group label {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .forgot-link {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .forgot-link:hover {
+            color: #fff;
+        }
+
+        .login-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .login-btn:hover {
+            background-color:orange;
+            color: #000;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+        }
+
+        /* Tabs for user type selection */
+        .login-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            background-color: #000;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .login-tab {
+            padding: 12px 25px;
+            background-color: transparent;
+            border: none;
+            color: #aaa;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            flex: 1;
+            text-align: center;
+        }
+
+        .login-tab.active {
+            color: #fff;
+            background-color: #ff8c00; /* Orange background for active tab */
+            border-bottom: none;
+        }
+
+        .login-tab:hover:not(.active) {
+            color: #fff;
+            background-color: rgba(255, 140, 0, 0.3); /* Semi-transparent orange for hover */
+        }
+
+        /* Loading spinner styles */
+        .spinner {
+            display: none;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #fff;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 25px;
+                margin: 0 20px;
+            }
+
+            .login-header h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Include the navbar dynamically -->
+<div id="navbar-container"></div>
+
+<!-- Login Section -->
+<section class="login-section">
+    <div class="login-container">
+        <div class="login-tabs">
+            <button type="button" class="login-tab" data-tab="collaborator">Collaborator</button>
+            <button type="button" class="login-tab active" data-tab="blogger">Blogger</button>
+            <button type="button" class="login-tab" data-tab="user">User</button>
+        </div>
+
+        <div class="login-header">
+            <h2 id="loginTitle">Blogger Login</h2>
+            <p id="loginSubtitle">Sign in to access your blogging dashboard</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="password-field-container">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <button type="button" id="togglePassword" class="password-toggle">SHOW</button>
+                </div>
+            </div>
+
+            <div class="remember-forgot">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <a href="#" class="forgot-link">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="login-btn">
+                <span id="loginText">Login</span>
+                <div id="loginSpinner" class="spinner"></div>
+            </button>
+
+            <div id="errorMessage" class="error-message">
+                Invalid username or password. Please try again.
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Include the footer dynamically -->
+<div id="footer-container"></div>
+<script>
+    // Load navbar
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading navbar:', error);
+        });
+
+    // Load footer
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading footer:', error);
+        });
+
+    // Set up current user type - default to blogger since that tab is active
+    let currentUserType = 'blogger';
+
+    // Tab switching functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabs = document.querySelectorAll('.login-tab');
+        const loginTitle = document.getElementById('loginTitle');
+        const loginSubtitle = document.getElementById('loginSubtitle');
+
+        // Add click event to tabs
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+
+                // Add active class to clicked tab
+                this.classList.add('active');
+
+                // Set current user type
+                currentUserType = this.getAttribute('data-tab');
+
+                // Update title and subtitle
+                if (currentUserType === 'collaborator') {
+                    loginTitle.textContent = 'Collaborator Login';
+                    loginSubtitle.textContent = 'Sign in to access your collaboration dashboard';
+                } else if (currentUserType === 'blogger') {
+                    loginTitle.textContent = 'Blogger Login';
+                    loginSubtitle.textContent = 'Sign in to access your blogging dashboard';
+                } else {
+                    loginTitle.textContent = 'User Login';
+                    loginSubtitle.textContent = 'Sign in to access your user dashboard';
+                }
+
+                // Clear form fields and error message
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('errorMessage').style.display = 'none';
+            });
+        });
+
+        // Password toggle functionality with hover effect
+        const toggleButton = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('password');
+        const passwordContainer = document.querySelector('.password-field-container');
+
+        if (toggleButton && passwordField) {
+            // Toggle on click
+            toggleButton.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    toggleButton.textContent = 'HIDE';
+                } else {
+                    passwordField.type = 'password';
+                    toggleButton.textContent = 'SHOW';
+                }
+
+                setTimeout(function () {
+                    passwordField.focus();
+                    const valueLength = passwordField.value.length;
+                    passwordField.setSelectionRange(valueLength, valueLength);
+                }, 10);
+            });
+
+            // Hover toggle
+            passwordContainer.addEventListener('mouseenter', function () {
+                toggleButton.style.opacity = '1';
+            });
+
+            passwordContainer.addEventListener('mouseleave', function () {
+                if (document.activeElement !== passwordField) {
+                    toggleButton.style.opacity = '0.7';
+                }
+            });
+
+            passwordField.addEventListener('focus', function () {
+                toggleButton.style.opacity = '1';
+            });
+
+            passwordField.addEventListener('blur', function () {
+                if (!passwordContainer.matches(':hover')) {
+                    toggleButton.style.opacity = '0.7';
+                }
+            });
+        }
+
+        // ✅ Login form validation
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (!username || !password) {
+                showError('Username and password are required');
+                return;
+            }
+
+            const userData = {
+                username,
+                password,
+                role: currentUserType
+            };
+
+            fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        sessionStorage.setItem('currentUser', JSON.stringify(data.user));
+                        if (currentUserType === 'collaborator') {
+                            window.location.href = 'collaborator-dash.html';
+                        } else if (currentUserType === 'blogger') {
+                            window.location.href = 'blogger-dash.html';
+                        } else {
+                            window.location.href = 'user-dashboard.html';
+                        }
+                    } else {
+                        showError(data.message || 'Invalid username or password');
+                    }
+                })
+                .catch(error => {
+                    showError('Server error. Please try again later.');
+                    console.error('Error:', error);
+                });
+
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+                document.getElementById('password').value = '';
+                setTimeout(function () {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaboration Details | Local Lens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .collaboration-header {
+            background-color: #111;
+            padding: 2rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            border: 1px solid #333;
+        }
+
+        .collaboration-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .collaboration-tag {
+            background-color: #222;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+        }
+
+        .collaboration-tag.premium {
+            background-color: #FF8000;
+            color: #000;
+        }
+
+        .collaboration-details-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .details-main {
+            background-color: #111;
+            padding: 2rem;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+
+        .details-section {
+            margin-bottom: 2rem;
+        }
+
+        .details-section h3 {
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .details-section ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .details-section li {
+            margin-bottom: 0.75rem;
+        }
+
+        .details-sidebar {
+            background-color: #111;
+            padding: 2rem;
+            border-radius: 4px;
+            border: 1px solid #333;
+            position: sticky;
+            top: 2rem;
+            align-self: start;
+        }
+
+        .brand-info {
+            margin-bottom: 2rem;
+        }
+
+        .brand-meta {
+            margin-bottom: 1.5rem;
+        }
+
+        .brand-meta-item {
+            display: flex;
+            margin-bottom: 0.75rem;
+        }
+
+        .brand-meta-label {
+            min-width: 120px;
+            color: #999;
+        }
+
+        .collaboration-actions {
+            margin-top: 2rem;
+        }
+
+        .timeline {
+            margin: 2rem 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-left: 2px solid #333;
+        }
+
+        .timeline-item:last-child {
+            border-left-color: transparent;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #FF8000;
+            border-radius: 50%;
+            left: -7px;
+            top: 0;
+        }
+
+        .timeline-date {
+            color: #999;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .requirements-list {
+            margin-bottom: 2rem;
+        }
+
+        .requirements-list li {
+            margin-bottom: 0.75rem;
+        }
+
+        .related-opportunities {
+            padding: 4rem 0;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .related-card {
+            background-color: #111;
+            padding: 1.5rem;
+            border-radius: 4px;
+            border: 1px solid #333;
+            transition: transform 0.3s ease;
+        }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .related-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .related-card .btn {
+            margin-top: 1rem;
+        }
+
+        .btn-orange:hover {
+            background-color: #FF9933;
+            border-color: #FF9933;
+            color: #000;
+        }
+
+        .btn-white:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+
+        .alert {
+            background-color: rgba(255, 128, 0, 0.1);
+            border: 1px solid #FF8000;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+
+        .alert-title {
+            color: #FF8000;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .cta {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .collaboration-details-container {
+                grid-template-columns: 1fr;
+            }
+
+            .details-sidebar {
+                position: static;
+                margin-bottom: 2rem;
+                order: -1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .collaboration-header {
+                padding: 1.5rem;
+            }
+
+            .details-main, 
+            .details-sidebar {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Include the navbar dynamically -->
+<div id="navbar-container"></div>
+
+<!-- Hero Section -->
+<section class="hero parallax" style="background-image: url('https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+    <div class="overlay"></div>
+    <div class="hero-content parallax-content">
+        <h1>Luxury Resort Content Creation</h1>
+        <p>Premium opportunity with Coastal Paradise Resort in Bali, Indonesia</p>
+        <a href="#apply" class="btn btn-orange">Apply for This Opportunity</a>
+    </div>
+</section>
+
+<!-- Main Content -->
+<section class="content">
+    <div class="container">
+        <!-- Collaboration Header -->
+        <div class="collaboration-header">
+            <div class="collaboration-meta">
+                <span class="collaboration-tag premium">Premium</span>
+                <span class="collaboration-tag">Hotel Stay</span>
+                <span class="collaboration-tag">Paid</span>
+                <span class="collaboration-tag">Photography</span>
+                <span class="collaboration-tag">Video</span>
+            </div>
+            <h2>Luxury Resort Content Creation in Bali</h2>
+            <p>Create stunning visual content showcasing our beachfront property and luxury amenities. We're looking for photographers and videographers who can capture the essence of our tropical paradise.</p>
+        </div>
+
+        <!-- Collaboration Details -->
+        <div class="collaboration-details-container">
+            <div class="details-main">
+                <div class="alert">
+                    <h4 class="alert-title">Limited Time Opportunity</h4>
+                    <p>This collaboration is accepting applications for the next 14 days. Apply soon to secure your spot!</p>
+                </div>
+
+                <div class="details-section">
+                    <h3>Opportunity Overview</h3>
+                    <p>Coastal Paradise Resort is seeking content creators with a strong portfolio in travel photography and videography to produce high-quality visual content for our marketing campaigns. This collaboration includes a 5-night stay at our luxury beachfront resort in Bali, Indonesia, plus additional compensation for deliverables.</p>
+                    <p>We're looking for creators who can capture the unique atmosphere of our property, from our infinity pools overlooking the ocean to our award-winning spa facilities and culinary experiences.</p>
+                </div>
+
+                <div class="details-section">
+                    <h3>What You'll Receive</h3>
+                    <ul>
+                        <li><strong>5-night complimentary stay</strong> in a Premium Ocean View Suite (value: $2,500)</li>
+                        <li><strong>Daily breakfast and dinner</strong> for two at our beachfront restaurant</li>
+                        <li><strong>Complimentary spa treatment</strong> for two</li>
+                        <li><strong>Access to all resort facilities</strong> including infinity pools, fitness center, and water sports</li>
+                        <li><strong>Guided tour</strong> of local cultural attractions</li>
+                        <li><strong>$1,500 USD</strong> compensation for deliverables</li>
+                        <li><strong>Airport transfers</strong> included</li>
+                    </ul>
+                </div>
+
+                <div class="details-section">
+                    <h3>Content Requirements</h3>
+                    <p>We're looking for the following deliverables:</p>
+                    <ul>
+                        <li><strong>15 high-resolution photographs</strong> of the property, including rooms, facilities, and experiences</li>
+                        <li><strong>2-3 minute promotional video</strong> showcasing the resort experience</li>
+                        <li><strong>5 Instagram posts</strong> during your stay</li>
+                        <li><strong>3 Instagram Stories</strong> highlighting different aspects of the resort</li>
+                        <li><strong>1 blog post</strong> about your experience (min. 800 words)</li>
+                    </ul>
+                    <p>All content will be used across our marketing channels with proper credit. Exclusive usage rights for the agreed deliverables will be provided to Coastal Paradise Resort.</p>
+                </div>
+
+                <div class="details-section">
+                    <h3>Creator Requirements</h3>
+                    <ul>
+                        <li><strong>Minimum 10K followers</strong> on Instagram</li>
+                        <li><strong>Engagement rate</strong> of at least 3%</li>
+                        <li><strong>Professional equipment</strong> for high-quality photography/videography</li>
+                        <li><strong>Portfolio</strong> demonstrating experience in luxury travel content</li>
+                        <li><strong>Availability</strong> during June-August 2025</li>
+                    </ul>
+                </div>
+
+                <div class="details-section">
+                    <h3>Timeline</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">April 10 - April 24, 2025</div>
+                            <div class="timeline-content">
+                                <h4>Application Period</h4>
+                                <p>Submit your application with portfolio and proposed content plan.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">April 25 - May 5, 2025</div>
+                            <div class="timeline-content">
+                                <h4>Selection Process</h4>
+                                <p>Our team reviews applications and selects finalists.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">May 10, 2025</div>
+                            <div class="timeline-content">
+                                <h4>Final Selection Announced</h4>
+                                <p>Selected creators will be notified via email.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">June - August 2025</div>
+                            <div class="timeline-content">
+                                <h4>Collaboration Period</h4>
+                                <p>Selected dates for your 5-night stay at the resort.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">Within 14 days of stay</div>
+                            <div class="timeline-content">
+                                <h4>Content Delivery</h4>
+                                <p>All agreed deliverables to be submitted.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <h3>Application Process</h3>
+                    <p>To apply for this collaboration opportunity, please fill out the application form by clicking the "Apply Now" button. You'll need to provide:</p>
+                    <ul>
+                        <li>Links to your social media profiles</li>
+                        <li>Portfolio of your previous work</li>
+                        <li>Brief content proposal for this collaboration</li>
+                        <li>Preferred dates for your stay between June-August 2025</li>
+                    </ul>
+                </div>
+
+                <div class="details-section">
+                    <h3>Terms & Conditions</h3>
+                    <p>By applying for this collaboration, you agree to:</p>
+                    <ul>
+                        <li>Produce all agreed deliverables within the specified timeframe</li>
+                        <li>Grant Coastal Paradise Resort usage rights to all content created during this collaboration</li>
+                        <li>Include specified hashtags and mentions in all social media posts</li>
+                        <li>Disclose the sponsored nature of content as per local regulations</li>
+                        <li>Not engage in collaborations with competing properties for 30 days before and after your stay</li>
+                    </ul>
+                    <p>Full terms and conditions will be provided to selected applicants.</p>
+                </div>
+
+                <div class="collaboration-actions" id="apply">
+                    <a href="#" class="btn btn-orange btn-lg btn-block">Apply for This Opportunity</a>
+                </div>
+            </div>
+
+            <div class="details-sidebar">
+                <div class="brand-info">
+                    <h3>About the Brand</h3>
+                    <div class="brand-meta">
+                        <div class="brand-meta-item">
+                            <span class="brand-meta-label">Brand Name:</span>
+                            <span class="brand-meta-value">Coastal Paradise Resort</span>
+                        </div>
+                        <div class="brand-meta-item">
+                            <span class="brand-meta-label">Location:</span>
+                            <span class="brand-meta-value">Bali, Indonesia</span>
+                        </div>
+                        <div class="brand-meta-item">
+                            <span class="brand-meta-label">Industry:</span>
+                            <span class="brand-meta-value">Luxury Hospitality</span>
+                        </div>
+                        <div class="brand-meta-item">
+                            <span class="brand-meta-label">Website:</span>
+                            <span class="brand-meta-value">coastalparadiseresort.com</span>
+                        </div>
+                        <div class="brand-meta-item">
+                            <span class="brand-meta-label">Established:</span>
+                            <span class="brand-meta-value">2018</span>
+                        </div>
+                    </div>
+                    <p>Coastal Paradise Resort is a 5-star luxury beachfront resort located on the pristine shores of Bali. Our property features 120 rooms and villas, 3 restaurants, award-winning spa facilities, and direct beach access.</p>
+                </div>
+
+                <div class="opportunity-details">
+                    <h3>Quick Details</h3>
+                    <div class="brand-meta">
+                        <div class="brand-meta-item">
+                            <span class="brand-meta-label">Opportunity Type:</span>
+                            <span class="brand-meta-value">Hotel Stay + Paid</span>
+                        </div>
+                        <div class="brand-meta-item">
+                            <span class="brand-meta-label">Compensation:</span>
+                            <span class="brand-meta-value">$1,500 + Perks</span>
+                        </div>
+                        <div class="brand-meta-item">
+                            <span class="brand-meta-label">Duration:</span>
+                            <span class="brand-meta-value">5 Nights</span>
+                        </div>
+                        <div class="brand-meta-item">
+                            <span class="brand-meta-label">Timeframe:</span>
+                            <span class="brand-meta-value">June-August 2025</span>
+                        </div>
+                        <div class="brand-meta-item">
+                            <span class="brand-meta-label">Application Deadline:</span>
+                            <span class="brand-meta-value">April 24, 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-cta">
+                    <a href="#" class="btn btn-white btn-block">View Brand Profile</a>
+                    <a href="#" class="btn btn-orange btn-block" style="margin-top: 1rem;">Apply Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Opportunities Section -->
+<section class="related-opportunities">
+    <div class="container">
+        <h2>Similar Opportunities</h2>
+        <div class="related-grid">
+            <div class="related-card">
+                <h3>Boutique Hotel Social Takeover</h3>
+                <p>3-day social media takeover at our design-forward property in Lisbon, Portugal.</p>
+                <a href="#" class="btn btn-white">View Details</a>
+            </div>
+            <div class="related-card">
+                <h3>Wellness Retreat Content Creation</h3>
+                <p>Create content highlighting our luxury wellness retreat experiences in Tulum, Mexico.</p>
+                <a href="#" class="btn btn-white">View Details</a>
+            </div>
+            <div class="related-card">
+                <h3>Mountain Resort Winter Season</h3>
+                <p>Week-long stay plus compensation at our alpine resort in the Swiss Alps.</p>
+                <a href="#" class="btn btn-white">View Details</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+    <div class="container">
+        <h2>Find Your Perfect Collaboration</h2>
+        <p>Create a profile to get personalized collaboration opportunities delivered to your inbox.</p>
+        <a href="#" class="btn btn-orange">Create Your Profile</a>
+    </div>
+</section>
+
+<!-- Include the footer dynamically -->
+<div id="footer-container"></div>
+
+<script>
+    // Function to load components dynamically
+    async function loadComponent(url, containerId) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Failed to load ${url}`);
+            }
+            const html = await response.text();
+            document.getElementById(containerId).innerHTML = html;
+        } catch (error) {
+            console.error(`Error loading component from ${url}:`, error);
+        }
+    }
+
+    // Load components when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        loadComponent('navbar.html', 'navbar-container');
+        loadComponent('footer.html', 'footer-container');
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerala Sadya Masterclass | Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        .experience-header {
+          position: relative;
+          height: 50vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-image: url('kerala_sadya.jpg');
+          background-size: cover;
+          background-position: center;
+          color: #fff;
+        }
+
+        .header-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+          position: relative;
+          z-index: 2;
+          text-align: center;
+          max-width: 800px;
+          padding: 0 20px;
+        }
+
+        .experience-details {
+          background-color: #000;
+          padding: 5rem 0;
+        }
+
+        .details-container {
+          max-width: 1000px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        .detail-box {
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          padding: 2rem;
+          margin-bottom: 2rem;
+        }
+
+        .dish-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+          margin-top: 3rem;
+        }
+
+        .dish-item {
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          padding: 1.5rem;
+        }
+
+        .booking-section {
+          background-color: #000;
+          padding: 5rem 0;
+          text-align: center;
+        }
+
+        .booking-container {
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        @media (max-width: 992px) {
+          .dish-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 576px) {
+          .dish-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Include navbar.html using fetch API -->
+<div id="navbar-container"></div>
+
+<!-- Experience Header -->
+<header class="experience-header">
+    <div class="header-overlay"></div>
+    <div class="header-content">
+        <h1>Kerala Sadya Masterclass</h1>
+        <p>Learn the art of preparing Kerala's traditional multi-course feast</p>
+    </div>
+</header>
+
+<!-- Experience Details -->
+<section class="experience-details">
+    <div class="details-container">
+        <div class="detail-box">
+            <h2>Experience Overview</h2>
+            <p>Immerse yourself in the culinary heritage of Kerala with this hands-on masterclass focused on Sadya - the elaborate traditional feast served on banana leaves. Led by a local chef from a traditional Kerala family, this experience takes you through the preparation of multiple dishes that balance the six tastes in Ayurvedic tradition.</p>
+
+            <p>You'll learn the techniques for grinding spices, extracting coconut milk, and cooking with traditional ingredients like curry leaves, coconut oil, and kokum. The workshop culminates in a communal feast where you'll enjoy the fruits of your labor the authentic way - seated on the floor, eating with your hands from a fresh banana leaf.</p>
+
+            <ul>
+                <li><strong>Duration:</strong> 5-6 hours</li>
+                <li><strong>Group Size:</strong> Maximum 6 people</li>
+                <li><strong>Includes:</strong> All ingredients, recipes to take home, full Sadya meal</li>
+                <li><strong>Location:</strong> Traditional home kitchen in Fort Kochi</li>
+                <li><strong>Language:</strong> English (Malayalam translation available)</li>
+            </ul>
+        </div>
+
+        <h3>Dishes You'll Learn to Prepare</h3>
+        <div class="dish-grid">
+            <div class="dish-item">
+                <h4>Sambar</h4>
+                <p>The signature lentil and vegetable stew flavored with tamarind and a special spice blend.</p>
+            </div>
+
+            <div class="dish-item">
+                <h4>Avial</h4>
+                <p>Mixed vegetables in a coconut and yogurt sauce with curry leaves and coconut oil.</p>
+            </div>
+
+            <div class="dish-item">
+                <h4>Thoran</h4>
+                <p>Stir-fried vegetables with grated coconut, mustard seeds, and curry leaves.</p>
+            </div>
+
+            <div class="dish-item">
+                <h4>Olan</h4>
+                <p>White pumpkin and beans cooked in a light coconut milk gravy.</p>
+            </div>
+
+            <div class="dish-item">
+                <h4>Pachadi</h4>
+                <p>A yogurt-based side dish with vegetables and coconut, similar to raita.</p>
+            </div>
+
+            <div class="dish-item">
+                <h4>Payasam</h4>
+                <p>Traditional Kerala sweet dessert made with rice, milk, and jaggery.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Section -->
+<section class="booking-section">
+    <div class="booking-container">
+        <h2>Book This Experience</h2>
+        <p>Join us for an authentic culinary journey into Kerala's rich food traditions. Private sessions available for families and groups.</p>
+        <a href="#book-now" class="btn">Check Availability</a>
+    </div>
+</section>
+
+<!-- Include footer.html using fetch API -->
+<div id="footer-container"></div>
+
+<script>
+    // Load navbar and footer components
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to fetch and insert HTML content
+      async function includeHTML(url, targetElementId) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.status}`);
+          }
+          const html = await response.text();
+          document.getElementById(targetElementId).innerHTML = html;
+
+          // Execute any scripts in the included HTML
+          const scripts = document.getElementById(targetElementId).getElementsByTagName('script');
+          for (let i = 0; i < scripts.length; i++) {
+            const script = document.createElement('script');
+            script.textContent = scripts[i].textContent;
+            document.body.appendChild(script);
+          }
+        } catch (error) {
+          console.error(`Error including HTML from ${url}:`, error);
+        }
+      }
+
+      // Include navbar and footer
+      includeHTML('navbar.html', 'navbar-container');
+      includeHTML('footer.html', 'footer-container');
+    });
+</script>
+</body>
+</html>

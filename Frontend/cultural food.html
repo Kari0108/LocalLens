@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Food Experiences | India | Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        /* Additional styles not found in css.css */
+        .parallax-section {
+          position: relative;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-attachment: scroll;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          overflow: hidden;
+        }
+
+        .parallax-content {
+          text-align: center;
+          max-width: 900px;
+          padding: 0 2rem;
+          z-index: 2;
+        }
+
+        .black-frame {
+          background-color: #000;
+          padding: 8rem 0;
+          position: relative;
+        }
+
+        .frame-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          text-align: center;
+        }
+
+        .experience-grid-section {
+          background-color: #000;
+          padding: 5rem 0;
+        }
+
+        .experience-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        .filter-container {
+          margin-bottom: 3rem;
+          text-align: center;
+        }
+
+        .filter-options {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+
+        .filter-btn {
+          padding: 8px 16px;
+          background-color: transparent;
+          color: #fff;
+          border: 1px solid #fff;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+          background-color: #FF9933;
+          border-color: #FF9933;
+        }
+
+        .experience-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+
+        .experience-card {
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          overflow: hidden;
+          transition: transform 0.3s ease;
+        }
+
+        .experience-card:hover {
+          transform: translateY(-10px);
+        }
+
+        .experience-content {
+          padding: 1.5rem;
+        }
+
+        .experience-title {
+          font-size: 1.5rem;
+          margin-bottom: 0.5rem;
+          color: #fff;
+        }
+
+        .experience-location {
+          font-size: 1rem;
+          color: #FF9933;
+          margin-bottom: 1rem;
+        }
+
+        .experience-details {
+          margin-bottom: 1.5rem;
+          line-height: 1.5;
+        }
+
+        .story-section {
+          background-color: #000;
+          padding: 5rem 0;
+        }
+
+        .story-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          text-align: center;
+        }
+
+        .story-card {
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          padding: 2rem;
+          margin-top: 3rem;
+          text-align: left;
+        }
+
+        .story-title {
+          font-size: 2rem;
+          margin-bottom: 1rem;
+          color: #fff;
+        }
+
+        .story-author {
+          font-size: 1rem;
+          color: #FF9933;
+          margin-bottom: 1.5rem;
+        }
+
+        .story-content {
+          line-height: 1.8;
+        }
+
+        .quote-block {
+          border-left: 3px solid #FF9933;
+          padding-left: 1.5rem;
+          margin: 2rem 0;
+          font-style: italic;
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 992px) {
+          .experience-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 576px) {
+          .experience-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Include navbar.html using fetch API -->
+<div id="navbar-container"></div>
+
+<!-- Hero Parallax Section -->
+<section class="parallax-section" style="background-image: url('e10.jpg');">
+    <div class="parallax-content">
+        <h1>Taste the Soul of India</h1>
+        <p>Immerse yourself in authentic culinary traditions and cultural experiences across the diverse regions of India.</p>
+        <a href="#experiences" class="btn">Explore Food Journeys</a>
+    </div>
+</section>
+
+<!-- Black Frame Section - Introduction -->
+<section class="black-frame">
+    <div class="frame-container">
+        <h2>Culinary Experiences & Cultural Heritage</h2>
+        <p>India's culinary landscape is as diverse as its culture, with each region offering distinct flavors, cooking techniques, and food traditions that have evolved over thousands of years. From the fiery curries of Andhra Pradesh to the subtle sweetness of Bengali cuisine, from the street food havens of Mumbai to the royal kitchens of Rajasthan - embark on a gastronomical journey through India's rich tapestry of tastes, guided by locals who cherish and preserve these culinary traditions.</p>
+    </div>
+</section>
+
+<!-- Experience Grid Section -->
+<section id="experiences" class="experience-grid-section">
+    <div class="experience-container">
+        <h2>Featured Food & Cultural Experiences</h2>
+
+        <!-- Filter Options -->
+        <div class="filter-container">
+            <h3>Filter By:</h3>
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="north">North India</button>
+                <button class="filter-btn" data-filter="south">South India</button>
+                <button class="filter-btn" data-filter="east">East India</button>
+                <button class="filter-btn" data-filter="west">West India</button>
+                <button class="filter-btn" data-filter="street-food">Street Food</button>
+                <button class="filter-btn" data-filter="home-cooking">Home Cooking</button>
+                <button class="filter-btn" data-filter="festivals">Festivals</button>
+            </div>
+        </div>
+
+        <!-- Experiences Grid -->
+        <div class="experience-grid">
+            <!-- Experience 1 -->
+            <div class="experience-card" data-category="north street-food">
+                <div class="experience-content">
+                    <h3 class="experience-title">Old Delhi Food Walk</h3>
+                    <p class="experience-location">Chandni Chowk, Delhi</p>
+                    <p class="experience-details">Navigate the narrow lanes of Chandni Chowk with a local food expert, sampling iconic Delhi street foods like paratha, jalebi, chole bhature, and the famous Dilli-style butter chicken.</p>
+                    <a href="#old-delhi" class="btn">View Experience</a>
+                </div>
+            </div>
+
+            <!-- Experience 2 -->
+            <div class="experience-card" data-category="south home-cooking">
+                <div class="experience-content">
+                    <h3 class="experience-title">Kerala Sadya Masterclass</h3>
+                    <p class="experience-location">Kochi, Kerala</p>
+                    <p class="experience-details">Learn to prepare the traditional Kerala feast served on banana leaves. Master the art of balancing flavors across multiple dishes with local spices and coconut.</p>
+                    <a href="#kerala-sadya" class="btn">View Experience</a>
+                </div>
+            </div>
+
+            <!-- Experience 3 -->
+            <div class="experience-card" data-category="east home-cooking">
+                <div class="experience-content">
+                    <h3 class="experience-title">Bengali Sweets Workshop</h3>
+                    <p class="experience-location">Kolkata, West Bengal</p>
+                    <p class="experience-details">Discover the secrets behind Bengal's famous sweets like rasgulla, sandesh, and mishti doi with a multi-generational family of confectioners in Kolkata.</p>
+                    <a href="#bengali-sweets" class="btn">View Experience</a>
+                </div>
+            </div>
+
+            <!-- Experience 4 -->
+            <div class="experience-card" data-category="west street-food">
+                <div class="experience-content">
+                    <h3 class="experience-title">Mumbai Chaat Crawl</h3>
+                    <p class="experience-location">Mumbai, Maharashtra</p>
+                    <p class="experience-details">Experience Mumbai's vibrant street food scene with tastings of pav bhaji, vada pav, bhel puri, and more at the city's most authentic local spots.</p>
+                    <a href="#mumbai-chaat" class="btn">View Experience</a>
+                </div>
+            </div>
+
+            <!-- Experience 5 -->
+            <div class="experience-card" data-category="north festivals">
+                <div class="experience-content">
+                    <h3 class="experience-title">Holi Festival Feast</h3>
+                    <p class="experience-location">Mathura, Uttar Pradesh</p>
+                    <p class="experience-details">Celebrate the festival of colors with traditional Holi specialties like gujiya, thandai, and dal kachori in the birthplace of Lord Krishna.</p>
+                    <a href="#holi-feast" class="btn">View Experience</a>
+                </div>
+            </div>
+
+            <!-- Experience 6 -->
+            <div class="experience-card" data-category="south street-food">
+                <div class="experience-content">
+                    <h3 class="experience-title">Hyderabadi Biryani Trail</h3>
+                    <p class="experience-location">Hyderabad, Telangana</p>
+                    <p class="experience-details">Discover the rich history and authentic preparation of the legendary Hyderabadi biryani at traditional eateries across the city of Nizams.</p>
+                    <a href="#hyderabad-biryani" class="btn">View Experience</a>
+                </div>
+            </div>
+
+            <!-- Experience 7 -->
+            <div class="experience-card" data-category="west home-cooking">
+                <div class="experience-content">
+                    <h3 class="experience-title">Rajasthani Royal Kitchen</h3>
+                    <p class="experience-location">Udaipur, Rajasthan</p>
+                    <p class="experience-details">Learn the culinary secrets of Rajasthan's royal households with hands-on cooking of dal baati churma, gatte ki sabzi, and laal maas.</p>
+                    <a href="#rajasthani-royal" class="btn">View Experience</a>
+                </div>
+            </div>
+
+            <!-- Experience 8 -->
+            <div class="experience-card" data-category="east festivals">
+                <div class="experience-content">
+                    <h3 class="experience-title">Durga Puja Food Trail</h3>
+                    <p class="experience-location">Kolkata, West Bengal</p>
+                    <p class="experience-details">Experience the culinary traditions of Bengal's biggest festival with special dishes like kosha mangsho, luchi, and narikel naru.</p>
+                    <a href="#durga-puja" class="btn">View Experience</a>
+                </div>
+            </div>
+
+            <!-- Experience 9 -->
+            <div class="experience-card" data-category="south home-cooking">
+                <div class="experience-content">
+                    <h3 class="experience-title">Chettinad Spice Journey</h3>
+                    <p class="experience-location">Karaikudi, Tamil Nadu</p>
+                    <p class="experience-details">Explore the complex spice blends of Chettinad cuisine and learn to prepare authentic curry and appam with a local Chettiar family.</p>
+                    <a href="#chettinad" class="btn">View Experience</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Parallax Section 1 -->
+<section class="parallax-section" style="background-image: url('e15.avif');">
+    <div class="parallax-content">
+        <h1>Street Food Adventures</h1>
+        <p>Discover the authentic flavors of India's vibrant street food culture, from chaats to kebabs to regional specialties.</p>
+        <a href="#street-food" class="btn">Explore Street Food</a>
+    </div>
+</section>
+
+<!-- Featured Story Section -->
+<section class="story-section">
+    <div class="story-container">
+        <h2>Featured Food Story</h2>
+        <div class="story-card">
+            <h3 class="story-title">The Spice Route: A Journey Through Kerala's Cardamom Hills</h3>
+            <p class="story-author">By Priya Sharma, Food Historian</p>
+
+            <div class="story-content">
+                <p>Long before the Portuguese navigator Vasco da Gama set foot on the Malabar Coast in 1498, Kerala was already a bustling center of the global spice trade. Cardamom, pepper, cinnamon, cloves, and nutmeg from these fertile hills had made their way to the kitchens of Rome, the markets of Arabia, and the dining tables of distant China.</p>
+
+                <p>My journey began in the misty cardamom plantations of Thekkady, where the morning air carries an intoxicating aroma of spices. A local farmer named Thomas, whose family has cultivated cardamom for seven generations, guided me through the emerald-green slopes.</p>
+
+                <div class="quote-block">
+                    <p>"Each cardamom pod is harvested by hand," Thomas explained as he carefully plucked the green pods. "We pick them just before they're fully ripe to preserve their essential oils. This is why Kerala cardamom is renowned worldwide for its intense fragrance."</p>
+                </div>
+
+                <p>In the nearby village of Kumily, I visited traditional spice markets where traders still use ancient measuring techniques and bargaining practices that haven't changed for centuries. Here, the culinary heritage of Kerala comes alive in dishes like appam with stew, karimeen pollichathu (pearl spot fish wrapped in banana leaf), and the fiery fish curry with kudampuli (Malabar tamarind).</p>
+
+                <p>The most memorable food experience came in a small home kitchen in Kumarakom, where I learned to prepare a traditional Syrian Christian duck roast. The complex blend of spices – cardamom, cinnamon, cloves, star anise, and stone flower – created layers of flavor that told the story of Kerala's multicultural history through a single dish.</p>
+
+                <p>As we feasted on the duck roast with appam and vegetable stew, my host Mariam shared stories of how recipes have been preserved through generations, with subtle variations marking each family's unique culinary signature. "Our food is our history," she said. "Each dish carries the memory of trade routes, cultural exchanges, and family traditions."</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Parallax Section 2 -->
+<section class="parallax-section" style="background-image: url('cf1.png');">
+    <div class="parallax-content">
+        <h1>Home Cooking Experiences</h1>
+        <p>Learn authentic family recipes handed down through generations in the welcoming kitchens of local homes.</p>
+        <a href="#home-cooking" class="btn">Discover Cooking Classes</a>
+    </div>
+</section>
+
+<!-- Parallax Section 3 -->
+<section class="parallax-section" style="background-image: url('cf2.jpg');">
+    <div class="parallax-content">
+        <h1>Festival Food Traditions</h1>
+        <p>Experience India's vibrant festivals through their unique culinary traditions and ceremonial dishes.</p>
+        <a href="#festivals" class="btn">Explore Festival Foods</a>
+    </div>
+</section>
+
+<!-- Include footer.html using fetch API -->
+<div id="footer-container"></div>
+
+<script>
+    // Load navbar and footer components
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to fetch and insert HTML content
+      async function includeHTML(url, targetElementId) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.status}`);
+          }
+          const html = await response.text();
+          document.getElementById(targetElementId).innerHTML = html;
+
+          // Execute any scripts in the included HTML
+          const scripts = document.getElementById(targetElementId).getElementsByTagName('script');
+          for (let i = 0; i < scripts.length; i++) {
+            const script = document.createElement('script');
+            script.textContent = scripts[i].textContent;
+            document.body.appendChild(script);
+          }
+        } catch (error) {
+          console.error(`Error including HTML from ${url}:`, error);
+        }
+      }
+
+      // Include navbar and footer
+      includeHTML('navbar.html', 'navbar-container');
+      includeHTML('footer.html', 'footer-container');
+
+      // Filter functionality
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const experienceCards = document.querySelectorAll('.experience-card');
+
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Remove active class from all buttons
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+
+          // Add active class to clicked button
+          this.classList.add('active');
+
+          // Get filter value
+          const filterValue = this.getAttribute('data-filter');
+
+          // Filter experience cards
+          experienceCards.forEach(card => {
+            if (filterValue === 'all' || card.getAttribute('data-category').includes(filterValue)) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+</script>
+</body>
+</html>

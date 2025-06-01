@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hidden Gems of India | Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        /* Additional styles not found in css.css */
+        .parallax-section {
+          position: relative;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-attachment: scroll;
+          overflow: hidden;
+        }
+
+        .parallax-content {
+          text-align: center;
+          max-width: 900px;
+          padding: 0 2rem;
+          z-index: 2;
+        }
+
+        .black-frame {
+          background-color: #000;
+          padding: 8rem 0;
+          position: relative;
+        }
+
+        .frame-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        .region-container {
+          margin-bottom: 5rem;
+        }
+
+        .region-title {
+          font-size: 2rem;
+          margin-bottom: 1.5rem;
+          color: #FF9933;
+          position: relative;
+          display: inline-block;
+        }
+
+        .region-title::after {
+          content: '';
+          position: absolute;
+          width: 50%;
+          height: 2px;
+          background: #FF9933;
+          bottom: -10px;
+          left: 0;
+        }
+
+        .hidden-gems-list {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+          margin-top: 2rem;
+        }
+
+        .gem-item {
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          padding: 1.5rem;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gem-item:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .gem-location {
+          display: block;
+          font-size: 0.9rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+          color: #fff;
+        }
+
+        .gem-title {
+          font-size: 1.5rem;
+          margin-bottom: 1rem;
+          color: #fff;
+        }
+
+        .gem-description {
+          color: #ccc;
+          margin-bottom: 1.5rem;
+          line-height: 1.6;
+        }
+
+        .contributor {
+          display: flex;
+          align-items: center;
+          margin-top: 1rem;
+        }
+
+        .contributor-info {
+          margin-left: 0.5rem;
+        }
+
+        .contributor-name {
+          font-weight: 600;
+          color: #FF9933;
+          font-size: 0.9rem;
+        }
+
+        .contributor-type {
+          font-size: 0.8rem;
+          color: #aaa;
+        }
+
+        .tag-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+        }
+
+        .tag {
+          background-color: rgba(255, 255, 255, 0.1);
+          color: #ccc;
+          padding: 4px 10px;
+          border-radius: 20px;
+          font-size: 0.8rem;
+        }
+
+        .filter-container {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 1rem;
+          margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+          background-color: transparent;
+          border: 1px solid #555;
+          color: #fff;
+          padding: 8px 15px;
+          border-radius: 20px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+          background-color: #FF9933;
+          border-color: #FF9933;
+          color: #000;
+        }
+
+        .btn-small {
+          padding: 8px 20px;
+          font-size: 0.9rem;
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 992px) {
+          .hidden-gems-list {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .region-title {
+            font-size: 1.8rem;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .hidden-gems-list {
+            grid-template-columns: 1fr;
+          }
+
+          .filter-container {
+            flex-direction: column;
+            align-items: center;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Include navbar.html using fetch API -->
+<div id="navbar-container"></div>
+
+<!-- Hero Parallax Section -->
+<section class="parallax-section" style="background-image: url('hg1.avif');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h1>Hidden Gems of India</h1>
+        <p>Discover secret locations and extraordinary experiences known only to locals and seasoned travelers.</p>
+    </div>
+</section>
+
+<!-- Black Frame Section - Introduction -->
+<section class="black-frame">
+    <div class="frame-container">
+        <h2 class="section-title">India's Best Kept Secrets</h2>
+        <p class="section-description">Beyond India's iconic landmarks lies a treasure trove of lesser-known destinations waiting to be explored. From serene villages nestled in mountain valleys to pristine beaches untouched by mass tourism, ancient temples hidden in dense forests to vibrant local festivals celebrated away from tourist circuits - these hidden gems offer authentic experiences that reveal the true soul of incredible India.</p>
+
+        <div class="filter-container">
+            <button class="filter-btn active">All Regions</button>
+            <button class="filter-btn">North India</button>
+            <button class="filter-btn">South India</button>
+            <button class="filter-btn">East India</button>
+            <button class="filter-btn">West India</button>
+            <button class="filter-btn">Central India</button>
+            <button class="filter-btn">Northeast</button>
+        </div>
+
+        <div class="region-container">
+            <h3 class="region-title">Northern Treasures</h3>
+            <div class="hidden-gems-list">
+                <div class="gem-item">
+                    <span class="gem-location">Tirthan Valley, Himachal Pradesh</span>
+                    <h3 class="gem-title">The Gateway to Great Himalayan National Park</h3>
+                    <div class="tag-container">
+                        <span class="tag">Valley</span>
+                        <span class="tag">Trout Fishing</span>
+                        <span class="tag">Peaceful</span>
+                    </div>
+                    <p class="gem-description">A serene alternative to overcrowded hill stations, Tirthan Valley offers pristine rivers, traditional Himachali villages, and access to the UNESCO-listed Great Himalayan National Park without the tourist crowds.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Pradeep Sharma</div>
+                            <div class="contributor-type">Local Guide, 15 years experience</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gem-item">
+                    <span class="gem-location">Majuli, Assam</span>
+                    <h3 class="gem-title">World's Largest River Island</h3>
+                    <div class="tag-container">
+                        <span class="tag">Cultural</span>
+                        <span class="tag">Island</span>
+                        <span class="tag">Satras</span>
+                    </div>
+                    <p class="gem-description">Experience the unique culture of the Mising tribe and ancient Vaishnavite monasteries (satras) on this slowly-eroding island in the Brahmaputra River, where traditional crafts and performing arts still thrive.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Ananya Das</div>
+                            <div class="contributor-type">Cultural Preservationist</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gem-item">
+                    <span class="gem-location">Nubra Valley, Ladakh</span>
+                    <h3 class="gem-title">The Hidden Valley of Flowers</h3>
+                    <div class="tag-container">
+                        <span class="tag">Desert</span>
+                        <span class="tag">Mountains</span>
+                        <span class="tag">Bactrian Camels</span>
+                    </div>
+                    <p class="gem-description">Beyond the popular Diskit Monastery lies little-visited Panamik village with its hot springs and the pristine Yarab Tso lake, considered sacred by locals and largely unknown to most tourists visiting Ladakh.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Tenzin Wangyal</div>
+                            <div class="contributor-type">Ladakhi Adventure Guide</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="region-container">
+            <h3 class="region-title">Southern Secrets</h3>
+            <div class="hidden-gems-list">
+                <div class="gem-item">
+                    <span class="gem-location">Valparai, Tamil Nadu</span>
+                    <h3 class="gem-title">The Forgotten Tea Paradise</h3>
+                    <div class="tag-container">
+                        <span class="tag">Tea Plantations</span>
+                        <span class="tag">Wildlife</span>
+                        <span class="tag">Peaceful</span>
+                    </div>
+                    <p class="gem-description">Nestled in the Anamalai Hills, this little-known hill station offers misty tea estates, colonial bungalows, and incredible wildlife spotting opportunities including lion-tailed macaques and great hornbills.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Lakshmi Krishnan</div>
+                            <div class="contributor-type">Wildlife Photographer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gem-item">
+                    <span class="gem-location">Agumbe, Karnataka</span>
+                    <h3 class="gem-title">India's Cherrapunji of the South</h3>
+                    <div class="tag-container">
+                        <span class="tag">Rainforest</span>
+                        <span class="tag">King Cobra</span>
+                        <span class="tag">Sunset</span>
+                    </div>
+                    <p class="gem-description">Known as the 'Cherrapunji of the South' for its abundant rainfall, this Western Ghats village offers spectacular sunset views, pristine rainforests, and ancient Jain temples along with the chance to spot unique reptiles.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Rohit Gowda</div>
+                            <div class="contributor-type">Herpetologist</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gem-item">
+                    <span class="gem-location">Wayanad, Kerala</span>
+                    <h3 class="gem-title">The Hidden Chembra Heart Lake</h3>
+                    <div class="tag-container">
+                        <span class="tag">Trekking</span>
+                        <span class="tag">Lake</span>
+                        <span class="tag">Tribes</span>
+                    </div>
+                    <p class="gem-description">Beyond the popular Chembra Peak lies a secret trail to a heart-shaped lake known to few outsiders. Visit during weekdays with a local guide to experience this natural wonder in solitude and learn about indigenous Kurichiya tribe traditions.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Maya Joseph</div>
+                            <div class="contributor-type">Local Naturalist</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="region-container">
+            <h3 class="region-title">Eastern Escapes</h3>
+            <div class="hidden-gems-list">
+                <div class="gem-item">
+                    <span class="gem-location">Mechuka, Arunachal Pradesh</span>
+                    <h3 class="gem-title">The Forgotten Himalayan Valley</h3>
+                    <div class="tag-container">
+                        <span class="tag">Remote</span>
+                        <span class="tag">Buddhist</span>
+                        <span class="tag">Tribal</span>
+                    </div>
+                    <p class="gem-description">Just 29 km from the Indo-China border, this secluded valley is home to the Memba tribe and offers stunning views of snow-capped mountains, ancient Buddhist monasteries, and pristine rivers virtually untouched by tourism.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Dorjee Khandu</div>
+                            <div class="contributor-type">Local Homestay Owner</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gem-item">
+                    <span class="gem-location">Pelling, Sikkim</span>
+                    <h3 class="gem-title">The Secret Rabdentse Ruins</h3>
+                    <div class="tag-container">
+                        <span class="tag">Historical</span>
+                        <span class="tag">Ruins</span>
+                        <span class="tag">Views</span>
+                    </div>
+                    <p class="gem-description">While tourists flock to Pelling for Kanchenjunga views, few venture to the ancient ruins of Rabdentse, Sikkim's second capital from 1670 to 1814. A local guide can show you secret viewpoints that frame the ruins against the mighty Himalayan peaks.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Tenzing Sherpa</div>
+                            <div class="contributor-type">Heritage Expert</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gem-item">
+                    <span class="gem-location">Rajrappa, Jharkhand</span>
+                    <h3 class="gem-title">Sacred Confluence of Rivers</h3>
+                    <div class="tag-container">
+                        <span class="tag">Temple</span>
+                        <span class="tag">Waterfall</span>
+                        <span class="tag">Tribal</span>
+                    </div>
+                    <p class="gem-description">At the confluence of the Damodar and Bhairavi rivers stands an ancient Chhinnamasta temple largely unknown outside Jharkhand. Witness authentic tribal rituals and the picturesque waterfall away from the typical tourist circuits.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Mahua Munda</div>
+                            <div class="contributor-type">Cultural Historian</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="region-container">
+            <h3 class="region-title">Western Wonders</h3>
+            <div class="hidden-gems-list">
+                <div class="gem-item">
+                    <span class="gem-location">Dang, Gujarat</span>
+                    <h3 class="gem-title">The Hidden Tribal Haat</h3>
+                    <div class="tag-container">
+                        <span class="tag">Tribal</span>
+                        <span class="tag">Market</span>
+                        <span class="tag">Cultural</span>
+                    </div>
+                    <p class="gem-description">Deep in Gujarat's only tribal district, experience the weekly Haat (market) where Bhil, Gamit, and Kunbi tribes gather to trade goods, medicine, and handicrafts using traditional methods virtually unchanged for centuries.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Vikram Desai</div>
+                            <div class="contributor-type">Anthropologist</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gem-item">
+                    <span class="gem-location">Sandhan Valley, Maharashtra</span>
+                    <h3 class="gem-title">The Hidden Valley of Shadows</h3>
+                    <div class="tag-container">
+                        <span class="tag">Canyon</span>
+                        <span class="tag">Trekking</span>
+                        <span class="tag">Adventure</span>
+                    </div>
+                    <p class="gem-description">Known as the 'Valley of Suspense' or 'Valley of Shadows', this 2km narrow canyon is a well-kept secret among serious trekkers. Navigate through 200-foot high rock walls where sunlight barely reaches the bottom, creating a mystical atmosphere.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Nikhil Joshi</div>
+                            <div class="contributor-type">Adventure Guide</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gem-item">
+                    <span class="gem-location">Kaas Plateau, Maharashtra</span>
+                    <h3 class="gem-title">Maharashtra's Valley of Flowers</h3>
+                    <div class="tag-container">
+                        <span class="tag">Wildflowers</span>
+                        <span class="tag">UNESCO</span>
+                        <span class="tag">Seasonal</span>
+                    </div>
+                    <p class="gem-description">This UNESCO World Heritage site transforms into a carpet of vibrant wildflowers for just a few weeks each monsoon season. Visit during weekdays in September to avoid crowds and witness over 850 species of flowering plants in their full glory.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Radhika Kulkarni</div>
+                            <div class="contributor-type">Botanist</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="region-container">
+            <h3 class="region-title">Central India's Secrets</h3>
+            <div class="hidden-gems-list">
+                <div class="gem-item">
+                    <span class="gem-location">Patalkot, Madhya Pradesh</span>
+                    <h3 class="gem-title">The Hidden Horseshoe Valley</h3>
+                    <div class="tag-container">
+                        <span class="tag">Tribal</span>
+                        <span class="tag">Medicinal</span>
+                        <span class="tag">Isolated</span>
+                    </div>
+                    <p class="gem-description">A 1200-foot deep horseshoe-shaped valley housing Bharia tribals who lived in complete isolation until the 1990s. Witness ancient healing traditions and medicinal plant knowledge passed down through generations virtually unchanged by modern influence.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Dr. Ramesh Sharma</div>
+                            <div class="contributor-type">Ethnobotanist</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gem-item">
+                    <span class="gem-location">Chanderi, Madhya Pradesh</span>
+                    <h3 class="gem-title">The Forgotten Silk Town</h3>
+                    <div class="tag-container">
+                        <span class="tag">Textiles</span>
+                        <span class="tag">Historical</span>
+                        <span class="tag">Architecture</span>
+                    </div>
+                    <p class="gem-description">Beyond its famous silk sarees, this ancient town hides over 350 historical monuments, many unmapped and unexplored. Visit the crumbling Koshak Mahal or find the submerged Rajghat Dam temple that emerges only during summer months.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Zubair Ahmed</div>
+                            <div class="contributor-type">Textile Historian</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gem-item">
+                    <span class="gem-location">Amarkantak, Madhya Pradesh</span>
+                    <h3 class="gem-title">Source of the Sacred Narmada</h3>
+                    <div class="tag-container">
+                        <span class="tag">Spiritual</span>
+                        <span class="tag">Waterfalls</span>
+                        <span class="tag">Pristine</span>
+                    </div>
+                    <p class="gem-description">While pilgrims visit the main Narmada temple, few venture to the secluded Kapildhara waterfall or ancient temples hidden in the Maikal Hills. Local guides can show you meditation caves used by saints for centuries away from tourist circuits.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Pandit Suresh Mishra</div>
+                            <div class="contributor-type">Local Priest</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="region-container">
+            <h3 class="region-title">Northeast Treasures</h3>
+            <div class="hidden-gems-list">
+                <div class="gem-item">
+                    <span class="gem-location">Ziro Valley, Arunachal Pradesh</span>
+                    <h3 class="gem-title">Land of the Apatani Tribe</h3>
+                    <div class="tag-container">
+                        <span class="tag">Tribal</span>
+                        <span class="tag">Rice Fields</span>
+                        <span class="tag">Cultural</span>
+                    </div>
+                    <p class="gem-description">Beyond the annual music festival, discover the unique sustainable wet rice cultivation and fish farming practiced by the Apatani tribe. Witness their distinctive nose plugs and facial tattoos representing a cultural practice with fascinating historical origins.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Tage Mado</div>
+                            <div class="contributor-type">Apatani Elder</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gem-item">
+                    <span class="gem-location">Longwa Village, Nagaland</span>
+                    <h3 class="gem-title">The Village in Two Countries</h3>
+                    <div class="tag-container">
+                        <span class="tag">Border</span>
+                        <span class="tag">Konyak</span>
+                        <span class="tag">Headhunters</span>
+                    </div>
+                    <p class="gem-description">Experience the unique village where the Indo-Myanmar international border runs through the Angh's (King's) house. Learn about the fascinating history of the Konyak tribe, once feared headhunters, now known for their incredible hospitality and craftsmanship.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Wang Konyak</div>
+                            <div class="contributor-type">Village Elder</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gem-item">
+                    <span class="gem-location">Nongriat, Meghalaya</span>
+                    <h3 class="gem-title">Beyond the Double-Decker Root Bridge</h3>
+                    <div class="tag-container">
+                        <span class="tag">Living Bridges</span>
+                        <span class="tag">Waterfalls</span>
+                        <span class="tag">Trekking</span>
+                    </div>
+                    <p class="gem-description">While tourists trek to the famous double-decker root bridge, continue two hours further to discover the mystical Rainbow Falls and the lesser-known single root bridges that few travelers ever see. Stay in this remote village to experience Khasi culture authentically.</p>
+                    <a href="#" class="btn btn-small">Read More</a>
+                    <div class="contributor">
+                        <div class="contributor-info">
+                            <div class="contributor-name">Recommended by: Banjop Kharsyntiew</div>
+                            <div class="contributor-type">Local Guide</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-container text-center">
+            <h2>Share Your Own Hidden Gem</h2>
+            <p>Know a secret spot in India that deserves to be celebrated while staying protected from overtourism? Share your local knowledge with our community of responsible travelers.</p>
+            <a href="#" class="btn btn-primary">Submit Your Hidden Gem</a>
+        </div>
+    </div>
+</section>
+
+<!-- User Testimonials Section -->
+<section class="parallax-section" style="background-image: url('hg2.jpg');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h2>Traveler Stories</h2>
+        <div class="testimonial-container">
+            <div class="testimonial">
+                <p>"The secret tea gardens of Valparai completely changed my perception of South India. Without Local Lens, I would never have discovered this misty paradise away from the tourist crowds."</p>
+                <div class="testimonial-author">- Arjun Singh, Delhi</div>
+            </div>
+        </div>
+        <a href="#" class="btn">Find Hidden Experiences</a>
+    </div>
+</section>
+
+<!-- Footer will be included using fetch API -->
+<div id="footer-container"></div>
+
+<script>
+    // Fetch and include navbar
+    fetch('navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+      })
+      .catch(error => {
+        console.error('Error loading navbar:', error);
+        document.getElementById('navbar-container').innerHTML = '<p>Error loading navigation</p>';
+      });
+
+    // Fetch and include footer
+    fetch('footer.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('footer-container').innerHTML = data;
+      })
+      .catch(error => {
+        console.error('Error loading footer:', error);
+        document.getElementById('footer-container').innerHTML = '<p>Error loading footer</p>';
+      });
+
+    // Filter functionality
+    document.querySelectorAll('.filter-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+
+        // Add active class to clicked button
+        this.classList.add('active');
+
+        // Filter logic would go here
+        // For this demo, we'll just change the active state
+      });
+    });
+</script>
+</body>
+</html>

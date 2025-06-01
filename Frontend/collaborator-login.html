@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Local Lens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        .login-section {
+            min-height: 100vh;
+            padding: 120px 0 60px;
+            background-color: #000;
+            background-image: url('travel-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+        
+        .login-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+        
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .login-header p {
+            color: #aaa;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus {
+            border-color: #fff;
+            outline: none;
+        }
+        
+        /* Password toggle button styles */
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 41px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 10;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .password-toggle:hover {
+            color: #fff;
+        }
+        
+        .password-field-container {
+            position: relative;
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-group input {
+            margin-right: 8px;
+        }
+        
+        .checkbox-group label {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .forgot-link {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .forgot-link:hover {
+            color: #fff;
+        }
+        
+        .login-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        
+        .login-btn:hover {
+            background-color:orange;
+            color: #000;
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+        }
+        
+        /* Tabs for user type selection */
+        .login-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .login-tab {
+            padding: 12px 25px;
+            background-color: transparent;
+            border: none;
+            color: #aaa;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .login-tab.active {
+            color: #fff;
+            border-bottom: 2px solid #fff;
+        }
+        
+        .login-tab:hover:not(.active) {
+            color: #fff;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 25px;
+                margin: 0 20px;
+            }
+            
+            .login-header h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include the navbar dynamically -->
+    <div id="navbar-container"></div>
+
+    <!-- Login Section -->
+    <section class="login-section">
+        <div class="login-container">
+            <div class="login-tabs">
+                <button type="button" class="login-tab active" data-tab="collaborator">Collaborator</button>
+                <button type="button" class="login-tab" data-tab="blogger">Blogger</button>
+            </div>
+            
+            <div class="login-header">
+                <h2 id="loginTitle">Collaborator Login</h2>
+                <p id="loginSubtitle">Sign in to access your collaboration dashboard</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="password-field-container">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <button type="button" id="togglePassword" class="password-toggle">SHOW</button>
+                    </div>
+                </div>
+                
+                <div class="remember-forgot">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="login-btn">Login</button>
+                
+                <div id="errorMessage" class="error-message">
+                    Invalid username or password. Please try again.
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Include the footer dynamically -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Load navbar
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error loading navbar:', error);
+            });
+        
+        // Load footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error loading footer:', error);
+            });
+        
+        // Set up current user type
+        let currentUserType = 'collaborator';
+        
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.login-tab');
+            const loginTitle = document.getElementById('loginTitle');
+            const loginSubtitle = document.getElementById('loginSubtitle');
+            
+            // Add click event to tabs
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Set current user type
+                    currentUserType = this.getAttribute('data-tab');
+                    
+                    // Update title and subtitle
+                    if (currentUserType === 'collaborator') {
+                        loginTitle.textContent = 'Collaborator Login';
+                        loginSubtitle.textContent = 'Sign in to access your collaboration dashboard';
+                    } else {
+                        loginTitle.textContent = 'Blogger Login';
+                        loginSubtitle.textContent = 'Sign in to access your blogging dashboard';
+                    }
+                    
+                    // Clear form fields and error message
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                    document.getElementById('errorMessage').style.display = 'none';
+                });
+            });
+        });
+        
+        // Password toggle functionality with hover effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleButton = document.getElementById('togglePassword');
+            const passwordField = document.getElementById('password');
+            const passwordContainer = document.querySelector('.password-field-container');
+            
+            if (toggleButton && passwordField) {
+                // Toggle on click
+                toggleButton.addEventListener('click', function(event) {
+                    // Prevent form submission
+                    event.preventDefault();
+                    
+                    // Toggle password visibility
+                    if (passwordField.type === 'password') {
+                        passwordField.type = 'text';
+                        toggleButton.textContent = 'HIDE';
+                    } else {
+                        passwordField.type = 'password';
+                        toggleButton.textContent = 'SHOW';
+                    }
+                    
+                    // Set focus back to password field
+                    setTimeout(function() {
+                        // Focus on the field
+                        passwordField.focus();
+                        
+                        // Move cursor to end of input
+                        const valueLength = passwordField.value.length;
+                        passwordField.setSelectionRange(valueLength, valueLength);
+                    }, 10);
+                });
+                
+                // Show toggle button on hover
+                passwordContainer.addEventListener('mouseenter', function() {
+                    toggleButton.style.opacity = '1';
+                });
+                
+                // Hide toggle button when not hovering
+                passwordContainer.addEventListener('mouseleave', function() {
+                    if (document.activeElement !== passwordField) {
+                        toggleButton.style.opacity = '0.7';
+                    }
+                });
+                
+                // Show toggle when field is focused
+                passwordField.addEventListener('focus', function() {
+                    toggleButton.style.opacity = '1';
+                });
+                
+                // Hide toggle when field loses focus
+                passwordField.addEventListener('blur', function() {
+                    if (!passwordContainer.matches(':hover')) {
+                        toggleButton.style.opacity = '0.7';
+                    }
+                });
+            }
+        });
+        
+        // Login form validation
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (currentUserType === 'collaborator') {
+                // Check collaborator credentials
+                if (username === 'sara_walker' && password === 'sarawalker123') {
+                    // Store user data in session storage
+                    sessionStorage.setItem('currentUser', JSON.stringify({
+                        name: 'Sara Walker',
+                        username: 'sara_walker',
+                        role: 'collaborator',
+                        location: 'New York'
+                    }));
+                    
+                    // Redirect to collaborator dashboard
+                    window.location.href = 'collaborator-dash.html';
+                } else {
+                    // Show error message
+                    errorMessage.style.display = 'block';
+                    
+                    // Clear password field
+                    document.getElementById('password').value = '';
+                    
+                    // Auto-hide error message after 3 seconds
+                    setTimeout(function() {
+                        errorMessage.style.display = 'none';
+                    }, 3000);
+                }
+            } else {
+                // Check blogger credentials
+                if (username === 'priya_sharma' && password === 'priyasharma123') {
+                    // Store user data in session storage
+                    sessionStorage.setItem('currentUser', JSON.stringify({
+                        name: 'Priya Sharma',
+                        username: 'priya_sharma',
+                        role: 'blogger',
+                        location: 'Mumbai'
+                    }));
+                    
+                    // Redirect to blogger dashboard
+                    window.location.href = 'blogger-dash.html';
+                } else {
+                    // Show error message
+                    errorMessage.style.display = 'block';
+                    
+                    // Clear password field
+                    document.getElementById('password').value = '';
+                    
+                    // Auto-hide error message after 3 seconds
+                    setTimeout(function() {
+                        errorMessage.style.display = 'none';
+                    }, 3000);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

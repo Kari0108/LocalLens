@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Campaigns | Local Lens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .intro {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .intro-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .intro-text {
+            flex: 1;
+            padding-right: 2rem;
+        }
+        
+        .intro-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .intro-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .campaigns {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .campaigns h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .campaign-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .campaign-card {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .campaign-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .campaign-details {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .campaign-meta {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .meta-item {
+            background-color: #222;
+            padding: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .meta-item h4 {
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
+            color: #f05d23;
+        }
+        
+        .meta-item p {
+            font-size: 0.9rem;
+        }
+        
+        .campaign-action {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-left: 1px solid #333;
+            padding-left: 1.5rem;
+        }
+        
+        .campaign-tag {
+            display: inline-block;
+            background-color: #f05d23;
+            color: #fff;
+            padding: 0.3rem 0.7rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .filter-section {
+            background-color: #111;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #333;
+        }
+        
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .filter-button {
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 0.5rem 1rem;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-button:hover, .filter-button.active {
+            background-color: #f05d23;
+            border-color: #f05d23;
+        }
+        
+        .two-column {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .two-column-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .column {
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #333;
+        }
+        
+        .column h3 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonials {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonials p.subtext {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background-color: #111;
+            padding: 2rem;
+            border-radius: 4px;
+            color: #fff;
+            border: 1px solid #333;
+        }
+        
+        .cta {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            margin-bottom: 1rem;
+        }
+        
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+        
+        .page-button {
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #444;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .page-button:hover, .page-button.active {
+            background-color: #f05d23;
+            border-color: #f05d23;
+        }
+        
+        @media (max-width: 768px) {
+            .intro-container {
+                flex-direction: column;
+            }
+            
+            .intro-text {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .campaign-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .campaign-action {
+                border-left: none;
+                border-top: 1px solid #333;
+                padding-left: 0;
+                padding-top: 1.5rem;
+            }
+            
+            .campaign-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include the navbar dynamically -->
+    <div id="navbar-container"></div>
+
+    <!-- Hero Section -->
+    <section class="hero parallax" style="background-image: url('/api/placeholder/1200/800');">
+        <div class="overlay"></div>
+        <div class="hero-content parallax-content">
+            <h1>Social Media Campaigns across India</h1>
+            <p>Connect with brands looking for authentic travel content showcasing India's diverse landscapes, cultures, and experiences.</p>
+            <a href="#campaigns" class="btn">Browse Campaigns</a>
+        </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="intro">
+        <div class="container intro-container">
+            <div class="intro-text">
+                <h2>Short-Term, High-Impact Social Media Collaborations</h2>
+                <p>Create stunning content for brands looking to promote their presence across India's most beautiful destinations - from the snow-capped peaks of the Himalayas to the sun-soaked beaches of Kerala.</p>
+            </div>
+            <div class="intro-image">
+                <img src="/api/placeholder/400/300" alt="Social Media Campaign Illustration">
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="campaigns">
+        <div class="container">
+            <div class="filter-section">
+                <h3>Filter Campaigns</h3>
+                <div class="filter-container">
+                    <button class="filter-button active">All Campaigns</button>
+                    <button class="filter-button">Instagram</button>
+                    <button class="filter-button">YouTube</button>
+                    <button class="filter-button">TikTok</button>
+                    <button class="filter-button">North India</button>
+                    <button class="filter-button">South India</button>
+                    <button class="filter-button">Mountain Escapes</button>
+                    <button class="filter-button">Cultural Experiences</button>
+                    <button class="filter-button">Food & Cuisine</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campaigns Section -->
+    <section class="campaigns" id="campaigns">
+        <div class="container">
+            <h2>Current Social Media Campaigns</h2>
+            
+            <div class="campaign-list">
+                <!-- Campaign 1 -->
+                <div class="campaign-card">
+                    <div class="campaign-details">
+                        <span class="campaign-tag">Instagram Stories</span>
+                        <span class="campaign-tag">Reels</span>
+                        <h3>Monsoon Magic in Meghalaya</h3>
+                        <p>Discover Northeast India's living root bridges and showcase the magic of the world's wettest place during monsoon season for Incredible India's digital campaign.</p>
+                        
+                        <div class="campaign-meta">
+                            <div class="meta-item">
+                                <h4>DURATION</h4>
+                                <p>2 Weeks</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>DELIVERABLES</h4>
+                                <p>5 Reels, 10 Stories</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>DEADLINE</h4>
+                                <p>May 15, 2025</p>
+                            </div>
+                        </div>
+                        
+                        <p><strong>Brand:</strong> Incredible India Tourism</p>
+                        <p><strong>Location:</strong> Cherrapunji, Mawlynnong, Dawki River, Meghalaya</p>
+                    </div>
+                    <div class="campaign-action">
+                        <p class="compensation">₹30,000 + Expenses</p>
+
+                    </div>
+                </div>
+                
+                <!-- Campaign 2 -->
+                <div class="campaign-card">
+                    <div class="campaign-details">
+                        <span class="campaign-tag">YouTube</span>
+                        <span class="campaign-tag">Instagram</span>
+                        <h3>Golden Triangle Heritage Tour</h3>
+                        <p>Create luxurious content highlighting heritage hotels and historical monuments across Delhi, Agra, and Jaipur for Rajasthan Tourism's new campaign.</p>
+                        
+                        <div class="campaign-meta">
+                            <div class="meta-item">
+                                <h4>DURATION</h4>
+                                <p>10 Days</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>DELIVERABLES</h4>
+                                <p>1 Video, 15 Posts</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>DEADLINE</h4>
+                                <p>June 5, 2025</p>
+                            </div>
+                        </div>
+                        
+                        <p><strong>Brand:</strong> Rajasthan Tourism Board</p>
+                        <p><strong>Location:</strong> Delhi (Red Fort, Qutub Minar), Agra (Taj Mahal), Jaipur (Amber Fort, City Palace)</p>
+                    </div>
+                    <div class="campaign-action">
+                        <p class="compensation">₹45,000 + Accommodation</p>
+
+                    </div>
+                </div>
+                
+                <!-- Campaign 3 -->
+                <div class="campaign-card">
+                    <div class="campaign-details">
+                        <span class="campaign-tag">TikTok</span>
+                        <span class="campaign-tag">Instagram Reels</span>
+                        <h3>Kerala Backwaters Luxury Experience</h3>
+                        <p>Capture the serene beauty of Kerala's backwaters through short-form vertical videos showcasing traditional houseboats and authentic local experiences.</p>
+                        
+                        <div class="campaign-meta">
+                            <div class="meta-item">
+                                <h4>DURATION</h4>
+                                <p>7 Days</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>DELIVERABLES</h4>
+                                <p>8 Reels/TikToks</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>DEADLINE</h4>
+                                <p>April 30, 2025</p>
+                            </div>
+                        </div>
+                        
+                        <p><strong>Brand:</strong> Kerala Tourism & Luxury Houseboats Association</p>
+                        <p><strong>Location:</strong> Alleppey, Kumarakom, Kochi, Kerala</p>
+                    </div>
+                    <div class="campaign-action">
+                        <p class="compensation">₹25,000 + Full Stay</p>
+
+                    </div>
+                </div>
+                
+                <!-- Campaign 4 -->
+                <div class="campaign-card">
+                    <div class="campaign-details">
+                        <span class="campaign-tag">Instagram</span>
+                        <span class="campaign-tag">Blog Content</span>
+                        <h3>Organic Farm-to-Table Experiences</h3>
+                        <p>Document and share the journey of organic produce from farms in Coorg and Ooty to high-end restaurants, highlighting sustainable agriculture practices.</p>
+                        
+                        <div class="campaign-meta">
+                            <div class="meta-item">
+                                <h4>DURATION</h4>
+                                <p>5 Days</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>DELIVERABLES</h4>
+                                <p>10 Posts, 1 Blog</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>DEADLINE</h4>
+                                <p>May 20, 2025</p>
+                            </div>
+                        </div>
+                        
+                        <p><strong>Brand:</strong> Organic India & Blue Tokai Coffee</p>
+                        <p><strong>Location:</strong> Coffee plantations in Coorg, Tea gardens in Ooty</p>
+                    </div>
+                    <div class="campaign-action">
+                        <p class="compensation">₹20,000 + Product Package</p>
+
+                    </div>
+                </div>
+                
+                <!-- Campaign 5 -->
+                <div class="campaign-card">
+                    <div class="campaign-details">
+                        <span class="campaign-tag">YouTube</span>
+                        <span class="campaign-tag">Instagram</span>
+                        <h3>Spiritual Retreats of Rishikesh</h3>
+                        <p>Create immersive content showcasing yoga retreats, meditation centers, and adventure activities along the sacred Ganges River in Rishikesh.</p>
+                        
+                        <div class="campaign-meta">
+                            <div class="meta-item">
+                                <h4>DURATION</h4>
+                                <p>14 Days</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>DELIVERABLES</h4>
+                                <p>2 Videos, 12 Posts</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>DEADLINE</h4>
+                                <p>July 10, 2025</p>
+                            </div>
+                        </div>
+                        
+                        <p><strong>Brand:</strong> Uttarakhand Tourism & Parmarth Niketan Ashram</p>
+                        <p><strong>Location:</strong> Rishikesh, Haridwar, Uttarakhand</p>
+                    </div>
+                    <div class="campaign-action">
+                        <p class="compensation">₹35,000 + Accommodation</p>
+
+                    </div>
+                </div>
+                
+                <!-- Campaign 6 -->
+                <div class="campaign-card">
+                    <div class="campaign-details">
+                        <span class="campaign-tag">Instagram</span>
+                        <span class="campaign-tag">Twitter</span>
+                        <h3>Culinary Journey Through Old Delhi</h3>
+                        <p>Document the rich flavors and hidden gems of Old Delhi's street food scene, showcasing centuries-old recipes and the stories behind iconic eateries.</p>
+                        
+                        <div class="campaign-meta">
+                            <div class="meta-item">
+                                <h4>DURATION</h4>
+                                <p>4 Days</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>DELIVERABLES</h4>
+                                <p>8 Posts, 20 Tweets</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>DEADLINE</h4>
+                                <p>May 5, 2025</p>
+                            </div>
+                        </div>
+                        
+                        <p><strong>Brand:</strong> Delhi Food Walks & Zomato</p>
+                        <p><strong>Location:</strong> Chandni Chowk, Jama Masjid area, Karim's, Paranthe Wali Gali</p>
+                    </div>
+                    <div class="campaign-action">
+                        <p class="compensation">₹18,000 + Food Experiences</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <div class="page-button active">1</div>
+                <div class="page-button">2</div>
+                <div class="page-button">3</div>
+                <div class="page-button">></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Section -->
+    <section class="parallax" style="background-image: url('/api/placeholder/1200/800');">
+        <div class="overlay"></div>
+        <div class="parallax-content">
+            <h2>Social Media Campaigns with Businesses</h2>
+            <p>Create engaging content for brands looking to enhance their social media presence across India's most photogenic locations.</p>
+
+        </div>
+    </section>
+
+    <!-- Two Column Section -->
+    <section class="two-column">
+        <div class="container two-column-container">
+            <div class="column">
+                <h3>Why Brands Choose Local Lens</h3>
+                <p>Connect with authentic content creators who understand India's diverse cultures and can create content that resonates with both local and international audiences.</p>
+            </div>
+            <div class="column">
+                <h3>Why Creators Love Our Campaigns</h3>
+                <p>Gain experience working with established Indian brands, build your portfolio, and receive fair compensation for your creative work.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>Success Stories from Recent Campaigns</h2>
+            <p class="subtext">See how influencers and brands have collaborated to create stunning content across India's most beautiful destinations.</p>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <h3>Varanasi Ghats Campaign</h3>
+                    <p>"The content created for our Varanasi sunrise campaign generated over 2 million impressions and a 35% increase in international bookings for our morning boat tours."</p>
+                    <p><strong>- Ganges Heritage Tours</strong></p>
+                </div>
+                <div class="testimonial-card">
+                    <h3>Rann of Kutch Festival</h3>
+                    <p>"Our collaboration with Local Lens creators during the Rann Utsav helped us showcase the white desert's beauty to new audiences across 15 countries."</p>
+                    <p><strong>- Gujarat Tourism</strong></p>
+                </div>
+                <div class="testimonial-card">
+                    <h3>Ladakh Monastery Trail</h3>
+                    <p>"As a creator, the Ladakh campaign allowed me to document ancient Buddhist monasteries while reaching new followers interested in spiritual travel experiences."</p>
+                    <p><strong>- Arjun K., Travel Creator</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="campaigns">
+        <div class="container">
+            <h2 class="text-center">Frequently Asked Questions</h2>
+            <div class="campaign-list">
+                <div class="campaign-card">
+                    <div class="campaign-details" style="width: 100%">
+                        <h3>What metrics do brands look for in applicants?</h3>
+                        <p>Most brands prioritize engagement rate, content quality, and audience demographics relevant to their target market in India. Follower count is considered but isn't the only criterion.</p>
+                    </div>
+                </div>
+                <div class="campaign-card">
+                    <div class="campaign-details" style="width: 100%">
+                        <h3>How quickly will I hear back after applying?</h3>
+                        <p>Most brands review applications within 7-10 days. If selected, you'll be contacted directly to discuss campaign details, logistics, and contracts.</p>
+                    </div>
+                </div>
+                <div class="campaign-card">
+                    <div class="campaign-details" style="width: 100%">
+                        <h3>Do campaigns provide accommodation and travel?</h3>
+                        <p>Most campaigns in remote locations like Ladakh, Andamans, or Northeast India include accommodation. Urban campaigns in Delhi, Mumbai, or Bangalore typically offer compensation but may not cover stays.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Showcase India's Beauty?</h2>
+            <p>Apply for our current campaigns or create a profile to be notified about upcoming opportunities across India's most photogenic destinations.</p>
+            <a href="#campaigns" class="btn btn-white">Browse All Campaigns</a>
+        </div>
+    </section>
+
+    <!-- Include the footer dynamically -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Function to load components dynamically
+        async function loadComponent(url, containerId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${url}`);
+                }
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading component from ${url}:`, error);
+            }
+        }
+
+        // Load components when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            loadComponent('navbar.html', 'navbar-container');
+            loadComponent('footer.html', 'footer-container');
+        });
+    </script>
+</body>
+</html>

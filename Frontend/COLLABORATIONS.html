@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborations | Local Lens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        /* Keep only the CSS styles that are specific to this page and not in css.css */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Modified - changed background to black, text to white */
+        .intro {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .intro-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .intro-text {
+            flex: 1;
+            padding-right: 2rem;
+        }
+
+        .intro-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .intro-image img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .categories {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+
+        .categories h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        .category-card .btn {
+            margin-top: 1.5rem;
+        }
+
+        .two-column {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+
+        .two-column-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .column {
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #333;
+        }
+
+        .column h3 {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Modified - changed background to black, text to white */
+        .testimonials {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .testimonials p.subtext {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Modified - changed background to darker color to match theme */
+        .testimonial-card {
+            background-color: #111;
+            padding: 2rem;
+            border-radius: 4px;
+            color: #fff;
+            border: 1px solid #333;
+        }
+
+        .testimonial-card img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .intro-container {
+                flex-direction: column;
+            }
+
+            .intro-text {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Include the navbar dynamically -->
+<div id="navbar-container"></div>
+
+<!-- Hero Section -->
+<section class="hero parallax" style="background-image: url('collabration1.jpg');">
+    <div class="overlay"></div>
+    <div class="hero-content parallax-content">
+        <h1>Partner, Collaborate, and Elevate Travel Content</h1>
+        <p>Hotels, tour providers, and brands—connect with top travel bloggers and influencers for unique
+            collaborations.</p>
+        <a href="collaboration-opportunities.html" class="btn">Explore Opportunities</a>
+    </div>
+</section>
+
+
+<!-- Intro Section -->
+<section class="intro">
+    <div class="container intro-container">
+        <div class="intro-text">
+            <h2>Seamless Travel Collaborations</h2>
+            <p>Businesses list collaboration offers. Bloggers apply. Partnerships are made!</p>
+        </div>
+        <div class="intro-image">
+            <img src="p.jpg" alt="Handshake Illustration">
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories" id="opportunities">
+    <div class="container">
+        <h2>Find the Right Collaboration for You</h2>
+        <div class="categories-grid">
+            <div class="category-card">
+                <img src="collaberation-img_src1.jpg" alt="Sponsored Hotel Stays">
+                <h3>Sponsored Hotel Stays</h3>
+                <p>Connect with luxury hotels and resorts for sponsored stays in exchange for high-quality content.</p>
+                <a href="#" class="btn btn-white">See Details</a>
+            </div>
+            <div class="category-card">
+                <img src="collaberation-img_src2.jpg" alt="Paid Promotion Campaigns">
+                <h3>Paid Promotion Campaigns</h3>
+                <p>Create authentic content for travel brands looking to increase their online visibility.</p>
+                <a href="collaboration-details.html" class="btn btn-white">See Details</a>
+            </div>
+            <div class="category-card">
+                <img src="collaberation-img_src3.jpg" alt="Brand Partnerships">
+                <h3>Brand Partnerships</h3>
+                <p>Form long-term relationships with travel gear, apps, and service providers.</p>
+                <a href="#" class="btn btn-white">See Details</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Parallax Section -->
+<section class="parallax" style="background-image: url('home3.jpg');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h2>Simple & Transparent Partnerships</h2>
+        <p>Businesses list their opportunities. Bloggers apply. Partnerships happen!</p>
+        <a href="list-collaboration.html" class="btn btn-white">List an Opportunity</a>
+    </div>
+</section>
+
+<!-- Two Column Section -->
+<section class="two-column">
+    <div class="container two-column-container">
+        <div class="column">
+            <h3>I'm a Business Looking for Promotion</h3>
+            <p>Get your brand in front of authentic travel audiences through our network of content creators.</p>
+            <a href="" class="btn btn-white">Post a Collaboration</a>
+        </div>
+        <div class="column">
+            <h3>I'm a Blogger Looking for Partnerships</h3>
+            <p>Discover new collaboration opportunities with hotels, tour companies, and travel brands.</p>
+            <a href="find-partners.html" class="btn btn-white">Find Collaborations</a>
+        </div>
+    </div>
+</section>
+
+<!-- Five Parallax Sections -->
+<section class="parallax" style="background-image: url('collabration3.jpg');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h2>Hotels Seeking Travel Bloggers</h2>
+        <p>Discover hotels worldwide looking for authentic content creators to showcase their properties.</p>
+        <a href="hotel-offers.html" class="btn btn-white">View Offers</a>
+    </div>
+</section>
+
+<section class="parallax" style="background-image: url('collabration4.jpg');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h2>Tour Providers Looking for Promotion</h2>
+        <p>Connect with local tour operators seeking content creators to highlight unique experiences.</p>
+        <a href="tour-deals.html" class="btn btn-white">Explore Deals</a>
+    </div>
+</section>
+
+<section class="parallax" style="background-image: url('collabration5.jpg');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h2>Brand Sponsorships for Influencers</h2>
+        <p>Discover travel gear, apps, and services seeking authentic promotion from content creators.</p>
+        <a href="sponsorships.html" class="btn btn-white">Join Now</a>
+    </div>
+</section>
+
+<section class="parallax" style="background-image: url('collabration6.jpg');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h2>Social Media Campaigns with Businesses</h2>
+        <p>Create engaging content for brands looking to enhance their social media presence.</p>
+        <a href="social-campaigns.html" class="btn btn-white">Apply Now</a>
+    </div>
+</section>
+
+<section class="parallax" style="background-image: url('collabration7.jpg');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h2>Exclusive Travel Ambassador Programs</h2>
+        <p>Become a long-term ambassador for select travel brands and destinations.</p>
+        <a href="ambassador-program.html" class="btn btn-white">Become an Ambassador</a>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials">
+    <div class="container">
+        <h2>Real Stories, Real Impact</h2>
+        <p class="subtext">See how Local Lens has helped bloggers & businesses create unforgettable travel
+            campaigns.</p>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <img src="collaberation-img_src4.jpg" alt="Testimonial 1">
+                <h3>Sarah J. | Travel Blogger</h3>
+                <p>"Through Local Lens, I connected with a boutique hotel chain that resulted in a six-month
+                    collaboration across three countries. The transparency and structure made the partnership
+                    seamless."</p>
+            </div>
+            <div class="testimonial-card">
+                <img src="collaberation-img_src5.jpg" alt="Testimonial 2">
+                <h3>Marco's Adventures | Tour Company</h3>
+                <p>"We've seen a 40% increase in bookings after collaborating with content creators from Local Lens. The
+                    quality of applicants and content exceeded our expectations."</p>
+            </div>
+            <div class="testimonial-card">
+                <img src="collaberation-img_src6.jpg" alt="Testimonial 3">
+                <h3>Coastal Retreats | Resort Chain</h3>
+                <p>"Local Lens provided us with a streamlined way to connect with authentic travel influencers who truly
+                    resonated with our brand values. We've now made this a core part of our marketing strategy."</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA Section -->
+<section class="cta">
+    <div class="container">
+        <h2>Start Your Collaboration Today!</h2>
+        <p>Whether you're a blogger looking for opportunities or a brand seeking partnerships, we help you connect.</p>
+        <a href="sponsorships.html" class="btn btn-white">Join Now</a>
+    </div>
+</section>
+
+<!-- Include the footer dynamically -->
+<div id="footer-container"></div>
+
+<script>
+    // Function to load components dynamically
+    async function loadComponent(url, containerId) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Failed to load ${url}`);
+            }
+            const html = await response.text();
+            document.getElementById(containerId).innerHTML = html;
+        } catch (error) {
+            console.error(`Error loading component from ${url}:`, error);
+        }
+    }
+
+    // Load components when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        loadComponent('navbar.html', 'navbar-container');
+        loadComponent('footer.html', 'footer-container');
+    });
+</script>
+</body>
+</html>

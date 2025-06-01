@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Event - Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            background-color: #000;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #FF9933;
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #FFFFFF;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 153, 51, 0.3);
+        }
+
+        /* Rate Event Header Parallax */
+        .rate-event-header {
+            background-image: url('m12.webp');
+            height: 50vh;
+            position: relative;
+            background-attachment: scroll; /* Fixed changed to scroll for better compatibility */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .rate-event-header .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)); /* Gradient overlay for readability */
+            z-index: 1;
+        }
+
+        .rate-event-header .content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        .rate-event-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .rate-event-header p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Event Details Section */
+        .event-details {
+            background-color: #111;
+            padding: 3rem 0;
+        }
+
+        .event-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .event-info-left {
+            flex: 1;
+            min-width: 300px;
+            background-color: #222;
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .event-info-left h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .event-meta-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .event-meta-item i {
+            color: #FF9933;
+            margin-right: 0.5rem;
+        }
+
+        .event-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background-color: #333;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .tag.food {
+            background-color: #f39c12;
+        }
+
+        .tag.culture {
+            background-color: #9b59b6;
+        }
+
+        .tag.adventure {
+            background-color: #e74c3c;
+        }
+
+        .tag.photography {
+            background-color: #3498db;
+        }
+
+        /* Rate Form Section */
+        .rate-form-section {
+            padding: 4rem 0;
+            background-color: #000;
+        }
+
+        .rate-form {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #222;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, #FF9933, #FFFFFF, #138808);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Star Rating System */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            cursor: pointer;
+            color: #444;
+            padding: 0 0.15rem;
+            transition: color 0.3s ease;
+        }
+
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: #FF9933;
+        }
+
+        .rating-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .rating-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .rating-category h4 {
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .rate-event-header h1 {
+                font-size: 2.5rem;
+            }
+            .event-info {
+                flex-direction: column;
+            }
+            .rating-categories {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- Rate Event Header Parallax Section -->
+<section class="rate-event-header parallax">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1>Rate Your Experience</h1>
+        <p>Your feedback helps our community provide better experiences</p>
+    </div>
+</section>
+
+<!-- Event Details Section -->
+<section class="event-details">
+    <div class="container">
+        <div class="event-info">
+            <div class="event-info-left">
+                <h2>Traditional Holi Celebration</h2>
+                <div class="event-meta">
+                    <div class="event-meta-item">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>March 8, 2025</span>
+                    </div>
+                    <div class="event-meta-item">
+                        <i class="far fa-clock"></i>
+                        <span>10:00 AM - 2:00 PM</span>
+                    </div>
+                    <div class="event-meta-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Mathura, Uttar Pradesh</span>
+                    </div>
+                </div>
+                <div class="event-description">
+                    <p>An explosion of colors and joy as travelers experienced the festival of colors with local families. This immersive cultural experience provided a unique opportunity to participate in authentic Holi traditions.</p>
+                </div>
+                <div class="event-tags">
+                    <span class="tag culture">Culture</span>
+                    <span class="tag photography">Photography</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Rate Form Section -->
+<section class="rate-form-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Share Your Feedback</h2>
+            <p>Your honest review helps other travelers and improves future events</p>
+        </div>
+        <div class="rate-form">
+            <form id="event-rating-form">
+                <div class="rating-categories">
+                    <div class="rating-category">
+                        <h4>Overall Experience</h4>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="overall" value="5" />
+                            <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="star4" name="overall" value="4" />
+                            <label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="star3" name="overall" value="3" />
+                            <label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="star2" name="overall" value="2" />
+                            <label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="star1" name="overall" value="1" />
+                            <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+                        </div>
+                    </div>
+                    <div class="rating-category">
+                        <h4>Host/Guide</h4>
+                        <div class="star-rating">
+                            <input type="radio" id="host5" name="host" value="5" />
+                            <label for="host5" title="5 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="host4" name="host" value="4" />
+                            <label for="host4" title="4 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="host3" name="host" value="3" />
+                            <label for="host3" title="3 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="host2" name="host" value="2" />
+                            <label for="host2" title="2 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="host1" name="host" value="1" />
+                            <label for="host1" title="1 star"><i class="fas fa-star"></i></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rating-categories">
+                    <div class="rating-category">
+                        <h4>Value for Money</h4>
+                        <div class="star-rating">
+                            <input type="radio" id="value5" name="value" value="5" />
+                            <label for="value5" title="5 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="value4" name="value" value="4" />
+                            <label for="value4" title="4 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="value3" name="value" value="3" />
+                            <label for="value3" title="3 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="value2" name="value" value="2" />
+                            <label for="value2" title="2 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="value1" name="value" value="1" />
+                            <label for="value1" title="1 star"><i class="fas fa-star"></i></label>
+                        </div>
+                    </div>
+                    <div class="rating-category">
+                        <h4>Location/Venue</h4>
+                        <div class="star-rating">
+                            <input type="radio" id="location5" name="location" value="5" />
+                            <label for="location5" title="5 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="location4" name="location" value="4" />
+                            <label for="location4" title="4 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="location3" name="location" value="3" />
+                            <label for="location3" title="3 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="location2" name="location" value="2" />
+                            <label for="location2" title="2 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="location1" name="location" value="1" />
+                            <label for="location1" title="1 star"><i class="fas fa-star"></i></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="review-text">Your Review</label>
+                    <textarea id="review-text" placeholder="Share your experience in detail. What did you enjoy most? Any suggestions for improvement?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="highlight">Highlight of the Event</label>
+                    <textarea id="highlight" placeholder="What was the most memorable part of this event?"></textarea>
+                </div>
+
+                <button type="submit" class="btn">Submit Review</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Include header and footer -->
+<script>
+    // Load header and footer
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('nav-placeholder').innerHTML = data;
+        });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animation for section headers
+        gsap.utils.toArray('.section-header').forEach(header => {
+            gsap.from(header, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: header,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Animation for form
+        gsap.from('.rate-form', {
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            scrollTrigger: {
+                trigger: '.rate-form',
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // Animation for event info
+        gsap.from('.event-info-left', {
+            opacity: 0,
+            x: -30,
+            duration: 0.8,
+            scrollTrigger: {
+                trigger: '.event-info',
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // Form submission
+        const ratingForm = document.getElementById('event-rating-form');
+        if (ratingForm) {
+            ratingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Here you would normally send the data to your backend
+                // For demonstration, we'll just show an alert
+                alert('Thank you for your feedback! Your review has been submitted.');
+
+                // Reset form
+                ratingForm.reset();
+            });
+        }
+    });
+</script>
+
+<!-- Add footer placeholder -->
+<div id="footer-placeholder"></div>
+
+</body>
+</html>

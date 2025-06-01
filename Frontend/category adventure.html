@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Experiences in India | Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        /* Additional styles not found in css.css */
+        .parallax-section {
+          position: relative;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-attachment: scroll;
+          overflow: hidden;
+        }
+
+        .parallax-content {
+          text-align: center;
+          max-width: 900px;
+          padding: 0 2rem;
+          z-index: 2;
+        }
+
+        .black-frame {
+          background-color: #000;
+          padding: 8rem 0;
+          position: relative;
+        }
+
+        .frame-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          text-align: center;
+        }
+
+        .experiences-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+          margin-top: 3rem;
+        }
+
+        .experience-card {
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          overflow: hidden;
+          padding: 1.5rem;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .experience-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .experience-location {
+          color: #FF9933;
+          font-size: 0.9rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+          display: block;
+        }
+
+        .experience-title {
+          font-size: 1.5rem;
+          margin-bottom: 1rem;
+          color: #fff;
+        }
+
+        .experience-excerpt {
+          color: #ccc;
+          margin-bottom: 1.5rem;
+          line-height: 1.6;
+        }
+
+        .btn-small {
+          padding: 8px 20px;
+          font-size: 0.9rem;
+        }
+
+        .tag-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+        }
+
+        .tag {
+          background-color: rgba(255, 153, 51, 0.2);
+          color: #FF9933;
+          padding: 4px 10px;
+          border-radius: 20px;
+          font-size: 0.8rem;
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 992px) {
+          .experiences-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 576px) {
+          .experiences-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Include navbar.html using fetch API -->
+<div id="navbar-container"></div>
+
+<!-- Hero Parallax Section -->
+<section class="parallax-section" style="background-image: url('adventure_banner.jpg');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h1>Adventure Experiences in India</h1>
+        <p>Discover thrilling adventures across India's diverse landscapes, from the Himalayan peaks to the backwaters of Kerala.</p>
+    </div>
+</section>
+
+<!-- Black Frame Section - Introduction -->
+<section class="black-frame">
+    <div class="frame-container">
+        <h2>Extraordinary Adventures Await</h2>
+        <p>India's vast and varied landscape offers endless opportunities for adventure seekers. From trekking through the majestic Himalayas to white-water rafting in the Ganges, zip-lining through lush forests in the Western Ghats, or paragliding over the stunning valleys of Bir Billing - the adventure possibilities are limitless. Explore our curated collection of adrenaline-pumping experiences that showcase the wild side of incredible India.</p>
+
+        <div class="experiences-grid">
+            <div class="experience-card">
+                <span class="experience-location">Rishikesh, Uttarakhand</span>
+                <h3 class="experience-title">White Water Rafting in the Holy Ganges</h3>
+                <div class="tag-container">
+                    <span class="tag">Water Sports</span>
+                    <span class="tag">Moderate</span>
+                    <span class="tag">Group Activity</span>
+                </div>
+                <p class="experience-excerpt">Navigate through thrilling rapids of varying grades while surrounded by the serene Himalayan foothills. Experience the sacred Ganges river like never before with expert guides who share local legends and ecological insights.</p>
+
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Manali, Himachal Pradesh</span>
+                <h3 class="experience-title">Solang Valley Skiing Adventure</h3>
+                <div class="tag-container">
+                    <span class="tag">Winter Sports</span>
+                    <span class="tag">Beginner-Advanced</span>
+                    <span class="tag">Seasonal</span>
+                </div>
+                <p class="experience-excerpt">Glide down the pristine snow-covered slopes of Solang Valley with the magnificent Himalayas as your backdrop. Perfect for both beginners and experienced skiers with personalized instruction available.</p>
+
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Bir Billing, Himachal Pradesh</span>
+                <h3 class="experience-title">Paragliding over Himalayan Valleys</h3>
+                <div class="tag-container">
+                    <span class="tag">Aerial</span>
+                    <span class="tag">No Experience Needed</span>
+                    <span class="tag">Photography</span>
+                </div>
+                <p class="experience-excerpt">Soar like a bird over the breathtaking Dhauladhar mountain range from one of the world's best paragliding spots. Tandem flights with certified pilots make this experience accessible to everyone.</p>
+
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Spiti Valley, Himachal Pradesh</span>
+                <h3 class="experience-title">Motorcycle Expedition through Spiti</h3>
+                <div class="tag-container">
+                    <span class="tag">Motorbiking</span>
+                    <span class="tag">Advanced</span>
+                    <span class="tag">Multi-day</span>
+                </div>
+                <p class="experience-excerpt">Embark on an epic road journey through one of the world's most challenging yet rewarding terrains. Traverse high mountain passes, visit ancient monasteries, and experience the unique Tibetan-influenced culture.</p>
+
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Dandeli, Karnataka</span>
+                <h3 class="experience-title">Kali River Jungle Kayaking</h3>
+                <div class="tag-container">
+                    <span class="tag">Water Sports</span>
+                    <span class="tag">Wildlife</span>
+                    <span class="tag">Intermediate</span>
+                </div>
+                <p class="experience-excerpt">Paddle through the pristine waters of the Kali River surrounded by the lush Western Ghats. Spot exotic birds, crocodiles, and otters as you navigate gentle rapids with expert local guides.</p>
+
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Zanskar, Ladakh</span>
+                <h3 class="experience-title">Chadar Trek - The Frozen River Expedition</h3>
+                <div class="tag-container">
+                    <span class="tag">Winter Trek</span>
+                    <span class="tag">Challenging</span>
+                    <span class="tag">Cultural</span>
+                </div>
+                <p class="experience-excerpt">Walk on the frozen Zanskar River, surrounded by towering canyon walls in this once-in-a-lifetime winter adventure. Experience local Zanskari hospitality and ancient traditions in remote villages.</p>
+
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Jaisalmer, Rajasthan</span>
+                <h3 class="experience-title">Desert Camping and Dune Bashing</h3>
+                <div class="tag-container">
+                    <span class="tag">Desert Adventure</span>
+                    <span class="tag">Family-friendly</span>
+                    <span class="tag">Cultural</span>
+                </div>
+                <p class="experience-excerpt">Experience the thrill of 4x4 dune bashing in the golden Thar Desert, followed by a night under the stars with traditional Rajasthani music, dance, and cuisine in an authentic desert camp.</p>
+
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Andaman Islands</span>
+                <h3 class="experience-title">Scuba Diving at Havelock Island</h3>
+                <div class="tag-container">
+                    <span class="tag">Underwater</span>
+                    <span class="tag">Training Available</span>
+                    <span class="tag">Marine Life</span>
+                </div>
+                <p class="experience-excerpt">Discover vibrant coral reefs and exotic marine life in the crystal-clear waters of the Bay of Bengal. Perfect for beginners and certified divers alike with PADI courses available.</p>
+
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Meghalaya</span>
+                <h3 class="experience-title">Caving in the Abode of Clouds</h3>
+                <div class="tag-container">
+                    <span class="tag">Spelunking</span>
+                    <span class="tag">Moderate</span>
+                    <span class="tag">Unique</span>
+                </div>
+                <p class="experience-excerpt">Explore the mysterious limestone cave systems of Meghalaya, home to some of the longest and deepest caves in the Indian subcontinent. Witness stunning stalactite and stalagmite formations with expert speleologists.</p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Second Parallax Section -->
+<section class="parallax-section" style="background-image: url('adventure_footer.jpg');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h1>Ready for Your Next Adventure?</h1>
+        <p>Connect with local guides and fellow adventurers to plan your perfect Indian adventure.</p>
+        <a href="join%20collaborations.html" class="btn">Join Our Community</a>
+    </div>
+</section>
+
+<!-- Include footer.html using fetch API -->
+<div id="footer-container"></div>
+
+<script>
+    // Load navbar and footer components
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to fetch and insert HTML content
+      async function includeHTML(url, targetElementId) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.status}`);
+          }
+          const html = await response.text();
+          document.getElementById(targetElementId).innerHTML = html;
+
+          // Execute any scripts in the included HTML
+          const scripts = document.getElementById(targetElementId).getElementsByTagName('script');
+          for (let i = 0; i < scripts.length; i++) {
+            const script = document.createElement('script');
+            script.textContent = scripts[i].textContent;
+            document.body.appendChild(script);
+          }
+        } catch (error) {
+          console.error(`Error including HTML from ${url}:`, error);
+        }
+      }
+
+      // Include navbar and footer
+      includeHTML('navbar.html', 'navbar-container');
+      includeHTML('footer.html', 'footer-container');
+    });
+</script>
+</body>
+</html>

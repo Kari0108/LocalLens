@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Collaborations | Local Lens India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Filters Section */
+        .filters {
+            background-color: #000;
+            color: #fff;
+            padding: 3rem 0;
+        }
+        
+        .filters-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .filters h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .filter-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #333;
+            background-color: #111;
+            color: #fff;
+            border-radius: 4px;
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: #ff6b00;
+        }
+        
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #111;
+            border: 1px solid #333;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tag:hover {
+            background-color: #333;
+        }
+        
+        .tag.active {
+            background-color: #ff6b00;
+            border-color: #ff6b00;
+        }
+        
+        .clear-filters {
+            color: #ff6b00;
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 0.875rem;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        
+        .clear-filters:hover {
+            color: #ff8624;
+        }
+        
+        /* Collaborations Grid */
+        .collaborations {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .collaborations h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .collaborations p.subtext {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+        
+        .collaborations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .collaboration-card {
+            background-color: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .collaboration-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .card-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #ff6b00;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.75rem;
+            border-radius: 4px;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-location {
+            color: #ff6b00;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-location:before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff6b00' viewBox='0 0 384 512'%3E%3Cpath d='M172.3 501.7C27 291 0 269.4 0 192 0 86 86 0 192 0s192 86 192 192c0 77.4-27 99-172.3 309.7-9.5 13.7-29.9 13.7-39.4 0zM192 272c44.2 0 80-35.8 80-80s-35.8-80-80-80-80 35.8-80 80 35.8 80 80 80z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            margin-right: 5px;
+        }
+        
+        .card-description {
+            margin-bottom: 1.5rem;
+            font-size: 0.9375rem;
+            line-height: 1.5;
+        }
+        
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            background-color: #333;
+            border-radius: 20px;
+        }
+        
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #333;
+            padding-top: 1rem;
+        }
+        
+        .card-brand {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .card-action {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 0.5rem 1.25rem;
+            font-size: 0.875rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .card-action:hover {
+            background-color: #ff6b00;
+            border-color: #ff6b00;
+        }
+        
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .no-results h3 {
+            margin-bottom: 1rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filter-options {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .collaborations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include the navbar dynamically -->
+    <div id="navbar-container"></div>
+
+    <!-- Hero Section -->
+    <section class="hero parallax" style="background-image: url('/api/placeholder/1200/800');">
+        <div class="overlay"></div>
+        <div class="hero-content parallax-content">
+            <h1>Find Your Perfect Collaboration in India</h1>
+            <p>Discover unique partnership opportunities with hotels, tour operators, and brands across incredible India</p>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters">
+        <div class="container filters-container">
+            <h2>Filter Collaborations</h2>
+            
+            <div class="filter-options">
+                <div class="filter-group">
+                    <label for="region">Region</label>
+                    <select id="region" class="filter-select">
+                        <option value="">All of India</option>
+                        <option value="north">North India</option>
+                        <option value="south">South India</option>
+                        <option value="east">East India</option>
+                        <option value="west">West India</option>
+                        <option value="northeast">Northeast India</option>
+                        <option value="central">Central India</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="type">Collaboration Type</label>
+                    <select id="type" class="filter-select">
+                        <option value="">All Types</option>
+                        <option value="hotel">Hotel/Resort Stays</option>
+                        <option value="tour">Tours & Experiences</option>
+                        <option value="food">Food & Culinary</option>
+                        <option value="festival">Festivals & Events</option>
+                        <option value="wellness">Wellness & Ayurveda</option>
+                        <option value="gear">Travel Gear</option>
+                        <option value="destination">Destination Marketing</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="option">Payment Option</label>
+                    <select id="option" class="filter-select">
+                        <option value="">All Options</option>
+                        <option value="barter">Barter Exchange</option>
+                        <option value="paid">Paid Collaborations</option>
+                        <option value="both">Both Available</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="lang">Content Language</label>
+                    <select id="lang" class="filter-select">
+                        <option value="">All Languages</option>
+                        <option value="english">English</option>
+                        <option value="hindi">Hindi</option>
+                        <option value="tamil">Tamil</option>
+                        <option value="bengali">Bengali</option>
+                        <option value="marathi">Marathi</option>
+                        <option value="telugu">Telugu</option>
+                        <option value="malayalam">Malayalam</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="filter-tags">
+                <span class="tag active">Recommended for You</span>
+                <span class="tag">New Listings</span>
+                <span class="tag">Trending</span>
+                <span class="tag">Himalayan</span>
+                <span class="tag">Beach</span>
+                <span class="tag">Wildlife</span>
+                <span class="tag">Heritage</span>
+                <span class="tag">Food</span>
+                <span class="tag">Spiritual</span>
+                <button class="clear-filters">Clear All Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collaborations Section -->
+    <section class="collaborations">
+        <div class="container">
+            <h2>Suggested Collaborations</h2>
+            <p class="subtext">Based on your profile, interests, and previous collaborations</p>
+            
+            <div class="collaborations-grid">
+                <!-- Card 1 -->
+                <div class="collaboration-card">
+                    <div class="card-image" style="background-image: url('/api/placeholder/400/300');">
+                        <span class="card-badge">FEATURED</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Explore Luxury Houseboat Stays in Kerala Backwaters</h3>
+                        <div class="card-location">Alleppey, Kerala</div>
+                        <p class="card-description">Create content showcasing our traditional yet luxury houseboats while experiencing the serene backwaters of Kerala with authentic local cuisine and cultural encounters.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">South India</span>
+                            <span class="card-tag">Accommodation</span>
+                            <span class="card-tag">Barter</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-brand">Kerala Water Homes</span>
+                            <button class="card-action">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="collaboration-card">
+                    <div class="card-image" style="background-image: url('/api/placeholder/400/300');">
+                        <span class="card-badge">PAID</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Document the Ancient Temples of Hampi</h3>
+                        <div class="card-location">Hampi, Karnataka</div>
+                        <p class="card-description">Join our heritage documentation project to create content about the UNESCO World Heritage Site of Hampi. Looking for photographers and storytellers to highlight lesser-known structures.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Heritage</span>
+                            <span class="card-tag">Photography</span>
+                            <span class="card-tag">Paid</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-brand">Karnataka Tourism</span>
+                            <button class="card-action">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="collaboration-card">
+                    <div class="card-image" style="background-image: url('/api/placeholder/400/300');">
+                        <span class="card-badge">NEW</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Spiritual Retreat at Rishikesh Yoga Centers</h3>
+                        <div class="card-location">Rishikesh, Uttarakhand</div>
+                        <p class="card-description">Experience our 7-day authentic yoga and meditation retreat on the banks of the Ganges. We're looking for wellness content creators to document their transformation journey.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Wellness</span>
+                            <span class="card-tag">Spiritual</span>
+                            <span class="card-tag">Barter</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-brand">Himalayan Yoga Sanctuary</span>
+                            <button class="card-action">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="collaboration-card">
+                    <div class="card-image" style="background-image: url('/api/placeholder/400/300');">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Food Trail Through Old Delhi's Culinary Heritage</h3>
+                        <div class="card-location">Old Delhi, Delhi</div>
+                        <p class="card-description">Join our guided food tour through the historic streets of Old Delhi, featuring hidden gems from 100-year-old eateries to street food stalls. Seeking food bloggers and vloggers.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Food</span>
+                            <span class="card-tag">Urban</span>
+                            <span class="card-tag">Barter</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-brand">Delhi Food Walks</span>
+                            <button class="card-action">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 5 -->
+                <div class="collaboration-card">
+                    <div class="card-image" style="background-image: url('/api/placeholder/400/300');">
+                        <span class="card-badge">TRENDING</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Wildlife Photography in Kaziranga National Park</h3>
+                        <div class="card-location">Kaziranga, Assam</div>
+                        <p class="card-description">Capture the one-horned rhinoceros and other endangered species in their natural habitat. 4-day safari experience with specialized guides and accommodation included.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Wildlife</span>
+                            <span class="card-tag">Northeast</span>
+                            <span class="card-tag">Photography</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-brand">Assam Eco Tours</span>
+                            <button class="card-action">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 6 -->
+                <div class="collaboration-card">
+                    <div class="card-image" style="background-image: url('/api/placeholder/400/300');">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Desert Festival Experience in Pushkar</h3>
+                        <div class="card-location">Pushkar, Rajasthan</div>
+                        <p class="card-description">Cover the vibrant Pushkar Camel Fair with exclusive access to traditional ceremonies, camel races, folk performances, and local artisans. Premium tented accommodation included.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Festival</span>
+                            <span class="card-tag">Cultural</span>
+                            <span class="card-tag">Both</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-brand">Rajasthan Tourism</span>
+                            <button class="card-action">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 7 -->
+                <div class="collaboration-card">
+                    <div class="card-image" style="background-image: url('/api/placeholder/400/300');">
+                        <span class="card-badge">FEATURED</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Monastery Stay in Spiti Valley</h3>
+                        <div class="card-location">Spiti Valley, Himachal Pradesh</div>
+                        <p class="card-description">Experience authentic monastic life in the remote Himalayan region of Spiti. Document daily rituals, meditation practices, and the breathtaking landscapes of this high-altitude desert.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Himalayan</span>
+                            <span class="card-tag">Spiritual</span>
+                            <span class="card-tag">Adventure</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-brand">Himalayan Explorers</span>
+                            <button class="card-action">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 8 -->
+                <div class="collaboration-card">
+                    <div class="card-image" style="background-image: url('/api/placeholder/400/300');">
+                        <span class="card-badge">PAID</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Coffee Plantation Experience in Coorg</h3>
+                        <div class="card-location">Coorg, Karnataka</div>
+                        <p class="card-description">Stay at our heritage coffee estate, learn about sustainable coffee cultivation, participate in the harvest, and taste some of India's finest coffee varieties. Seeking content in English and Kannada.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Food & Drink</span>
+                            <span class="card-tag">Agriculture</span>
+                            <span class="card-tag">Paid</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-brand">Coorg Coffee Estates</span>
+                            <button class="card-action">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 9 -->
+                <div class="collaboration-card">
+                    <div class="card-image" style="background-image: url('/api/placeholder/400/300');">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Morning Aarti on Varanasi Ghats</h3>
+                        <div class="card-location">Varanasi, Uttar Pradesh</div>
+                        <p class="card-description">Document the spiritual morning rituals along the sacred Ganges River. Exclusive access to special ceremonies, local guides, and traditional accommodation in a heritage haveli.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Spiritual</span>
+                            <span class="card-tag">Cultural</span>
+                            <span class="card-tag">Barter</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-brand">Varanasi Heritage Walks</span>
+                            <button class="card-action">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include the footer dynamically -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Function to load components dynamically
+        async function loadComponent(url, containerId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${url}`);
+                }
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading component from ${url}:`, error);
+            }
+        }
+
+        // Load components when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            loadComponent('navbar.html', 'navbar-container');
+            loadComponent('footer.html', 'footer-container');
+            
+            // Filter tag interaction
+            document.querySelectorAll('.tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+            
+            // Clear filters
+            document.querySelector('.clear-filters').addEventListener('click', function() {
+                document.querySelectorAll('.filter-select').forEach(select => {
+                    select.selectedIndex = 0;
+                });
+                
+                document.querySelectorAll('.tag').forEach(tag => {
+                    tag.classList.remove('active');
+                });
+                
+                document.querySelector('.tag').classList.add('active');
+            });
+            
+            // View details interaction
+            document.querySelectorAll('.card-action').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    alert('Collaboration details will open in a new page.');
+                    // Here you would typically navigate to a detail page
+                });
+            });
+        });
+    </script>
+</body>
+</html>

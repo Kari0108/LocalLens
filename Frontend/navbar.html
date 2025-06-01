@@ -1,0 +1,50 @@
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="navbar-container">
+        <a href="About.html" class="logo">
+            <img src="logo.jpeg" alt="LOCAL LENS" class="logo-image">
+        </a>
+        <ul class="nav-links">
+            <li><a href="About.html">Home</a></li>
+            <li><a href="EXPERIENCES.html">Experiences</a></li>
+            <li><a href="COLLABORATIONS.html">Collaborations</a></li>
+            <li><a href="meetup.html">Meetups & Events</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="signup.html">SignUp</a></li>
+
+        </ul>
+        <div class="menu-toggle">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // JavaScript for navbar functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+        }
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.padding = '15px 0';
+                navbar.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+            } else {
+                navbar.style.padding = '20px 0';
+                navbar.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            }
+        });
+    });
+</script>

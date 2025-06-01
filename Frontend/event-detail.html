@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details - Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            background-color: #000;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #FF9933;
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #FFFFFF;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 153, 51, 0.3);
+        }
+
+        .btn.outline {
+            background: transparent;
+            border: 2px solid #FF9933;
+            color: #FF9933;
+        }
+
+        .btn.outline:hover {
+            background: #FF9933;
+            color: #000;
+        }
+
+        .btn.large {
+            font-size: 1.2rem;
+            padding: 1rem 2rem;
+        }
+
+        /* Event Hero Section */
+        .event-hero {
+            background-image: url('e15.avif');
+            height: 70vh;
+            position: relative;
+            background-attachment: scroll; /* Per requirements, using scroll instead of fixed */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .event-hero .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+            z-index: 1;
+        }
+
+        .event-hero .content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        .event-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .event-hero .event-meta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .event-hero .event-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .event-hero .event-meta i {
+            margin-right: 0.5rem;
+            color: #FF9933;
+        }
+
+        /* Event Details Section */
+        .event-details {
+            padding: 5rem 0;
+        }
+
+        .event-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .event-main {
+            background-color: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .event-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .event-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .event-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .event-section h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #FF9933;
+        }
+
+        .event-description {
+            color: #ddd;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .event-description p {
+            margin-bottom: 1.2rem;
+        }
+
+        .event-description p:last-child {
+            margin-bottom: 0;
+        }
+
+        .event-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background-color: #333;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        .tag.food {
+            background-color: #f39c12;
+        }
+
+        .tag.culture {
+            background-color: #9b59b6;
+        }
+
+        .tag.adventure {
+            background-color: #e74c3c;
+        }
+
+        .tag.photography {
+            background-color: #3498db;
+        }
+
+        /* Event Sidebar */
+        .event-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-card {
+            background-color: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .sidebar-card h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: #FF9933;
+        }
+
+        .event-details-list {
+            list-style: none;
+        }
+
+        .event-details-list li {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .event-details-list li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .event-details-list i {
+            width: 2rem;
+            color: #FF9933;
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .event-details-list .detail-content {
+            flex: 1;
+        }
+
+        .event-details-list .detail-title {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 0.2rem;
+        }
+
+        .event-details-list .detail-info {
+            font-weight: 500;
+        }
+
+        .join-card {
+            text-align: center;
+        }
+
+        .event-price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .price-note {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .join-btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .seats-left {
+            color: #FF9933;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* Host Card */
+        .host-card {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .host-header {
+            background-color: #222;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .host-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .host-avatar i {
+            font-size: 3rem;
+            color: #555;
+        }
+
+        .host-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .host-type {
+            color: #FF9933;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .host-stats {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        .host-content {
+            padding: 1.5rem;
+        }
+
+        .host-bio {
+            color: #ddd;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .host-contact {
+            background-color: #222;
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .contact-host-btn {
+            background-color: transparent;
+            border: 1px solid #FF9933;
+            color: #FF9933;
+        }
+
+        .contact-host-btn:hover {
+            background-color: #FF9933;
+            color: #000;
+        }
+
+        /* Related Events Section */
+        .related-events {
+            padding: 5rem 0;
+            background-color: #111;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, #FF9933, #FFFFFF, #138808);
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .related-card {
+            background-color: #222;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .related-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .related-img {
+            height: 180px;
+            background-color: #333;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .related-img i {
+            font-size: 3rem;
+            color: #444;
+        }
+
+        .related-date {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FF9933;
+            color: #000;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .related-content {
+            padding: 1.5rem;
+        }
+
+        .related-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .related-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .related-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .related-meta i {
+            margin-right: 0.3rem;
+            color: #FF9933;
+        }
+
+        /* Call to action */
+        .cta-section {
+            background-color: #000;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #ddd;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .event-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .related-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .event-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .event-hero .event-meta {
+                font-size: 1rem;
+            }
+
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .event-hero .event-meta {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .event-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- Event Hero Section -->
+<section class="event-hero">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1>Old Delhi Food Walk</h1>
+        <div class="event-meta">
+            <span><i class="far fa-calendar-alt"></i> May 15, 2025</span>
+            <span><i class="far fa-clock"></i> 6:00 PM - 9:00 PM</span>
+            <span><i class="fas fa-map-marker-alt"></i> Chandni Chowk, Delhi</span>
+        </div>
+        <a href="#join-now" class="btn large">Join This Event</a>
+    </div>
+</section>
+
+<!-- Event Details Section -->
+<section class="event-details">
+    <div class="container">
+        <div class="event-content">
+            <!-- Event Main Content -->
+            <div class="event-main">
+                <div class="event-section">
+                    <h2>About This Event</h2>
+                    <div class="event-description">
+                        <p>Join us for an unforgettable culinary adventure through the historic streets of Old Delhi. This guided food walk will take you through the bustling lanes of Chandni Chowk, where centuries-old recipes are still prepared using traditional methods.</p>
+
+                        <p>Explore the vibrant food scene of Old Delhi with our expert local guide who knows all the hidden gems and legendary eateries. From mouth-watering chaat and kebabs to decadent sweets, you'll taste authentic flavors that have made Delhi a food lover's paradise.</p>
+
+                        <p>During this 3-hour walk, we'll visit 6-7 carefully selected food stops, each with its own unique specialty and story. You'll learn about the history and cultural significance of each dish while savoring the best street food Delhi has to offer.</p>
+
+                        <div class="event-tags">
+                            <span class="tag food">Food</span>
+                            <span class="tag culture">Culture</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-section">
+                    <h2>What to Expect</h2>
+                    <div class="event-description">
+                        <p>• A guided walk through the historic streets of Old Delhi</p>
+                        <p>• Tastings at 6-7 famous eateries and street food vendors</p>
+                        <p>• Stories about the history and cultural significance of each food item</p>
+                        <p>• Small group experience (maximum 10 participants)</p>
+                        <p>• Bottled water provided throughout the tour</p>
+                        <p>• Tips on how to spot authentic Delhi cuisine</p>
+                    </div>
+                </div>
+
+                <div class="event-section">
+                    <h2>Important Information</h2>
+                    <div class="event-description">
+                        <p>• Meeting Point: Outside Chandni Chowk Metro Station, Gate No. 3</p>
+                        <p>• Duration: 3 hours</p>
+                        <p>• Wear comfortable walking shoes as we'll be exploring on foot</p>
+                        <p>• Bring cash for any additional purchases you might want to make</p>
+                        <p>• This experience includes non-vegetarian options, but vegetarian alternatives are available</p>
+                        <p>• Please inform us of any food allergies or dietary restrictions when booking</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Sidebar -->
+            <div class="event-sidebar">
+                <!-- Join Now Card -->
+                <div class="sidebar-card join-card" id="join-now">
+                    <div class="event-price">₹1,499</div>
+                    <div class="price-note">per person (all food tastings included)</div>
+                    <a href="#" class="btn join-btn">Join Now</a>
+                    <div class="seats-left">Only 5 spots left!</div>
+                </div>
+
+                <!-- Event Details Card -->
+                <div class="sidebar-card">
+                    <h3>Event Details</h3>
+                    <ul class="event-details-list">
+                        <li>
+                            <i class="far fa-calendar-alt"></i>
+                            <div class="detail-content">
+                                <div class="detail-title">Date</div>
+                                <div class="detail-info">May 15, 2025</div>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="far fa-clock"></i>
+                            <div class="detail-content">
+                                <div class="detail-title">Time</div>
+                                <div class="detail-info">6:00 PM - 9:00 PM</div>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="detail-content">
+                                <div class="detail-title">Location</div>
+                                <div class="detail-info">Chandni Chowk, Delhi</div>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-users"></i>
+                            <div class="detail-content">
+                                <div class="detail-title">Group Size</div>
+                                <div class="detail-info">Maximum 10 people</div>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-globe-asia"></i>
+                            <div class="detail-content">
+                                <div class="detail-title">Languages</div>
+                                <div class="detail-info">English, Hindi</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Host Information Card -->
+                <div class="sidebar-card host-card">
+                    <div class="host-header">
+                        <div class="host-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="host-name">Rajiv Sharma</div>
+                        <div class="host-type">Local Food Guide</div>
+                        <div class="host-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">4.9</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">78</div>
+                                <div class="stat-label">Reviews</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">124</div>
+                                <div class="stat-label">Tours</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="host-content">
+                        <div class="host-bio">
+                            Born and raised in Old Delhi, Rajiv has been exploring the food scene of his neighborhood for over 15 years. He knows every corner and every food vendor personally and is passionate about sharing authentic Delhi cuisine with visitors.
+                        </div>
+                        <div class="host-contact">
+                            <a href="#" class="btn contact-host-btn">Contact Host</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Events Section -->
+<section class="related-events">
+    <div class="container">
+        <div class="section-header">
+            <h2>Similar Experiences</h2>
+        </div>
+        <div class="related-grid">
+            <!-- Related Event 1 -->
+            <div class="related-card">
+                <div class="related-img">
+                    <i class="fas fa-utensils"></i>
+                    <div class="related-date">May 20</div>
+                </div>
+                <div class="related-content">
+                    <h4>South Delhi Food Tour</h4>
+                    <div class="related-meta">
+                        <span><i class="far fa-clock"></i> 7:00 PM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Hauz Khas, Delhi</span>
+                    </div>
+                    <a href="#" class="btn outline">View Details</a>
+                </div>
+            </div>
+
+            <!-- Related Event 2 -->
+            <div class="related-card">
+                <div class="related-img">
+                    <i class="fas fa-camera"></i>
+                    <div class="related-date">May 22</div>
+                </div>
+                <div class="related-content">
+                    <h4>Old Delhi Heritage Walk</h4>
+                    <div class="related-meta">
+                        <span><i class="far fa-clock"></i> 9:00 AM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Red Fort, Delhi</span>
+                    </div>
+                    <a href="#" class="btn outline">View Details</a>
+                </div>
+            </div>
+
+            <!-- Related Event 3 -->
+            <div class="related-card">
+                <div class="related-img">
+                    <i class="fas fa-mortar-pestle"></i>
+                    <div class="related-date">June 5</div>
+                </div>
+                <div class="related-content">
+                    <h4>Indian Cooking Class</h4>
+                    <div class="related-meta">
+                        <span><i class="far fa-clock"></i> 11:00 AM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Connaught Place, Delhi</span>
+                    </div>
+                    <a href="#" class="btn outline">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Create Your Own Experience</h2>
+            <p>Share your knowledge and passion with travelers from around the world</p>
+            <a href="#" class="btn large">Host an Event</a>
+        </div>
+    </div>
+</section>
+
+<!-- Include footer -->
+<div id="footer-placeholder"></div>
+
+<script>
+    // Load header and footer
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('nav-placeholder').innerHTML = data;
+        });
+
+    // Load footer
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+        });
+
+    // Initialize GSAP ScrollTrigger
+    document.addEventListener('DOMContentLoaded', function() {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animation for event sections
+        gsap.utils.toArray('.event-section').forEach((section, i) => {
+            gsap.from(section, {
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: i * 0.2,
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Animation for sidebar cards
+        gsap.utils.toArray('.sidebar-card').forEach((card, i) => {
+            gsap.from(card, {
+                opacity: 0,
+                x: 50,
+                duration: 0.8,
+                delay: i * 0.2,
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Animation for related events
+        gsap.utils.toArray('.related-card').forEach((card, i) => {
+            gsap.from(card, {
+                opacity: 0,
+                y: 30,
+                duration: 0.6,
+                delay: i * 0.15,
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                    end: "bottom 15%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Animation for CTA section
+        gsap.from('.cta-content', {
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            scrollTrigger: {
+                trigger: '.cta-section',
+                start: "top 70%",
+                end: "bottom 30%",
+                toggleActions: "play none none reverse"
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

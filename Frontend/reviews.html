@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traveler Stories & Reviews | Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        /* Additional styles for reviews page */
+        .parallax-section {
+          position: relative;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-attachment: scroll;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          overflow: hidden;
+        }
+
+        .parallax-content {
+          text-align: center;
+          max-width: 900px;
+          padding: 0 2rem;
+          z-index: 2;
+        }
+
+        .black-frame {
+          background-color: #000;
+          padding: 8rem 0;
+          position: relative;
+        }
+
+        .frame-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          text-align: center;
+        }
+
+        .reviews-section {
+          background-color: #000;
+          padding: 5rem 0;
+        }
+
+        .reviews-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          text-align: center;
+        }
+
+        .reviews-slider {
+          position: relative;
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 2rem 0;
+        }
+
+        .review-card {
+          display: none;
+          padding: 2.5rem;
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          margin: 0 auto;
+          text-align: center;
+          transition: opacity 0.5s ease;
+        }
+
+        .review-card.active {
+          display: block;
+        }
+
+        .review-text {
+          font-style: italic;
+          font-size: 1.2rem;
+          margin-bottom: 1.5rem;
+          line-height: 1.8;
+        }
+
+        .reviewer {
+          font-weight: 700;
+          color: #FF9933;
+          margin-bottom: 0.5rem;
+        }
+
+        .reviewer-location {
+          font-size: 0.9rem;
+          color: #ccc;
+        }
+
+        .slider-controls {
+          display: flex;
+          justify-content: center;
+          margin-top: 2rem;
+        }
+
+        .slider-dot {
+          width: 12px;
+          height: 12px;
+          background-color: #333;
+          border-radius: 50%;
+          margin: 0 8px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        .slider-dot.active {
+          background-color: #FF9933;
+        }
+
+        .slider-arrows {
+          display: flex;
+          justify-content: space-between;
+          position: absolute;
+          top: 50%;
+          width: 100%;
+          left: 0;
+          transform: translateY(-50%);
+        }
+
+        .slider-arrow {
+          background: none;
+          border: none;
+          font-size: 2rem;
+          color: #FF9933;
+          cursor: pointer;
+          padding: 1rem;
+          opacity: 0.7;
+          transition: opacity 0.3s ease;
+        }
+
+        .slider-arrow:hover {
+          opacity: 1;
+        }
+
+        /* Form Styles */
+        .review-form-section {
+          background-color: #000;
+          padding: 5rem 0;
+        }
+
+        .review-form-container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        .review-form {
+          background-color: rgba(255, 255, 255, 0.05);
+          padding: 3rem;
+          border-radius: 8px;
+        }
+
+        .form-group {
+          margin-bottom: 2rem;
+          text-align: left;
+        }
+
+        .form-group label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 600;
+        }
+
+        .form-control {
+          width: 100%;
+          padding: 1rem;
+          background-color: rgba(255, 255, 255, 0.1);
+          border: 1px solid #333;
+          border-radius: 4px;
+          color: #fff;
+          font-family: 'Montserrat', sans-serif;
+          resize: vertical;
+        }
+
+        .form-control:focus {
+          outline: none;
+          border-color: #FF9933;
+        }
+
+        .star-rating {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: flex-end;
+        }
+
+        .star-rating input {
+          display: none;
+        }
+
+        .star-rating label {
+          cursor: pointer;
+          font-size: 2rem;
+          color: #333;
+          padding: 0 0.2rem;
+          transition: color 0.3s ease;
+        }
+
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+          color: #FF9933;
+        }
+
+        .submit-btn {
+          background-color: transparent;
+          color: #fff;
+          border: 2px solid #FF9933;
+          padding: 1rem 2rem;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+          background-color: #FF9933;
+          color: #000;
+        }
+
+        .reviews-category {
+          display: flex;
+          justify-content: center;
+          margin: 3rem 0;
+        }
+
+        .category-btn {
+          background: none;
+          border: none;
+          color: #ccc;
+          font-size: 1rem;
+          padding: 0.5rem 1.5rem;
+          margin: 0 0.5rem;
+          cursor: pointer;
+          border-bottom: 2px solid transparent;
+          transition: all 0.3s ease;
+        }
+
+        .category-btn.active {
+          color: #FF9933;
+          border-bottom: 2px solid #FF9933;
+        }
+
+        .category-btn:hover {
+          color: #fff;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+          .review-form {
+            padding: 2rem;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Include navbar.html using fetch API -->
+<div id="navbar-container"></div>
+
+<!-- Hero Parallax Section -->
+<section class="parallax-section" style="background-image: url('r1.jpg');">
+    <div class="parallax-content">
+        <h1>Traveler Stories</h1>
+        <p>Authentic experiences and honest feedback from our community of explorers</p>
+    </div>
+</section>
+
+<!-- Black Frame Section - Introduction -->
+<section class="black-frame">
+    <div class="frame-container">
+        <h2>Real Stories from Real Travelers</h2>
+        <p>Our community of adventurous souls has ventured to the furthest corners of India, discovering hidden gems and creating memories that last a lifetime. Here they share their unfiltered experiences, honest reviews, and personal insights to help you craft your own unforgettable journey. Every review comes from someone who has walked the path before you, providing authentic perspectives that go beyond typical tourist experiences.</p>
+    </div>
+</section>
+
+<!-- Reviews Categories -->
+<section class="reviews-section">
+    <div class="reviews-container">
+        <div class="reviews-category">
+            <button class="category-btn active" data-category="all">All Reviews</button>
+            <button class="category-btn" data-category="adventure">Adventure</button>
+            <button class="category-btn" data-category="cultural">Cultural</button>
+            <button class="category-btn" data-category="food">Food</button>
+            <button class="category-btn" data-category="offbeat">Offbeat</button>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews Slider Section -->
+<section class="reviews-section">
+    <div class="reviews-container">
+        <h2>Featured Reviews</h2>
+        <div class="reviews-slider">
+            <!-- Review 1 -->
+            <div class="review-card active" data-category="adventure">
+                <p class="review-text">"The trek to Valley of Flowers in Uttarakhand was life-changing. Our guide, Ramesh, shared incredible knowledge about the rare Himalayan flora. The explosion of colors during the monsoon bloom was worth every step of the challenging trek. Staying in the small village of Ghangaria gave us insights into mountain life that no luxury hotel could ever provide."</p>
+                <p class="reviewer">Amit Patel</p>
+                <p class="reviewer-location">Mumbai, Maharashtra</p>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="review-card" data-category="cultural">
+                <p class="review-text">"The Theyyam ritual experience in North Kerala was mesmerizing. Watching performers transform into deities through elaborate makeup and costume was unlike anything I've seen before. The local family who hosted us explained the centuries-old traditions and even involved us in the preparation. This intimate cultural immersion made me feel connected to Kerala's spiritual heritage in ways I never expected."</p>
+                <p class="reviewer">Meera Krishnan</p>
+                <p class="reviewer-location">Bengaluru, Karnataka</p>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="review-card" data-category="food">
+                <p class="review-text">"The street food tour in Lucknow was the culinary highlight of my travels across India. From the melt-in-your-mouth galouti kebabs to the fragrant biryani and the complex flavors of chaat, each bite told a story of the city's rich Nawabi heritage. Our guide took us to hidden gems that have been run by the same families for generations. Worth every calorie!"</p>
+                <p class="reviewer">Rajiv Sharma</p>
+                <p class="reviewer-location">Delhi</p>
+            </div>
+
+            <!-- Review 4 -->
+            <div class="review-card" data-category="offbeat">
+                <p class="review-text">"Exploring the living root bridges in Nongriat village, Meghalaya was stepping into another world. These architectural marvels, created by the Khasi tribe by training tree roots across rivers, are both functional and magical. The three-day stay with a local family showed us how deeply connected the people are with nature. The monsoon rain created an ethereal atmosphere that I'll never forget."</p>
+                <p class="reviewer">Priya Nair</p>
+                <p class="reviewer-location">Chennai, Tamil Nadu</p>
+            </div>
+
+            <!-- Review 5 -->
+            <div class="review-card" data-category="adventure">
+                <p class="review-text">"The midnight kayaking experience in the bioluminescent waters of Havelock Island was nothing short of magical. Every paddle stroke illuminated the water with blue sparkles, like floating through a sea of stars. Our guide was incredibly knowledgeable about the marine ecosystem and even pointed out constellations during our breaks. Truly a once-in-a-lifetime adventure that showed me a side of Andaman few tourists get to see."</p>
+                <p class="reviewer">Vikram Singh</p>
+                <p class="reviewer-location">Jaipur, Rajasthan</p>
+            </div>
+
+            <!-- Review 6 -->
+            <div class="review-card" data-category="cultural">
+                <p class="review-text">"The Hornbill Festival in Nagaland exceeded all my expectations. Beyond the colorful performances at the main venue, our guide took us to authentic Angami villages where we participated in traditional games and danced with locals. The tribal homestay experience gave us deep insights into Naga customs, and the fermented bamboo shoot dishes were a revelation. This cultural journey changed my perception of Northeast India completely."</p>
+                <p class="reviewer">Ananya Das</p>
+                <p class="reviewer-location">Kolkata, West Bengal</p>
+            </div>
+
+            <!-- Review 7 -->
+            <div class="review-card" data-category="food">
+                <p class="review-text">"The spice plantation tour and cooking workshop in Coorg was the perfect blend of education and deliciousness. Walking through the cardamom, pepper, and coffee plantations with a third-generation farmer gave me new appreciation for ingredients I use daily. The hands-on cooking session to make Pandi Curry and Akki Roti in a traditional kitchen was both challenging and rewarding. The meal we enjoyed afterward, overlooking misty hills, was unforgettable."</p>
+                <p class="reviewer">Deepak Menon</p>
+                <p class="reviewer-location">Kochi, Kerala</p>
+            </div>
+
+            <!-- Review 8 -->
+            <div class="review-card" data-category="offbeat">
+                <p class="review-text">"Spending three days in the forgotten ghost town of Kuldhara near Jaisalmer was both eerie and fascinating. Our guide shared compelling stories about the abandoned Paliwal Brahmin village and the mysterious circumstances surrounding its desertion 200 years ago. Watching the sunset over the ruins while listening to folk musicians was haunting yet beautiful. This offbeat experience offered a unique glimpse into Rajasthan's lesser-known history."</p>
+                <p class="reviewer">Neha Kapoor</p>
+                <p class="reviewer-location">Pune, Maharashtra</p>
+            </div>
+
+            <!-- Controls for slider -->
+            <div class="slider-arrows">
+                <button class="slider-arrow prev-arrow">&#10094;</button>
+                <button class="slider-arrow next-arrow">&#10095;</button>
+            </div>
+
+            <div class="slider-controls"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Second Parallax Section -->
+<section class="parallax-section" style="background-image: url('r2.jpg');">
+    <div class="parallax-content">
+        <h1>Share Your Journey</h1>
+        <p>Help fellow travelers discover authentic experiences by sharing your story</p>
+    </div>
+</section>
+
+<!-- Review Form Section -->
+<section class="review-form-section">
+    <div class="review-form-container">
+        <h2>Leave a Review</h2>
+        <p class="mb-5">Your honest feedback helps our community discover authentic travel experiences across India.</p>
+
+        <form class="review-form" id="reviewForm">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Your Location</label>
+                <input type="text" id="location" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="experience">Experience Type</label>
+                <select id="experience" class="form-control" required>
+                    <option value="">Select Experience Type</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="food">Food & Culinary</option>
+                    <option value="nature">Nature & Wildlife</option>
+                    <option value="spiritual">Spiritual</option>
+                    <option value="offbeat">Offbeat & Hidden Gems</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="destination">Destination</label>
+                <input type="text" id="destination" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Rating</label>
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">★</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="review">Your Review</label>
+                <textarea id="review" class="form-control" rows="6" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Review</button>
+        </form>
+    </div>
+</section>
+
+<!-- Final Parallax Section -->
+<section class="parallax-section" style="background-image: url('r3.jpg');">
+    <div class="parallax-content">
+        <h1>Every Journey Has a Story</h1>
+        <p>Discover more authentic experiences across incredible India</p>
+        <a href="EXPERIENCES.html" class="btn">Explore Experiences</a>
+    </div>
+</section>
+
+<!-- Include footer.html using fetch API -->
+<div id="footer-container"></div>
+
+<script>
+    // Load navbar and footer components
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to fetch and insert HTML content
+      async function includeHTML(url, targetElementId) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.status}`);
+          }
+          const html = await response.text();
+          document.getElementById(targetElementId).innerHTML = html;
+
+          // Execute any scripts in the included HTML
+          const scripts = document.getElementById(targetElementId).getElementsByTagName('script');
+          for (let i = 0; i < scripts.length; i++) {
+            const script = document.createElement('script');
+            script.textContent = scripts[i].textContent;
+            document.body.appendChild(script);
+          }
+        } catch (error) {
+          console.error(`Error including HTML from ${url}:`, error);
+        }
+      }
+
+      // Include navbar and footer
+      includeHTML('navbar.html', 'navbar-container');
+      includeHTML('footer.html', 'footer-container');
+
+      // Reviews slider functionality
+      const reviewCards = document.querySelectorAll('.review-card');
+      const nextArrow = document.querySelector('.next-arrow');
+      const prevArrow = document.querySelector('.prev-arrow');
+      const sliderControls = document.querySelector('.slider-controls');
+      let currentIndex = 0;
+
+      // Create slider dots
+      reviewCards.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('slider-dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => showSlide(index));
+        sliderControls.appendChild(dot);
+      });
+
+      const dots = document.querySelectorAll('.slider-dot');
+
+      function showSlide(index) {
+        reviewCards.forEach(card => card.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        reviewCards[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentIndex = index;
+      }
+
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % reviewCards.length;
+        showSlide(currentIndex);
+      }
+
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + reviewCards.length) % reviewCards.length;
+        showSlide(currentIndex);
+      }
+
+      // Event listeners for arrows
+      nextArrow.addEventListener('click', nextSlide);
+      prevArrow.addEventListener('click', prevSlide);
+
+      // Auto rotate slides
+      const slideInterval = setInterval(nextSlide, 6000);
+
+      // Pause auto rotation when hovering over slider
+      const sliderContainer = document.querySelector('.reviews-slider');
+      sliderContainer.addEventListener('mouseenter', () => {
+        clearInterval(slideInterval);
+      });
+
+      // Category filtering
+      const categoryButtons = document.querySelectorAll('.category-btn');
+
+      categoryButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const category = button.getAttribute('data-category');
+
+          // Update active button
+          categoryButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+
+          // Filter reviews
+          if (category === 'all') {
+            // Show all reviews, but only activate the first one
+            showSlide(0);
+          } else {
+            // Find first review with matching category and show it
+            const matchingReviews = Array.from(reviewCards).filter(
+              card => card.getAttribute('data-category') === category
+            );
+
+            if (matchingReviews.length > 0) {
+              const index = Array.from(reviewCards).indexOf(matchingReviews[0]);
+              showSlide(index);
+            }
+          }
+        });
+      });
+
+      // Form submission
+      const reviewForm = document.getElementById('reviewForm');
+      reviewForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Here you would typically send the data to a server
+        // For now, just show a success message
+        alert('Thank you for your review! It will be published after moderation.');
+        reviewForm.reset();
+      });
+
+      // Add parallax scroll effect
+      window.addEventListener('scroll', function() {
+        const parallaxSections = document.querySelectorAll('.parallax-section');
+
+        parallaxSections.forEach(section => {
+          const distance = window.scrollY;
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+
+          if (distance > sectionTop - window.innerHeight && distance < sectionTop + sectionHeight) {
+            // Create subtle parallax effect without using fixed attachment
+            const yPos = -(distance - sectionTop) * 0.15;
+            section.style.backgroundPosition = `center ${yPos}px`;
+          }
+        });
+      });
+    });
+</script>
+</body>
+</html>

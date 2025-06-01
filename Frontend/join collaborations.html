@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Our Collaboration Platform | Local Lens India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        /* Specific styles for this page */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .benefit-card h3 {
+            margin-bottom: 1rem;
+            color: #FF9933;
+        }
+
+        .two-column {
+            padding: 4rem 0;
+        }
+
+        .two-column-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .column {
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #333;
+            background-color: #111;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .column:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .column h3 {
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonials {
+            padding: 4rem 0;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .testimonials p.subtext {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .india-regions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .region-card {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .region-card:hover {
+            transform: translateY(-10px);
+            border-color: #FF9933;
+        }
+
+        .region-card h3 {
+            color: #FF9933;
+            margin-bottom: 1rem;
+        }
+
+        .steps-container {
+            max-width: 900px;
+            margin: 3rem auto;
+        }
+
+        .step {
+            display: flex;
+            margin-bottom: 2rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background-color: #FF9933;
+            color: #000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-orange {
+            background-color: #FF9933;
+            border-color: #FF9933;
+            color: #000;
+        }
+
+        .btn-orange:hover {
+            background-color: #FF8800;
+            border-color: #FF8800;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #111;
+            border: 1px solid #333;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            background-color: #222;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #FF9933;
+        }
+
+        textarea {
+            min-height: 120px;
+        }
+
+        .form-disclaimer {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .step {
+                flex-direction: column;
+            }
+
+            .step-number {
+                margin-bottom: 1rem;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Include the navbar dynamically -->
+<div id="navbar-container"></div>
+
+<!-- Hero Section -->
+<section class="hero parallax" style="background-image: url('https://images.unsplash.com/photo-1506461883276-594a12b11cf3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+    <div class="overlay"></div>
+    <div class="hero-content parallax-content">
+        <h1>Join India's Premier Travel Collaboration Platform</h1>
+        <p>Connect with authentic Indian experiences, destinations, and brands - creating content that truly resonates.</p>
+        <a href="#join-options" class="btn btn-orange">Start Collaborating</a>
+    </div>
+</section>
+
+<!-- Introduction Section -->
+<section class="intro py-8">
+    <div class="container">
+        <h2 class="section-title">Discover the Magic of Incredible India Through Collaboration</h2>
+        <p class="section-description">From the misty mountains of Himachal Pradesh to the backwaters of Kerala, from the spiritual ghats of Varanasi to the vibrant streets of Mumbai - connect with the heart of India through authentic partnerships.</p>
+
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <h3>Authentic Connections</h3>
+                <p>Build genuine relationships with Indian hospitality brands, local tour operators, and destination management companies that value authentic storytelling.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>Cultural Immersion</h3>
+                <p>Gain access to unique cultural experiences, traditional festivals, and hidden gems that most travelers miss - from Holi celebrations to village homestays.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>Transparent Partnerships</h3>
+                <p>Our platform ensures clear expectations, fair compensation, and professional relationships between content creators and Indian businesses.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Join Options Section -->
+<section class="two-column py-8" id="join-options">
+    <div class="container">
+        <h2 class="section-title">Choose Your Path</h2>
+        <p class="section-description">Whether you're showcasing the beauty of India or looking to promote your Indian travel business, we have the perfect collaboration solution for you.</p>
+
+        <div class="two-column-container">
+            <div class="column">
+                <h3>I'm a Blogger or Content Creator</h3>
+                <p>Connect with authentic Indian experiences across the subcontinent. From luxury hotels in Rajasthan to wilderness retreats in Coorg, from street food tours in Old Delhi to yoga retreats in Rishikesh.</p>
+                <a href="#blogger-form" class="btn btn-orange">I'm a Blogger</a>
+            </div>
+            <div class="column">
+                <h3>I'm an Indian Business</h3>
+                <p>Showcase your property, tour, or destination to global audiences through authentic content creators. Perfect for hotels, tour operators, festivals, and local experiences across India.</p>
+                <a href="#business-form" class="btn btn-white">I'm a Business</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Regions of India Section -->
+<section class="py-8">
+    <div class="container">
+        <h2 class="section-title">Discover India's Diverse Regions</h2>
+        <p class="section-description">Our platform connects you with opportunities across India's most captivating destinations.</p>
+
+        <div class="india-regions">
+            <div class="region-card">
+                <h3>North India</h3>
+                <p>From the majestic Himalayas to the spiritual banks of the Ganges. Explore collaborations in Rishikesh, Ladakh, Dharamshala, and the ancient city of Varanasi.</p>
+            </div>
+            <div class="region-card">
+                <h3>South India</h3>
+                <p>Lush backwaters, ancient temples, and pristine beaches. Discover partnerships in Kerala, Hampi, Pondicherry, and the coffee plantations of Coorg.</p>
+            </div>
+            <div class="region-card">
+                <h3>West India</h3>
+                <p>Vibrant culture, royal heritage, and desert landscapes. Find opportunities in Rajasthan, Gujarat, Goa, and the bustling metropolis of Mumbai.</p>
+            </div>
+            <div class="region-card">
+                <h3>East & Northeast India</h3>
+                <p>Untouched wilderness, living root bridges, and cultural treasures. Explore collaborations in Meghalaya, Sikkim, Sundarbans, and Kolkata.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="parallax" style="background-image: url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h2>How Our Collaboration Platform Works</h2>
+        <p>A simple, transparent process that connects passionate content creators with authentic Indian experiences.</p>
+        <a href="#join-now" class="btn btn-orange">Join Now</a>
+    </div>
+</section>
+
+<!-- Process Steps Section -->
+<section class="py-8">
+    <div class="container">
+        <h2 class="section-title">Simple Steps to Successful Collaborations</h2>
+
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Create Your Profile</h3>
+                    <p>Set up your detailed profile highlighting your niche, audience demographics, and previous work. For businesses, showcase your unique Indian experience or destination.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Connect with Opportunities</h3>
+                    <p>Browse available collaborations across India or list your opportunity. Filter by region, from Kerala backwaters to Rajasthan palaces to Himalayan retreats.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Communicate Directly</h3>
+                    <p>Our platform facilitates direct communication between parties to discuss details, expectations, and deliverables.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Collaborate Successfully</h3>
+                    <p>Experience the authentic soul of India while creating meaningful content that resonates with global audiences.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Unique India Experiences -->
+<section class="parallax" style="background-image: url('https://images.unsplash.com/photo-1598007576147-c1982672b446?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h2>Discover Unique Indian Experiences</h2>
+        <p>From traditional Kathakali performances in Kerala to the living heritage of Rajasthan's havelis, from the bustling spice markets of Old Delhi to quiet moments at Himalayan monasteries.</p>
+        <a href="#join-now" class="btn btn-orange">Explore Opportunities</a>
+    </div>
+</section>
+
+<!-- Join Form Section -->
+<section class="py-8" id="join-now">
+    <div class="container">
+        <h2 class="section-title">Join Our Collaboration Community</h2>
+        <p class="section-description">Take the first step toward authentic Indian travel collaborations.</p>
+
+        <div class="form-container">
+            <form id="interest-form">
+                <div class="form-group">
+                    <label for="user-type">I am a:</label>
+                    <select id="user-type" name="user-type" required>
+                        <option value="">Select an option</option>
+                        <option value="blogger">Travel Blogger/Influencer</option>
+                        <option value="business">Indian Travel Business</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="interest">I'm interested in:</label>
+                    <select id="interest" name="interest" required>
+                        <option value="">Select your primary interest</option>
+                        <option value="north">North India Collaborations</option>
+                        <option value="south">South India Collaborations</option>
+                        <option value="east">East & Northeast India Collaborations</option>
+                        <option value="west">West India Collaborations</option>
+                        <option value="all">Pan-India Opportunities</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Tell us about yourself or your business</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-orange">Submit Interest</button>
+
+                <p class="form-disclaimer">By submitting this form, you agree to our terms and privacy policy. We'll be in touch with next steps to set up your profile.</p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA Section -->
+<section class="parallax" style="background-image: url('https://images.unsplash.com/photo-1518002054390-7ab2e01a3a5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h2>Ready to Experience the Heart of India?</h2>
+        <p>Join our community of passionate travel content creators and authentic Indian experiences. From the serene valleys of Kashmir to the temple towns of Tamil Nadu, unforgettable collaborations await.</p>
+        <a href="#join-now" class="btn btn-orange">Join Now</a>
+    </div>
+</section>
+
+<!-- Include the footer dynamically -->
+<div id="footer-container"></div>
+
+<script>
+    // Function to load components dynamically
+    async function loadComponent(url, containerId) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Failed to load ${url}`);
+            }
+            const html = await response.text();
+            document.getElementById(containerId).innerHTML = html;
+        } catch (error) {
+            console.error(`Error loading component from ${url}:`, error);
+        }
+    }
+
+    // Load components when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        loadComponent('navbar.html', 'navbar-container');
+        loadComponent('footer.html', 'footer-container');
+
+        // Form submission handling
+        const form = document.getElementById('interest-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your interest! We will contact you shortly to complete your profile setup.');
+                form.reset();
+            });
+        }
+    });
+</script>
+</body>
+</html>

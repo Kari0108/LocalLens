@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Meetup - Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            background-color: #000;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #FF9933;
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #FFFFFF;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 153, 51, 0.3);
+        }
+
+        /* Create Meetup Header */
+        .create-header {
+            background-image: url('https://images.unsplash.com/photo-1519671482749-fd09be7ccebf');
+            height: 50vh;
+            position: relative;
+            background-attachment: scroll;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .create-header .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
+            z-index: 1;
+        }
+
+        .create-header .content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        .create-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .create-header p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Create Meetup Form Section */
+        .create-form-section {
+            padding: 5rem 0;
+            background-color: #111;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, #FF9933, #FFFFFF, #138808);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .meetup-form {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #222;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 120px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+        }
+
+        .file-input-container {
+            position: relative;
+        }
+
+        .file-input-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #333;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+
+        .file-input-label:hover {
+            background-color: #444;
+        }
+
+        .file-input {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .input-file-name {
+            margin-left: 10px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .success-message {
+            display: none;
+            background-color: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Guidelines Section */
+        .guidelines-section {
+            padding: 5rem 0;
+            background-color: #000;
+        }
+
+        .guidelines-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .guideline-card {
+            background-color: #111;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .guideline-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .guideline-icon {
+            font-size: 2.5rem;
+            color: #FF9933;
+            margin-bottom: 1rem;
+        }
+
+        .guideline-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .guidelines-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .create-header h1 {
+                font-size: 2.5rem;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .guidelines-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .form-group label {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- Create Meetup Header Section -->
+<section class="create-header">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1>Host Your Meetup</h1>
+        <p>Share your local knowledge and create meaningful experiences for travelers from around the world</p>
+    </div>
+</section>
+
+<!-- Create Meetup Form Section -->
+<section class="create-form-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Create Your Event</h2>
+            <p>Fill in the details below to create your unique local experience</p>
+        </div>
+        <div class="meetup-form">
+            <form id="create-meetup-form">
+                <div class="form-group">
+                    <label for="meetup-title">Meetup Title*</label>
+                    <input type="text" id="meetup-title" placeholder="Give your meetup a catchy title" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="meetup-date">Date*</label>
+                        <input type="date" id="meetup-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="meetup-time">Time*</label>
+                        <input type="time" id="meetup-time" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="meetup-location">Location*</label>
+                    <input type="text" id="meetup-location" placeholder="Where will the meetup take place?" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="meetup-type">Meetup Type*</label>
+                        <select id="meetup-type" required>
+                            <option value="">Select Type</option>
+                            <option value="culture">Cultural Experience</option>
+                            <option value="food">Food & Cuisine</option>
+                            <option value="adventure">Adventure & Outdoors</option>
+                            <option value="photography">Photography Walk</option>
+                            <option value="art">Art & Craft</option>
+                            <option value="nature">Nature & Wildlife</option>
+                            <option value="wellness">Wellness & Yoga</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="meetup-capacity">Maximum Participants*</label>
+                        <input type="number" id="meetup-capacity" min="1" max="100" value="10" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="meetup-description">Description*</label>
+                    <textarea id="meetup-description" placeholder="Describe your meetup and what participants can expect. Include details about the experience, what to bring, and any special instructions." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Cover Image</label>
+                    <div class="file-input-container">
+                        <label for="meetup-image" class="file-input-label">
+                            <i class="fas fa-upload"></i> Choose File
+                        </label>
+                        <input type="file" id="meetup-image" class="file-input" accept="image/*">
+                        <span class="input-file-name">No file chosen</span>
+                    </div>
+                    <div class="image-preview" id="image-preview">
+                        <i class="fas fa-image"></i> Image preview will appear here
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="meetup-duration">Duration (hours)*</label>
+                        <input type="number" id="meetup-duration" min="0.5" max="24" step="0.5" value="2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="meetup-price">Price per Person (₹)*</label>
+                        <input type="number" id="meetup-price" min="0" step="50" value="500" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="meetup-requirements">Requirements</label>
+                    <textarea id="meetup-requirements" placeholder="List any requirements or things participants should bring (optional)"></textarea>
+                </div>
+                <button type="submit" class="btn">Submit Meetup</button>
+                <div class="success-message" id="success-message">
+                    <i class="fas fa-check-circle"></i> Your meetup has been successfully created! Our team will review it shortly.
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Guidelines Section -->
+<section class="guidelines-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Host Guidelines</h2>
+            <p>Tips to create an exceptional experience for your guests</p>
+        </div>
+        <div class="guidelines-container">
+            <!-- Guideline 1 -->
+            <div class="guideline-card">
+                <div class="guideline-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Be Authentic</h3>
+                <p>Share your genuine passion and local knowledge. Authentic experiences are what travelers seek the most.</p>
+            </div>
+
+            <!-- Guideline 2 -->
+            <div class="guideline-card">
+                <div class="guideline-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Plan Your Time</h3>
+                <p>Structure your meetup with a clear timeline while allowing flexibility for questions and interactions.</p>
+            </div>
+
+            <!-- Guideline 3 -->
+            <div class="guideline-card">
+                <div class="guideline-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Be Inclusive</h3>
+                <p>Create an environment where everyone feels welcome regardless of their background or travel experience.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Include header and footer -->
+<script>
+    // Load header and footer
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('nav-placeholder').innerHTML = data;
+        });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animation for section headers
+        gsap.utils.toArray('.section-header').forEach(header => {
+            gsap.from(header, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: header,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Animation for form
+        gsap.from('.meetup-form', {
+            opacity: 0,
+            y: 30,
+            duration: 1,
+            scrollTrigger: {
+                trigger: '.meetup-form',
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // Animation for guideline cards
+        gsap.utils.toArray('.guideline-card').forEach((card, i) => {
+            gsap.from(card, {
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: i * 0.2,
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                    end: "bottom 15%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // File input preview functionality
+        const fileInput = document.getElementById('meetup-image');
+        const fileNameDisplay = document.querySelector('.input-file-name');
+        
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                fileNameDisplay.textContent = this.files[0].name;
+                
+                // Display a color block in the preview area instead of the actual image
+                const previewArea = document.getElementById('image-preview');
+                previewArea.innerHTML = `<i class="fas fa-file-image"></i> ${this.files[0].name}`;
+                previewArea.style.backgroundColor = '#3a3a3a';
+            } else {
+                fileNameDisplay.textContent = 'No file chosen';
+                document.getElementById('image-preview').innerHTML = '<i class="fas fa-image"></i> Image preview will appear here';
+                document.getElementById('image-preview').style.backgroundColor = '#333';
+            }
+        });
+
+        // Form submission handling
+        const form = document.getElementById('create-meetup-form');
+        const successMessage = document.getElementById('success-message');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            successMessage.style.display = 'block';
+            
+            // Scroll to success message
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Reset form after 2 seconds
+            setTimeout(() => {
+                form.reset();
+                fileNameDisplay.textContent = 'No file chosen';
+                document.getElementById('image-preview').innerHTML = '<i class="fas fa-image"></i> Image preview will appear here';
+                document.getElementById('image-preview').style.backgroundColor = '#333';
+                successMessage.style.display = 'none';
+            }, 3000);
+        });
+    });
+</script>
+
+<!-- Add footer placeholder -->
+<div id="footer-placeholder"></div>
+
+</body>
+</html>

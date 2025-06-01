@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Old Delhi Food Walk | Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        .parallax-section {
+          position: relative;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-image: url('https://images.unsplash.com/photo-1576402187873-b6de7b3f5911?auto=format&fit=crop&w=1600&q=80');
+          background-attachment: scroll;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          overflow: hidden;
+        }
+
+        .parallax-content {
+          text-align: center;
+          max-width: 900px;
+          padding: 0 2rem;
+          z-index: 2;
+          color: white;
+        }
+
+        .section {
+          background-color: #000;
+          color: white;
+          padding: 5rem 0;
+        }
+
+        .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        h2 {
+          color: #FF9933;
+          margin-bottom: 1rem;
+        }
+
+        .btn {
+          padding: 10px 20px;
+          background-color: transparent;
+          border: 1px solid #fff;
+          color: white;
+          transition: all 0.3s ease;
+          text-decoration: none;
+        }
+
+        .btn:hover {
+          background-color: #FF9933;
+          border-color: #FF9933;
+          color: #000;
+        }
+    </style>
+</head>
+<body>
+<div id="navbar-container"></div>
+
+<section class="parallax-section">
+    <div class="parallax-content">
+        <h1>Old Delhi Food Walk</h1>
+        <p>Explore the legendary street food of Chandni Chowk with local foodies who know every spice-laden corner.</p>
+        <a href="#details" class="btn">View Experience Details</a>
+    </div>
+</section>
+
+<section id="details" class="section">
+    <div class="container">
+        <h2>Experience Overview</h2>
+        <p>Join a guided culinary journey through Old Delhi's bustling alleys, tasting iconic dishes like parathas at Paranthe Wali Gali, spicy chole bhature, creamy kulfi, piping hot jalebis, and of course, the famous Dilli-style butter chicken. Your guide is a seasoned local foodie who will also share cultural anecdotes, market history, and tips for navigating the maze-like lanes of Chandni Chowk.</p>
+
+        <h2>What You'll Explore</h2>
+        <ul>
+            <li>Street stalls that have served generations</li>
+            <li>Heritage sweet shops and paratha kitchens</li>
+            <li>Food culture of Shahjahanabad (Old Delhi)</li>
+            <li>Spices, aromas, and stories behind each dish</li>
+        </ul>
+
+        <h2>Quick Info</h2>
+        <ul>
+            <li><strong>Location:</strong> Chandni Chowk, Delhi</li>
+            <li><strong>Duration:</strong> 3 hours</li>
+            <li><strong>Availability:</strong> Daily, Morning & Evening Slots</li>
+            <li><strong>Languages:</strong> Hindi, English</li>
+            <li><strong>Group Size:</strong> 6–10 people</li>
+        </ul>
+
+        <a href="#" class="btn">Book Now</a>
+    </div>
+</section>
+
+<div id="footer-container"></div>
+
+<script>
+    // Load navbar and footer components
+    document.addEventListener('DOMContentLoaded', function () {
+      async function includeHTML(url, targetElementId) {
+        try {
+          const response = await fetch(url);
+          const html = await response.text();
+          document.getElementById(targetElementId).innerHTML = html;
+        } catch (err) {
+          console.error(`Failed to load ${url}`, err);
+        }
+      }
+      includeHTML('navbar.html', 'navbar-container');
+      includeHTML('footer.html', 'footer-container');
+    });
+</script>
+</body>
+</html>

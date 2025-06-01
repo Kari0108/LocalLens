@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Sponsorships | Local Lens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .intro {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .intro-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .intro-text {
+            flex: 1;
+            padding-right: 2rem;
+        }
+        
+        .intro-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .intro-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .sponsorship-categories {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .sponsorship-categories h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .sponsorship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .sponsorship-card {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .sponsorship-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .sponsorship-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+        }
+        
+        .sponsorship-card h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .sponsorship-card .btn {
+            margin-top: 1.5rem;
+        }
+        
+        .how-it-works {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .step {
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #333;
+            background-color: #111;
+        }
+        
+        .step h3 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #f05d23;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .featured-brands {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .featured-brands h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .brand-card {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .brand-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .brand-logo {
+            height: 80px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: #f05d23;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .brand-card h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .brand-card p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonials {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonials p.subtext {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background-color: #111;
+            padding: 2rem;
+            border-radius: 4px;
+            color: #fff;
+            border: 1px solid #333;
+        }
+        
+        .testimonial-card img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            margin-bottom: 1rem;
+        }
+        
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .intro-container {
+                flex-direction: column;
+            }
+            
+            .intro-text {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include the navbar dynamically -->
+    <div id="navbar-container"></div>
+
+    <!-- Hero Section -->
+    <section class="hero parallax" style="background-image: url('/api/placeholder/1200/800');">
+        <div class="overlay"></div>
+        <div class="hero-content parallax-content">
+            <h1>Brand Sponsorships for Travel Influencers in India</h1>
+            <p>Connect with top Indian and international brands seeking authentic content creators to showcase their products across the diverse landscapes of India.</p>
+            <a href="#sponsorships" class="btn">Explore Sponsorships</a>
+        </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="intro">
+        <div class="container intro-container">
+            <div class="intro-text">
+                <h2>Elevate Your Content with Premium Brand Partnerships</h2>
+                <p>From adventure gear for the Himalayas to tech for capturing the vibrant streets of Mumbai, find brands that align with your travel niche and audience in India.</p>
+            </div>
+            <div class="intro-image">
+                <img src="/api/placeholder/400/300" alt="Brand Sponsorship Illustration">
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsorship Categories Section -->
+    <section class="sponsorship-categories" id="sponsorships">
+        <div class="container">
+            <h2>Discover Sponsorship Opportunities</h2>
+            <div class="sponsorship-grid">
+                <div class="sponsorship-card">
+                    <img src="/api/placeholder/400/300" alt="Travel Gear Sponsorships">
+                    <h3>Travel Gear & Equipment</h3>
+                    <p>Showcase backpacks, clothing, and gear perfect for trekking in Ladakh, exploring Kerala's backwaters, or navigating urban Delhi.</p>
+                    <a href="#gear-brands" class="btn btn-white">View Opportunities</a>
+                </div>
+                <div class="sponsorship-card">
+                    <img src="/api/placeholder/400/300" alt="Tech Sponsorships">
+                    <h3>Photography & Tech</h3>
+                    <p>Partner with camera, drone, and mobile tech brands looking for content from India's most photogenic locations.</p>
+                    <a href="#tech-brands" class="btn btn-white">View Opportunities</a>
+                </div>
+                <div class="sponsorship-card">
+                    <img src="/api/placeholder/400/300" alt="Local Product Sponsorships">
+                    <h3>Indian Sustainable Products</h3>
+                    <p>Promote eco-friendly, locally sourced products that support traditional crafts and sustainable tourism across India.</p>
+                    <a href="#local-brands" class="btn btn-white">View Opportunities</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="text-center">How Sponsorships Work</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Browse Opportunities</h3>
+                    <p>Explore brand sponsorships that match your content style and Indian travel destinations you're planning to visit.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Apply With Portfolio</h3>
+                    <p>Submit your application highlighting your reach, engagement, and previous content from Indian destinations.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Collaborate & Create</h3>
+                    <p>Receive products, create authentic content, and share your Indian travel experiences with your audience.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Build Long-term Relationships</h3>
+                    <p>Turn successful one-time collaborations into ongoing brand ambassador relationships.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Brands Section -->
+    <section class="featured-brands" id="gear-brands">
+        <div class="container">
+            <h2>Travel Gear & Equipment Brands</h2>
+            <div class="brand-grid">
+                <div class="brand-card">
+                    <div class="brand-logo">WildCraft</div>
+                    <h3>Backpacks & Adventure Gear</h3>
+                    <p>Looking for content creators to showcase their all-weather backpacks during monsoon treks in the Western Ghats and Meghalaya's living root bridges.</p>
+                    <p><strong>Opportunity:</strong> Product sponsorship + ₹15,000 for 3 dedicated posts</p>
+                    <a href="#" class="btn btn-white">Join Program</a>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">Decathlon India</div>
+                    <h3>Outdoor & Fitness Equipment</h3>
+                    <p>Seeking influencers for their new line of trekking gear designed specifically for high-altitude Himalayan trails in Uttarakhand and Sikkim.</p>
+                    <p><strong>Opportunity:</strong> Full gear package + ₹20,000 content creation fee</p>
+                    <a href="#" class="btn btn-white">Join Program</a>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">FabIndia Outdoors</div>
+                    <h3>Sustainable Travel Clothing</h3>
+                    <p>Promoting their new line of breathable, sustainably produced clothing perfect for exploring Rajasthan's desert festivals and Karnataka's coffee plantations.</p>
+                    <p><strong>Opportunity:</strong> Clothing package + revenue share program</p>
+                    <a href="#" class="btn btn-white">Join Program</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Brands Section -->
+    <section class="featured-brands" id="tech-brands">
+        <div class="container">
+            <h2>Photography & Tech Brands</h2>
+            <div class="brand-grid">
+                <div class="brand-card">
+                    <div class="brand-logo">DJI India</div>
+                    <h3>Drone Photography</h3>
+                    <p>Looking for creators to capture aerial footage of India's diverse landscapes - from Varanasi's ghats to Goa's beaches and Spiti Valley's monasteries.</p>
+                    <p><strong>Opportunity:</strong> Latest drone loan + ₹30,000 for content series</p>
+                    <a href="#" class="btn btn-white">Join Program</a>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">Fujifilm Experience</div>
+                    <h3>Travel Photography Equipment</h3>
+                    <p>Seeking photographers to showcase their mirrorless cameras during cultural festivals like Pushkar Mela, Durga Puja, and Onam celebrations.</p>
+                    <p><strong>Opportunity:</strong> Camera gear sponsorship + exhibition opportunity</p>
+                    <a href="#" class="btn btn-white">Join Program</a>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">OnePlus Explorers</div>
+                    <h3>Mobile Photography</h3>
+                    <p>Looking for content creators to highlight their smartphone camera capabilities in capturing India's vibrant street life in Old Delhi, Kolkata's trams, and Mumbai's marine drive.</p>
+                    <p><strong>Opportunity:</strong> Latest smartphone + ₹25,000 for content creation</p>
+                    <a href="#" class="btn btn-white">Join Program</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Local Brands Section -->
+    <section class="featured-brands" id="local-brands">
+        <div class="container">
+            <h2>Indian Sustainable Products</h2>
+            <div class="brand-grid">
+                <div class="brand-card">
+                    <div class="brand-logo">Forest Essentials</div>
+                    <h3>Ayurvedic Travel Essentials</h3>
+                    <p>Seeking content creators to highlight their naturally sourced travel kits inspired by ingredients from the Himalayas, Kerala's spice gardens, and central India's forests.</p>
+                    <p><strong>Opportunity:</strong> Product package + ₹15,000 for authentic content</p>
+                    <a href="#" class="btn btn-white">Join Program</a>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">Khadi Earth</div>
+                    <h3>Eco-Friendly Travel Products</h3>
+                    <p>Looking for bloggers to showcase their sustainable travel accessories while exploring eco-tourism destinations in Arunachal Pradesh, Andaman Islands, and Silent Valley.</p>
+                    <p><strong>Opportunity:</strong> Full product line + commission-based partnership</p>
+                    <a href="#" class="btn btn-white">Join Program</a>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">Himalayan Natives</div>
+                    <h3>Traditional Food Products</h3>
+                    <p>Seeking food and travel bloggers to highlight their organic trail snacks while exploring remote villages in Uttarakhand, Himachal Pradesh, and Northeast India.</p>
+                    <p><strong>Opportunity:</strong> Food package + ₹10,000 per content series</p>
+                    <a href="#" class="btn btn-white">Join Program</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Brand Sponsorships Section -->
+    <section class="parallax" style="background-image: url('/api/placeholder/1200/800');">
+        <div class="overlay"></div>
+        <div class="parallax-content">
+            <h2>Brand Sponsorships for Influencers</h2>
+            <p>Discover travel gear, apps, and services seeking authentic promotion from content creators across India's most beautiful destinations.</p>
+            <a href="#" class="btn btn-white">Join Now</a>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>Success Stories from Indian Travel Creators</h2>
+            <p class="subtext">See how Local Lens has helped Indian travel creators build meaningful brand partnerships.</p>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <img src="/api/placeholder/400/250" alt="Testimonial 1">
+                    <h3>Priya Sharma | Mountain Trekker</h3>
+                    <p>"Through Local Lens, I connected with outdoor brands that supported my trek across the Valley of Flowers and Roopkund. The gear performed excellently, and the content resonated deeply with my audience."</p>
+                </div>
+                <div class="testimonial-card">
+                    <img src="/api/placeholder/400/250" alt="Testimonial 2">
+                    <h3>Rohan's Photography | Creator</h3>
+                    <p>"The camera equipment sponsorship I received helped me capture the most stunning shots of Ladakh's monasteries and Hampi's ruins. My following doubled and I've since partnered with three more brands!"</p>
+                </div>
+                <div class="testimonial-card">
+                    <img src="/api/placeholder/400/250" alt="Testimonial 3">
+                    <h3>Kerala Diaries | Travel Blogger</h3>
+                    <p>"As a sustainable travel advocate, partnering with eco-conscious Indian brands through Local Lens allowed me to promote responsible tourism while exploring the backwaters and tea plantations of South India."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="featured-brands">
+        <div class="container">
+            <h2 class="text-center">Frequently Asked Questions</h2>
+            <div class="brand-grid">
+                <div class="brand-card">
+                    <h3>What metrics do brands look for?</h3>
+                    <p>Most Indian brands value engagement over follower count. They look for authentic creators with dedicated audiences interested in travel across India's diverse regions.</p>
+                </div>
+                <div class="brand-card">
+                    <h3>How long do sponsorships typically last?</h3>
+                    <p>Initial collaborations range from single posts to 3-month partnerships. Successful relationships often extend to year-long ambassador programs.</p>
+                </div>
+                <div class="brand-card">
+                    <h3>Do I need to visit specific locations?</h3>
+                    <p>Some brands target specific Indian destinations like Rann of Kutch, Kerala backwaters, or Coorg hills, while others focus on your content style regardless of location.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Partner with Premium Brands?</h2>
+            <p>Join Local Lens and discover sponsorship opportunities that will enhance your Indian travel content and provide value to your audience.</p>
+            <a href="#" class="btn btn-white">Join Now</a>
+        </div>
+    </section>
+
+    <!-- Include the footer dynamically -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Function to load components dynamically
+        async function loadComponent(url, containerId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${url}`);
+                }
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading component from ${url}:`, error);
+            }
+        }
+
+        // Load components when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            loadComponent('navbar.html', 'navbar-container');
+            loadComponent('footer.html', 'footer-container');
+        });
+    </script>
+</body>
+</html>

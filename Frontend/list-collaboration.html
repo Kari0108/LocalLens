@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Your Collaboration | Local Lens India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .form-section {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #333;
+            background-color: #111;
+            color: #fff;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #ff6b00;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 2rem;
+            margin-top: 0.5rem;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input {
+            margin-right: 0.5rem;
+        }
+        
+        .submit-btn {
+            background-color: #ff6b00;
+            color: #fff;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .submit-btn:hover {
+            background-color: #ff8624;
+        }
+        
+        .guidelines {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-radius: 4px;
+        }
+        
+        .guidelines h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+        
+        .guidelines ul {
+            padding-left: 1.5rem;
+        }
+        
+        .guidelines li {
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .radio-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include the navbar dynamically -->
+    <div id="navbar-container"></div>
+
+    <!-- Hero Section -->
+    <section class="hero parallax" style="background-image: url('iot_photo.JPG');">
+        <div class="overlay"></div>
+        <div class="hero-content parallax-content">
+            <h1>List Your Collaboration Opportunity</h1>
+            <p>Connect with India's top travel bloggers and influencers to showcase your Indian experience</p>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="form-section">
+        <div class="container form-container">
+            <h2>Create Your Collaboration Listing</h2>
+            <p>Complete the form below to create a new collaboration opportunity for travel content creators across India.</p>
+            
+            <form id="collaboration-form">
+                <div class="form-group">
+                    <label for="title">Collaboration Title*</label>
+                    <input type="text" id="title" class="form-control" placeholder="e.g., 'Experience Luxury in the Heart of Jaipur'" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="brand">Brand/Company Name*</label>
+                    <input type="text" id="brand" class="form-control" placeholder="e.g., 'Royal Rajasthan Retreats'" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="type">Collaboration Type*</label>
+                    <select id="type" class="form-control" required>
+                        <option value="" disabled selected>Select a collaboration type</option>
+                        <option value="hotel">Hotel/Resort Stay</option>
+                        <option value="tour">Tour/Experience</option>
+                        <option value="festival">Festival/Event Coverage</option>
+                        <option value="food">Food & Culinary Experience</option>
+                        <option value="wellness">Wellness & Ayurveda</option>
+                        <option value="gear">Travel Gear/Product</option>
+                        <option value="app">App/Service</option>
+                        <option value="destination">Destination Marketing</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Location in India*</label>
+                    <input type="text" id="location" class="form-control" placeholder="e.g., 'Munnar, Kerala' or 'Multiple locations in Northeast India'" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Detailed Description*</label>
+                    <textarea id="description" class="form-control" placeholder="Describe your collaboration opportunity in detail. Include what you're offering, what you expect in return, ideal timeline, and any special requirements." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Collaboration Option*</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="barter" name="option" value="barter" required>
+                            <label for="barter">Barter (Exchange of services)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="paid" name="option" value="paid">
+                            <label for="paid">Paid Collaboration</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="both" name="option" value="both">
+                            <label for="both">Both Options Available</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Contact Email*</label>
+                    <input type="email" id="email" class="form-control" placeholder="yourname@company.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Contact Phone</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="e.g., +91 98765 43210">
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="submit-btn">Submit Collaboration</button>
+                </div>
+            </form>
+            
+            <div class="guidelines">
+                <h3>Collaboration Guidelines</h3>
+                <ul>
+                    <li>Be clear about what you're offering and what you expect in return</li>
+                    <li>Content creators typically expect coverage of their accommodation, experiences, transportation, or compensation</li>
+                    <li>Highlight what makes your Indian experience unique (historical significance, cultural importance, etc.)</li>
+                    <li>Mention if you're looking for specific content formats (Instagram, blog posts, YouTube videos)</li>
+                    <li>Your listing will be reviewed before going live, typically within 24-48 hours</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include the footer dynamically -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Function to load components dynamically
+        async function loadComponent(url, containerId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${url}`);
+                }
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading component from ${url}:`, error);
+            }
+        }
+
+        // Load components when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            loadComponent('navbar.html', 'navbar-container');
+            loadComponent('footer.html', 'footer-container');
+            
+            // Form submission handler
+            document.getElementById('collaboration-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                alert('Thank you for submitting your collaboration opportunity! Our team will review it shortly.');
+                // Here you would typically send the form data to your server
+            });
+        });
+    </script>
+
+    <script>
+        document.getElementById('collaboration-form').addEventListener('submit', async function (event) {
+          event.preventDefault();
+
+          const formData = {
+            title: document.getElementById('title').value,
+            brand: document.getElementById('brand').value,
+            type: document.getElementById('type').value,
+            location: document.getElementById('location').value,
+            description: document.getElementById('description').value,
+            option: document.querySelector('input[name="option"]:checked')?.value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value
+          };
+
+          const res = await fetch('http://localhost:5000/api/collaboration/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+          });
+
+          const result = await res.json();
+          alert(result.message || 'Something went wrong.');
+        });
+    </script>
+
+</body>
+</html>

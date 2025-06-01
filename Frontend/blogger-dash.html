@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogger Dashboard - Local Lens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            background-color: #000;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #FF9933;
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #FFFFFF;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 153, 51, 0.3);
+        }
+
+        .btn.outline {
+            background: transparent;
+            border: 2px solid #FF9933;
+            color: #FF9933;
+        }
+
+        .btn.outline:hover {
+            background: #FF9933;
+            color: #000;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, #FF9933, #FFFFFF, #138808);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Header/Navigation Styles */
+        .header {
+            background-color: rgba(0, 0, 0, 0.9);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            top: 0;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background-color: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .logo-text span {
+            color: #FF9933;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 1.5rem;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #FF9933;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #FF9933;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .notification-icon {
+            position: relative;
+            margin-right: 1.5rem;
+            cursor: pointer;
+        }
+
+        .notification-icon i {
+            font-size: 1.2rem;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .notification-icon:hover i {
+            color: #FF9933;
+        }
+
+        .notification-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #FF9933;
+            color: #000;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .profile-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #FF9933;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger-line {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('home.5.jpg');
+            height: 50vh;
+            position: relative;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 76px;
+        }
+
+        .dashboard-header .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .dashboard-header .content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .dashboard-header p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Blogger Profile Section */
+        .blogger-profile {
+            padding: 3rem 0;
+            background-color: #111;
+        }
+
+        .profile-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #FF9933;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .profile-info h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .profile-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-meta-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-meta-item i {
+            color: #FF9933;
+            margin-right: 0.5rem;
+        }
+
+        .quick-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background-color: #222;
+            padding: 1rem;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            color: #FF9933;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Blog Posts Section */
+        .blog-posts {
+            padding: 5rem 0;
+            background-color: #000;
+        }
+
+        .posts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .post-card {
+            background-color: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .post-image {
+            height: 200px;
+            position: relative;
+        }
+
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .status-published {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+
+        .status-draft {
+            background-color: #f39c12;
+            color: #000;
+        }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #ccc;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-date {
+            display: flex;
+            align-items: center;
+        }
+
+        .post-date i {
+            color: #FF9933;
+            margin-right: 0.5rem;
+        }
+
+        .post-views {
+            display: flex;
+            align-items: center;
+        }
+
+        .post-views i {
+            color: #FF9933;
+            margin-right: 0.5rem;
+        }
+
+        .post-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .post-excerpt {
+            color: #ccc;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-tag {
+            background-color: #333;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Draft Section */
+        .draft-section {
+            padding: 5rem 0;
+            background-color: #111;
+        }
+
+        /* Analytics Section */
+        .analytics-section {
+            padding: 5rem 0;
+            background-color: #000;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .analytics-card {
+            background-color: #222;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .analytics-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            padding-bottom: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .analytics-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #FF9933;
+        }
+
+        .analytics-period {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin-top: 1rem;
+            background-color: #333;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #FF9933;
+            font-size: 1.5rem;
+        }
+
+        .popular-posts {
+            margin-top: 1.5rem;
+        }
+
+        .popular-post-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .popular-post-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-right: 1rem;
+        }
+
+        .popular-post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .popular-post-info {
+            flex: 1;
+        }
+
+        .popular-post-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .popular-post-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .popular-post-stats span {
+            display: flex;
+            align-items: center;
+        }
+
+        .popular-post-stats i {
+            color: #FF9933;
+            margin-right: 0.5rem;
+        }
+
+        /* Create Post Section */
+        .create-post {
+            padding: 5rem 0;
+            background-color: #111;
+        }
+
+        .create-post-container {
+            background-color: #222;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #333;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #FF9933;
+        }
+
+        .editor-placeholder {
+            background-color: #333;
+            height: 300px;
+            border-radius: 5px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+        }
+
+        .tag-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #333;
+        }
+
+        .tag-item {
+            background-color: #555;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        .tag-close {
+            margin-left: 0.5rem;
+            cursor: pointer;
+        }
+
+        .publish-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .option-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin-right: 1rem;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #FF9933;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Collaboration Section */
+        .collaboration-section {
+            padding: 5rem 0;
+            background-color: #000;
+        }
+
+        .collab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .collab-card {
+            background-color: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .collab-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .collab-header {
+            background-color: #333;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .collab-type {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FF9933;
+            color: #000;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .collab-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .collab-meta {
+            display: flex;
+            gap: 1rem;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .collab-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .collab-meta i {
+            color: #FF9933;
+            margin-right: 0.5rem;
+        }
+
+        .collab-content {
+            padding: 1.5rem;
+        }
+
+        .collab-description {
+            color: #ccc;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #111;
+            padding: 4rem 0 2rem;
+            color: #fff;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #FF9933, #FFFFFF, #138808);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #FF9933;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a:hover {
+            color: #FF9933;
+        }
+
+        .footer-links a i {
+            margin-right: 0.5rem;
+            color: #FF9933;
+            font-size: 0.8rem;
+        }
+
+        .footer-subscribe {
+            margin-top: 1rem;
+        }
+
+        .subscribe-form {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .subscribe-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .subscribe-input:focus {
+            outline: none;
+        }
+
+        .subscribe-btn {
+            background-color: #FF9933;
+            color: #000;
+            border: none;
+            padding: 0 1rem;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .subscribe-btn:hover {
+            background-color: #fff;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: #FF9933;
+            transform: translateY(-5px);
+        }
+
+        .social-icon i {
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .social-icon:hover i {
+            color: #000;
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-bottom-links {
+            margin-top: 1rem;
+        }
+
+        .footer-bottom-links a {
+            color: #ccc;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #FF9933;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 76px;
+                flex-direction: column;
+                background-color: rgba(0, 0, 0, 0.95);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                height: 100vh;
+                padding-top: 2rem;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-item {
+                margin: 1.5rem 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active .hamburger-line:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .hamburger-line:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .hamburger-line:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 2.5rem;
+            }
+            .posts-container {
+                grid-template-columns: 1fr;
+            }
+            .profile-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-meta {
+                justify-content: center;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            .publish-options {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .quick-stats {
+                flex-direction: column;
+            }
+            .collab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header/Navigation -->
+<header class="header">
+    <div class="nav-container">
+        <div class="logo">
+            <img src="logo.jpeg" alt="Local Lens Logo">
+            <div class="logo-text">Local<span>Lens</span></div>
+        </div>
+        
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Destinations</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Community</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Resources</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Help</a>
+            </li>
+        </ul>
+        
+        <div class="user-actions">
+            <div class="notification-icon">
+                <i class="fas fa-bell"></i>
+                <span class="notification-count">5</span>
+            </div>
+            <div class="profile-dropdown">
+                <div class="profile-icon">
+                    <img src="collab-dash-sara.jpg" alt="User Profile">
+                </div>
+            </div>
+            <div class="hamburger"><div class="hamburger">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Dashboard Header -->
+<section class="dashboard-header">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1>Blogger Dashboard</h1>
+        <p>Manage your posts, track performance, and connect with fellow travel writers</p>
+        <a href="#create-post" class="btn">Create New Post</a>
+        <a href="#analytics" class="btn outline">View Analytics</a>
+    </div>
+</section>
+
+<!-- Blogger Profile Section -->
+<section class="blogger-profile">
+    <div class="container">
+        <div class="profile-container">
+            <div class="profile-avatar">
+                <img src="collab-dash-sara.jpg" alt="Blogger Profile">
+            </div>
+            <div class="profile-info">
+                <h2>Priya Sharma</h2>
+                <div class="profile-meta">
+                    <div class="profile-meta-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Mumbai, India</span>
+                    </div>
+                    <div class="profile-meta-item">
+                        <i class="fas fa-globe"></i>
+                        <span>Travel Writer</span>
+                    </div>
+                    <div class="profile-meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Member since 2021</span>
+                    </div>
+                </div>
+                <p>Passionate about exploring hidden gems across India and sharing authentic cultural experiences with travelers from around the world.</p>
+                <div class="quick-stats">
+                    <div class="stat-card">
+                        <h3>28</h3>
+                        <p>Published Posts</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>56.8K</h3>
+                        <p>Total Views</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>872</h3>
+                        <p>Comments</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>4.8</h3>
+                        <p>Rating</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Posts Section -->
+<section class="blog-posts" id="posts">
+    <div class="container">
+        <div class="section-header">
+            <h2>Your Blog Posts</h2>
+            <p>View, edit and manage all your published and draft posts</p>
+        </div>
+        <div class="posts-container">
+            <!-- Post 1 -->
+            <div class="post-card">
+                <div class="post-image">
+                    <img src="salem.jpg" alt="Post Image">
+                    <div class="post-status status-published">Published</div>
+                </div>
+                <div class="post-content">
+                    <div class="post-meta">
+                        <div class="post-date">
+                            <i class="far fa-calendar"></i>
+                            <span>April 12, 2025</span>
+                        </div>
+                        <div class="post-views">
+                            <i class="far fa-eye"></i>
+                            <span>1.2K</span>
+                        </div>
+                    </div>
+                    <h3 class="post-title">Hidden Beaches of Goa You Must Visit</h3>
+                    <p class="post-excerpt">Discover the untouched beauty of Goa's lesser-known beaches away from the tourist crowds. My journey through the pristine coastlines reveals...</p>
+                    <div class="post-tags">
+                        <span class="post-tag">Beaches</span>
+                        <span class="post-tag">Goa</span>
+                        <span class="post-tag">Travel</span>
+                    </div>
+                    <div class="post-actions">
+                        <a href="#" class="btn outline">Edit</a>
+                        <a href="#" class="btn">View</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Post 2 -->
+            <div class="post-card">
+                <div class="post-image">
+                    <img src="find partner-Old Delhi's.avif" alt="Post Image">
+                    <div class="post-status status-published">Published</div>
+                </div>
+                <div class="post-content">
+                    <div class="post-meta">
+                        <div class="post-date">
+                            <i class="far fa-calendar"></i>
+                            <span>April 5, 2025</span>
+                        </div>
+                        <div class="post-views">
+                            <i class="far fa-eye"></i>
+                            <span>2.8K</span>
+                        </div>
+                    </div>
+                    <h3 class="post-title">The Ultimate Guide to Street Food in Delhi</h3>
+                    <p class="post-excerpt">From Chandni Chowk to Connaught Place, explore the vibrant flavors of Delhi's street food scene. My guide to the best chaat, kebabs, and...</p>
+                    <div class="post-tags">
+                        <span class="post-tag">Food</span>
+                        <span class="post-tag">Delhi</span>
+                        <span class="post-tag">Local Cuisine</span>
+                    </div>
+                    <div class="post-actions">
+                        <a href="#" class="btn outline">Edit</a>
+                        <a href="#" class="btn">View</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Post 3 -->
+            <div class="post-card">
+                <div class="post-image">
+                    <img src="find-partner-hampi.jpg" alt="Post Image">
+                    <div class="post-status status-draft">Draft</div>
+                </div>
+                <div class="post-content">
+                    <div class="post-meta">
+                        <div class="post-date">
+                            <i class="far fa-calendar"></i>
+                            <span>March 28, 2025</span>
+                        </div>
+                        <div class="post-views">
+                            <i class="far fa-eye"></i>
+                            <span>-</span>
+                        </div>
+                    </div>
+                    <h3 class="post-title">Sacred Temples of South India: A 10-Day Itinerary</h3>
+                    <p class="post-excerpt">A comprehensive guide to exploring the architectural wonders and spiritual significance of South India's most revered temples...</p>
+                    <div class="post-tags">
+                        <span class="post-tag">Temples</span>
+                        <span class="post-tag">South India</span>
+                        <span class="post-tag">Itinerary</span>
+                    </div>
+                    <div class="post-actions">
+                        <a href="#" class="btn outline">Edit</a>
+                        <a href="#" class="btn">Preview</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Analytics Section -->
+<section class="analytics-section" id="analytics">
+    <div class="container">
+        <div class="section-header">
+            <h2>Analytics & Performance</h2>
+            <p>Track your content performance and audience engagement</p>
+        </div>
+        <div class="analytics-grid">
+            <!-- Views Chart -->
+            <div class="analytics-card">
+                <div class="analytics-title">
+                    <span>Post Views</span>
+                    <div class="analytics-period">Last 30 days</div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-line"></i> View Statistics Graph
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Engagement Chart -->
+            <div class="analytics-card">
+                <div class="analytics-title">
+                    <span>Engagement</span>
+                    <div class="analytics-period">Last 30 days</div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-bar"></i> Engagement Graph
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Popular Posts -->
+            <div class="analytics-card">
+                <div class="analytics-title">
+                    <span>Popular Posts</span>
+                    <div class="analytics-period">Last 30 days</div>
+                </div>
+                <div class="popular-posts">
+                    <!-- Popular Post 1 -->
+                    <div class="popular-post-item">
+                        <div class="popular-post-image">
+                            <img src="find partner-Old Delhi's.avif" alt="Popular Post">
+                        </div>
+                        <div class="popular-post-info">
+                            <h4 class="popular-post-title">The Ultimate Guide to Street Food in Delhi</h4>
+                            <div class="popular-post-stats">
+                                <span><i class="far fa-eye"></i> 2.8K</span>
+                                <span><i class="far fa-comment"></i> 45</span>
+                                <span><i class="far fa-heart"></i> 120</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Popular Post 2 -->
+                    <div class="popular-post-item">
+                        <div class="popular-post-image">
+                            <img src="sea.jpeg" alt="Popular Post">
+                        </div>
+                        <div class="popular-post-info">
+                            <h4 class="popular-post-title">Hidden Beaches of Goa You Must Visit</h4>
+                            <div class="popular-post-stats">
+                                <span><i class="far fa-eye"></i> 1.2K</span>
+                                <span><i class="far fa-comment"></i> 32</span>
+                                <span><i class="far fa-heart"></i> 89</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Popular Post 3 -->
+                    <div class="popular-post-item">
+                        <div class="popular-post-image">
+                            <img src="home-Monsoon Season.jpg" alt="Popular Post">
+                        </div>
+                        <div class="popular-post-info">
+                            <h4 class="popular-post-title">Monsoon Trekking: Best Trails Near Mumbai</h4>
+                            <div class="popular-post-stats">
+                                <span><i class="far fa-eye"></i> 987</span>
+                                <span><i class="far fa-comment"></i> 28</span>
+                                <span><i class="far fa-heart"></i> 76</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Audience Demographics -->
+            <div class="analytics-card">
+                <div class="analytics-title">
+                    <span>Audience Demographics</span>
+                    <div class="analytics-period">Last 30 days</div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-pie"></i> Demographics Chart
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Create Post Section -->
+<section class="create-post" id="create-post">
+    <div class="container">
+        <div class="section-header">
+            <h2>Create New Post</h2>
+            <p>Share your latest travel experiences with the community</p>
+        </div>
+        <div class="create-post-container">
+            <form>
+                <div class="form-group">
+                    <label for="post-title">Post Title</label>
+                    <input type="text" id="post-title" class="form-control" placeholder="Enter a catchy title...">
+                </div>
+                <div class="form-group">
+                    <label for="post-excerpt">Post Excerpt</label>
+                    <textarea id="post-excerpt" class="form-control" rows="3" placeholder="Write a brief summary of your post..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="post-content">Post Content</label>
+                    <div class="editor-placeholder">
+                        <i class="fas fa-pen-fancy"></i> Rich Text Editor would be integrated here
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="post-tags">Tags</label>
+                    <div class="tag-input">
+                        <div class="tag-item">
+                            Travel <span class="tag-close">&times;</span>
+                        </div>
+                        <div class="tag-item">
+                            India <span class="tag-close">&times;</span>
+                        </div>
+                        <input type="text" placeholder="Add tags..." style="border: none; background: transparent; color: #fff; flex: 1;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="post-featured-image">Featured Image</label>
+                    <input type="file" id="post-featured-image" class="form-control">
+                </div>
+                <div class="publish-options">
+                    <div class="option-group">
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <span>Enable Comments</span>
+                    </div>
+                    <div class="option-group">
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                        <span>Feature this post</span>
+                    </div>
+                    <div>
+                        <button type="button" class="btn outline">Save as Draft</button>
+                        <button type="submit" class="btn">Publish Post</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Collaboration Section -->
+<section class="collaboration-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Collaboration Opportunities</h2>
+            <p>Connect with other travel writers and brands for exciting collaborations</p>
+        </div>
+        <div class="collab-grid">
+            <!-- Collab Card 1 -->
+            <div class="collab-card">
+                <div class="collab-header">
+                    <div class="collab-type">Brand</div>
+                    <h3 class="collab-title">Backpack Review Opportunity</h3>
+                    <div class="collab-meta">
+                        <span><i class="fas fa-building"></i> TrekGear India</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                    </div>
+                </div>
+                <div class="collab-content">
+                    <p class="collab-description">Looking for experienced hikers and trekkers to review our new line of all-weather backpacks. Compensation includes free gear and paid content.</p>
+                    <a href="#" class="btn">Apply Now</a>
+                </div>
+            </div>
+            
+            <!-- Collab Card 2 -->
+            <div class="collab-card">
+                <div class="collab-header">
+                    <div class="collab-type">Writer</div>
+                    <h3 class="collab-title">Co-Author for Himalayan Guide</h3>
+                    <div class="collab-meta">
+                        <span><i class="fas fa-user"></i> Arjun Kapoor</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Shimla</span>
+                    </div>
+                </div>
+                <div class="collab-content">
+                    <p class="collab-description">Seeking a co-author with experience in the Himalayan region for a comprehensive guide book. Must have strong photography skills.</p>
+                    <a href="#" class="btn">Connect</a>
+                </div>
+            </div>
+            
+            <!-- Collab Card 3 -->
+            <div class="collab-card">
+                <div class="collab-header">
+                    <div class="collab-type">Tourism Board</div>
+                    <h3 class="collab-title">Kerala Tourism Bloggers Program</h3>
+                    <div class="collab-meta">
+                        <span><i class="fas fa-globe"></i> Kerala Tourism</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Kerala</span>
+                    </div>
+                </div>
+                <div class="collab-content">
+                    <p class="collab-description">Inviting travel bloggers for a 10-day sponsored tour of Kerala's hidden gems. Full expenses covered with content creation requirements.</p>
+                    <a href="#" class="btn">Apply Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About LocalLens</h3>
+                <p>A platform for authentic travel stories and local experiences shared by passionate bloggers from around the world.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Destinations</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Blog</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Community</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Resources</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Blogger Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Writing Guidelines</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> SEO Tips</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Photography Guide</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Monetization</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Success Stories</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Help Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for travel inspiration, tips, and opportunities.</p>
+                <div class="footer-subscribe">
+                    <form class="subscribe-form">
+                        <input type="email" class="subscribe-input" placeholder="Your email address">
+                        <button type="submit" class="subscribe-btn"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 LocalLens. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Scroll effect for header
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+    
+    // Mobile menu toggle
+    document.querySelector('.hamburger').addEventListener('click', function() {
+        this.classList.toggle('active');
+        document.querySelector('.nav-menu').classList.toggle('active');
+    });
+    
+    // Initialize GSAP animations when available
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            // Animate cards on scroll
+            gsap.registerPlugin(ScrollTrigger);
+            
+            gsap.utils.toArray('.post-card').forEach(card => {
+                gsap.from(card, {
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top bottom-=100",
+                        toggleActions: "play none none none"
+                    }
+                });
+            });
+            
+            gsap.utils.toArray('.analytics-card').forEach((card, i) => {
+                gsap.from(card, {
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    delay: i * 0.2,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top bottom-=100",
+                        toggleActions: "play none none none"
+                    }
+                });
+            });
+            
+            gsap.utils.toArray('.collab-card').forEach((card, i) => {
+                gsap.from(card, {
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    delay: i * 0.2,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top bottom-=100",
+                        toggleActions: "play none none none"
+                    }
+                });
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

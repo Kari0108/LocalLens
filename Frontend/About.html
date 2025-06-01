@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Lens | Discover Indian Stories</title>
+    <link rel="stylesheet" href="css.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #000;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* General Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            background-color: #FF9933; /* Orange button background */
+            color: #fff; /* White text */
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-top: 20px;
+            position: relative;
+            z-index: 10;
+            border: 2px solid #FF9933;
+            font-family: 'Montserrat', sans-serif, Arial;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+            opacity: 1 !important; /* Ensure buttons are always visible */
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: #fff;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* White Button Variant */
+        .btn-white {
+            background-color: white;
+            color: #000;
+            border-color: white;
+        }
+
+        .btn-white:hover {
+            background-color: transparent;
+            color: white;
+        }
+
+        /* Fixed Parallax Implementation */
+        .parallax {
+            position: relative;
+            height: 100vh;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            /* Use transform for better performance on Mac */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        /* MacOS specific fix for parallax */
+        @supports (-webkit-touch-callout: none) {
+            .parallax {
+                background-attachment: scroll; /* Use scroll instead of fixed on iOS devices */
+            }
+        }
+
+        /* Ensure first parallax section sits right below navbar */
+        .hero {
+            margin-top: 0;
+            background-image: url('home1.jpg'); /* Add your hero image here */
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .parallax-content {
+            position: relative;
+            text-align: center;
+            max-width: 900px;
+            padding: 0 2rem;
+            z-index: 3;
+            color: #fff;
+            opacity: 1 !important; /* Ensure content is always visible */
+        }
+
+        /* Content Frames */
+        .frame {
+            background-color: black;
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin: 2rem 0;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        .tagline span {
+            color: #FF9933;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        /* Team Section */
+        .team-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .team-member {
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-8px);
+        }
+
+        .team-member img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border-radius: 50%;
+            border: 3px solid #FF9933;
+        }
+
+        .team-member h4 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .team-member p {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 0;
+            color: #ccc;
+        }
+
+        /* Parallax Content Sections */
+        .parallax-2 {
+            background-image: url('home2.jpg');
+        }
+
+        /* Seamless Parallax Block */
+        .seamless-block .parallax {
+            height: 80vh;
+        }
+
+        .seamless-block .parallax-1 {
+            background-image: url('home3.jpg');
+        }
+
+        .seamless-block .parallax-2 {
+            background-image: url('home4.jpg');
+        }
+
+        .seamless-block .parallax-3 {
+            background-image: url('home5.jpg');
+        }
+
+        .seamless-block .parallax-4 {
+            background-image: url('home6.jpg');
+        }
+
+        .seamless-block .parallax-5 {
+            background-image: url('home7.jpg');
+        }
+
+        /* Experiences Section */
+        .experiences {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .experience-item {
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 8px;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .experience-item:hover {
+            transform: translateY(-8px);
+        }
+
+        .experience-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .experience-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .experience-item .overlay {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+
+        .experience-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            color: #fff;
+            position: relative;
+            z-index: 3;
+        }
+
+        /* Final Parallax */
+        .final-parallax {
+            background-image: url('home8.jpg');
+        }
+
+        /* Custom font styles */
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            letter-spacing: -1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-size: 3rem;
+            letter-spacing: -0.5px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #e0e0e0;
+        }
+
+        /* Logo styles */
+        .logo span {
+            color: #FF9933;
+        }
+
+        /* Container for better spacing */
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Enhanced button container for better visibility */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            opacity: 1 !important; /* Ensure buttons container is always visible */
+        }
+
+        /* Centering all buttons in their containers */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-3 {
+            margin-top: 2rem;
+        }
+
+        /* Indian border styling */
+        .indian-border {
+            border-top: 3px solid #FF9933; /* Orange */
+            border-bottom: 3px solid #138808; /* Green */
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        /* Navbar Placeholder - Same height as your actual navbar */
+        #nav-placeholder {
+            height: 80px; /* Adjust to match your navbar height */
+            position: relative;
+            z-index: 100;
+        }
+
+        /* Fix for footer placement */
+        #footer-placeholder {
+            margin-top: 0;
+        }
+
+        /* Animation Helper Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Hero section specific styles */
+        .hero .parallax-content h1 {
+            font-size: 6rem; /* Larger size for better visibility */
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8); /* Stronger shadow for better contrast */
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero .tagline {
+            font-size: 2.8rem; /* Slightly larger for better visibility */
+            margin: 2rem 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            h2 {
+                font-size: 2.5rem;
+            }
+            .hero .parallax-content h1 {
+                font-size: 4.5rem;
+            }
+            .hero .tagline {
+                font-size: 2.2rem;
+            }
+            .team-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .experiences {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallax, .seamless-block .parallax {
+                height: 70vh;
+                background-attachment: scroll; /* Better mobile performance */
+            }
+            .hero .parallax-content h1 {
+                font-size: 3.5rem;
+            }
+            .hero .tagline {
+                font-size: 1.8rem;
+            }
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .experiences {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            .hero .parallax-content h1 {
+                font-size: 2.8rem;
+            }
+            .hero .tagline {
+                font-size: 1.5rem;
+            }
+            .team-section {
+                grid-template-columns: 1fr;
+            }
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            .frame {
+                padding: 4rem 0;
+            }
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- Hero Parallax Section -->
+<section class="parallax hero" id="home">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h1>LOCAL<span style="color: #FF9933;"> LENS</span></h1>
+        <p class="tagline">Explore. <span>Connect.</span> Create Together.</p>
+        <div class="button-container">
+            <a href="explore%20experiences.html" class="btn">Discover India</a>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="frame" id="about">
+    <div class="container">
+        <div class="indian-border">
+            <h2>Our Mission</h2>
+            <p>Local Lens is a collective of photographers, storytellers, and local guides dedicated to uncovering the hidden gems and authentic experiences that define India. We believe that every corner of this vibrant country has stories worth telling, and we're here to capture them through our lens.</p>
+            <p>Our team works closely with local communities across India to ensure that our content is authentic, respectful, and truly representative of the places we feature. By highlighting local perspectives, we aim to promote sustainable tourism and deeper connections between travelers and India's rich cultural tapestry.</p>
+        </div>
+        <div class="button-container">
+            <a href="EXPERIENCES.html" class="btn">View Our Work</a>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="frame" id="gallery">
+    <div class="container">
+        <h2>Explore Indian Culture Through Our Lens</h2>
+        <p>Each photograph tells a unique story of people, places, and traditions from across the Indian subcontinent.</p>
+        <div class="gallery">
+            <div class="gallery-item"><img src="home-Indian%20Festival.jpg" alt="Indian Festival"></div>
+            <div class="gallery-item"><img src="home-rural%20india.jpg" alt="Rural Life"></div>
+            <div class="gallery-item"><img src="images.jpeg" alt="Traditional Dance"></div>
+            <div class="gallery-item"><img src="home-Street%20Food.jpg" alt="Street Food"></div>
+            <div class="gallery-item"><img src="home-Temple%20Architecture.jpg" alt="Temple Architecture"></div>
+            <div class="gallery-item"><img src="home-Textile%20Crafts.jpg" alt="Textile Crafts"></div>
+            <div class="gallery-item"><img src="home-Desert%20Landscapes.jpeg" alt="Desert Landscapes"></div>
+            <div class="gallery-item"><img src="home-Mountain%20Villages.webp" alt="Mountain Villages"></div>
+            <div class="gallery-item"><img src="home-Urban%20India.jpg" alt="Urban India"></div>
+            <div class="gallery-item"><img src="home-Monsoon%20Season.jpg" alt="Monsoon Season"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Collaborative Experiences Parallax -->
+<section class="parallax parallax-2">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h2>Collaborative Experiences</h2>
+        <p>Join our community of creators and share your own perspective on India. We're always looking for passionate collaborators who want to contribute to our growing collection of local stories.</p>
+        <div class="button-container">
+            <a href="reviews.html" class="btn btn-white">Share Your Story</a>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="frame" id="team">
+    <div class="container">
+        <h2>Our Team</h2>
+        <p>Meet the dedicated individuals who bring Local Lens India to life.</p>
+        <div class="team-section">
+            <div class="team-member">
+                <img src="bhavya.jpg" alt="Aditya Sharma">
+                <h4>Bhavya Jain</h4>
+                <p>Founder & Lead Photographer</p>
+            </div>
+            <div class="team-member">
+                <img src="kanak.jpg" alt="Priya Patel">
+                <h4>Kanak Jaiswal</h4>
+                <p>Creative Director</p>
+            </div>
+            <div class="team-member">
+                <img src="karishma.jpg" alt="Rajesh Kumar">
+                <h4>Karishma Parwani</h4>
+                <p>Content Strategist</p>
+            </div>
+            <div class="team-member">
+                <img src="vanshika.jpg" alt="Meera Singh">
+                <h4>Vanshika Nagar</h4>
+                <p>Community Manager</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Seamless Parallax Block -->
+<section class="seamless-block">
+    <div class="parallax parallax-1">
+        <div class="overlay"></div>
+        <div class="parallax-content">
+            <h2>Urban Exploration</h2>
+            <p>Discover the pulse of Indian city life through the eyes of locals.</p>
+            <div class="button-container">
+                <a href="join%20collaborations.html" class="btn">Book City Tour</a>
+            </div>
+        </div>
+    </div>
+    <div class="parallax parallax-2">
+        <div class="overlay"></div>
+        <div class="parallax-content">
+            <h2>Cultural Immersion</h2>
+            <p>Dive deep into Indian traditions, festivals, and community celebrations.</p>
+            <div class="button-container">
+                <a href="browse-events.html" class="btn btn-white">Join Festival</a>
+            </div>
+        </div>
+    </div>
+    <div class="parallax parallax-3">
+        <div class="overlay"></div>
+        <div class="parallax-content">
+            <h2>Culinary Journeys</h2>
+            <p>Taste India through local flavors and regional dining experiences.</p>
+            <div class="button-container">
+                <a href="cultural%20food.html" class="btn">Taste India</a>
+            </div>
+        </div>
+    </div>
+    <div class="parallax parallax-4">
+        <div class="overlay"></div>
+        <div class="parallax-content">
+            <h2>Natural Wonders</h2>
+            <p>Experience breathtaking Indian landscapes and hidden natural treasures.</p>
+            <div class="button-container">
+                <a href="browse-events.html" class="btn btn-white">Explore Trails</a>
+            </div>
+        </div>
+    </div>
+    <div class="parallax parallax-5">
+        <div class="overlay"></div>
+        <div class="parallax-content">
+            <h2>Artisan Crafts</h2>
+            <p>Meet the makers preserving traditional Indian skills and creating modern masterpieces.</p>
+            <div class="button-container">
+                <a href="join%20collaborations.html" class="btn">Book Workshop</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Experiences Section -->
+<section class="frame" id="experiences">
+    <div class="container">
+        <h2>Curated Experiences</h2>
+        <p>Each experience we offer has been carefully crafted to provide authentic connections with local communities and cultures across India. Our expert guides will take you beyond the tourist trails into the heart of each destination.</p>
+        <div class="experiences">
+            <div class="experience-item">
+                <img src="home-Old%20Delhi%20Food%20Walk.jpg" alt="Old Delhi Food Walk">
+                <div class="overlay">
+                    <h3>Old Delhi Food Walk</h3>
+                </div>
+            </div>
+            <div class="experience-item">
+                <img src="home-Rajasthani%20Artisans.jpg" alt="Rajasthani Artisans">
+                <div class="overlay">
+                    <h3>Rajasthani Artisans</h3>
+                </div>
+            </div>
+            <div class="experience-item">
+                <img src="home-Himalayan%20Highlands.jpg" alt="Himalayan Highlands">
+                <div class="overlay">
+                    <h3>Himalayan Highlands</h3>
+                </div>
+            </div>
+            <div class="experience-item">
+                <img src="home-Kerala%20Backwaters.jpg" alt="Kerala Backwaters">
+                <div class="overlay">
+                    <h3>Kerala Backwaters</h3>
+                </div>
+            </div>
+            <div class="experience-item">
+                <img src="home-mumbai%20by%20nights.jpg" alt="Mumbai By Night">
+                <div class="overlay">
+                    <h3>Mumbai By Night</h3>
+                </div>
+            </div>
+            <div class="experience-item">
+                <img src="home-Varanasi%20Ghats.jpg" alt="Varanasi Ghats">
+                <div class="overlay">
+                    <h3>Varanasi Ghats</h3>
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <a href="experiences.html" class="btn">View All Experiences</a>
+        </div>
+    </div>
+</section>
+
+<!-- Final Parallax -->
+<section class="parallax final-parallax">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h2>Begin Your Indian Journey</h2>
+        <p>Ready to explore India through a different lens? Join us on an unforgettable adventure.</p>
+        <div class="button-container">
+            <a href="explore%20experiences.html" class="btn btn-white">Book Now</a>
+        </div>
+    </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<!-- JavaScript to dynamically include nav and footer -->
+<script>
+    // Load navigation
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("nav-placeholder").innerHTML = data);
+
+    // Load footer
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("footer-placeholder").innerHTML = data);
+</script>
+
+<!-- GSAP + ScrollTrigger script with Mac compatibility fixes -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Set elements to be visible immediately to prevent flashing
+        gsap.set('.btn, .parallax-content', {opacity: 1});
+
+        // Call animations when content is loaded
+        initAnimations();
+
+        // Force a redraw on page load to fix any render issues
+        setTimeout(function() {
+            window.dispatchEvent(new Event('resize'));
+        }, 100);
+
+        function initAnimations() {
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (navbar && window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else if (navbar) {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Cross-platform parallax effect
+            const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+
+            // Different parallax implementation for Mac
+            if (isMac) {
+                // Using a more Mac-friendly parallax approach
+                gsap.utils.toArray('.parallax').forEach(section => {
+                    const bg = section.style.backgroundImage;
+
+                    // Create a background div that can be moved with transform
+                    const bgDiv = document.createElement('div');
+                    bgDiv.style.cssText = `
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 120%;
+                        background-image: ${bg};
+                        background-size: cover;
+                        background-position: center;
+                        z-index: 0;
+                    `;
+
+                    section.style.backgroundImage = 'none';
+                    section.style.position = 'relative';
+                    section.style.overflow = 'hidden';
+
+                    section.insertBefore(bgDiv, section.firstChild);
+
+                    // Use transform for smoother animation on Mac
+                    gsap.to(bgDiv, {
+                        y: '20%',
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: section,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true
+                        }
+                    });
+                });
+            } else {
+                // Standard parallax effect for other platforms
+                gsap.utils.toArray('.parallax').forEach(section => {
+                    gsap.to(section, {
+                        backgroundPosition: `50% ${innerHeight / 4}px`,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: section,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: 0.5
+                        }
+                    });
+                });
+            }
+
+            // Make sure all buttons and text are visible with no animation delay
+            gsap.set('.btn, .button-container, h1, h2, h3, h4, .tagline, p', {opacity: 1, y: 0});
+
+            // Animate sections on scroll with reduced animation duration
+            // and no delay to prevent flashing/disappearing content
+            gsap.utils.toArray('.frame').forEach(section => {
+                // Animate heading and paragraph with quick but subtle animation
+                gsap.from(section.querySelectorAll('h2, p'), {
+                    y: 30,
+                    opacity: 0.8,
+                    duration: 0.5,
+                    stagger: 0.1,
+                    ease: "power1.out",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    }
+                });
+
+                // Gallery items with shorter animation
+                if (section.querySelector('.gallery')) {
+                    gsap.from(section.querySelectorAll('.gallery-item'), {
+                        y: 30,
+                        opacity: 0.8,
+                        duration: 0.4,
+                        stagger: 0.05,
+                        ease: "power1.out",
+                        scrollTrigger: {
+                            trigger: section.querySelector('.gallery'),
+                            start: "top 85%",
+                            toggleActions: "play none none none"
+                        }
+                    });
+                }
+
+                // Team members with shorter animation
+                if (section.querySelector('.team-section')) {
+                    gsap.from(section.querySelectorAll('.team-member'), {
+                        y: 30,
+                        opacity: 0.8,
+                        duration: 0.4,
+                        stagger: 0.1,
+                        ease: "power1.out",
+                        scrollTrigger: {
+                            trigger: section.querySelector('.team-section'),
+                            start: "top 85%",
+                            toggleActions: "play none none none"
+                        }
+                    });
+                }
+
+                // Experience items with shorter animation
+                if (section.querySelector('.experiences')) {
+                    gsap.from(section.querySelectorAll('.experience-item'), {
+                        y: 30,
+                        opacity: 0.8,
+                        duration: 0.4,
+                        stagger: 0.1,
+                        ease: "power1.out",
+                        scrollTrigger: {
+                            trigger: section.querySelector('.experiences'),
+                            start: "top 85%",
+                            toggleActions: "play none none none"
+                        }
+                    });
+                }
+            });
+
+            // Animate parallax content with shorter, more subtle animations
+            gsap.utils.toArray('.parallax-content').forEach(content => {
+                gsap.from(content.children, {
+                    y: 30,
+     opacity: 0.8,
+                    duration: 0.6,
+                    stagger: 0.1,
+                    ease: "power1.out",
+                    scrollTrigger: {
+                        trigger: content.parentElement,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            });
+
+            // Hero section animation - immediate without scroll trigger
+            // Set immediate visibility to prevent flashing
+            const heroSection = document.querySelector('.hero .parallax-content');
+            if (heroSection) {
+                gsap.set(heroSection.children, {opacity: 1, y: 0});
+
+                // Add a subtle animation that won't affect visibility
+                gsap.from(heroSection.children, {
+                    y: 20,
+                    opacity: 0.9,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: "power1.out",
+                    delay: 0.1
+                });
+            }
+        }
+
+        // Fix for Mac Safari not properly loading images with parallax
+        function preloadBackgroundImages() {
+            const parallaxSections = document.querySelectorAll('.parallax');
+            parallaxSections.forEach(section => {
+                const style = getComputedStyle(section);
+                const url = style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+                if (url !== 'none') {
+                    const img = new Image();
+                    img.src = url;
+                }
+            });
+        }
+        preloadBackgroundImages();
+
+        // Force repaint of all buttons to ensure visibility
+        const allButtons = document.querySelectorAll('.btn');
+        allButtons.forEach(button => {
+            // Force repaint and ensure opacity is 1
+            button.style.opacity = '1';
+            void button.offsetWidth;
+        });
+
+        // Additional fix for Mac - listen for scroll events and force redraw
+        if (/Mac|iPod|iPhone|iPad/.test(navigator.platform)) {
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    document.querySelectorAll('.parallax').forEach(section => {
+                        section.style.transform = 'translateZ(0)';
+                    });
+                }, 50);
+            });
+        }
+    });
+</script>
+</body>
+</html>

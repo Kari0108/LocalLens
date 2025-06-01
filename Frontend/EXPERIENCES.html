@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover Experiences | Local Lens</title>
+  <link rel="stylesheet" href="css.css">
+  <style>
+    /* Additional styles not found in css.css */
+    .parallax-section {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      overflow: hidden;
+    }
+
+    .parallax-content {
+      text-align: center;
+      max-width: 900px;
+      padding: 0 2rem;
+      z-index: 2;
+    }
+
+    .black-frame {
+      background-color: #000;
+      padding: 8rem 0;
+      position: relative;
+    }
+
+    .frame-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .gallery-section, .reviews-section, .category-section {
+      background-color: #000;
+      padding: 5rem 0;
+    }
+
+    .gallery-container, .reviews-container, .category-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .category-card {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .category-image img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .category-content {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 1.5rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      text-align: center;
+    }
+
+    .category-content h3 {
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .reviews-slider {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+
+    .review-card {
+      display: none;
+      padding: 2rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .review-card.active {
+      display: block;
+    }
+
+    .review-text {
+      font-style: italic;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .reviewer {
+      font-weight: 700;
+      color: #FF9933;
+    }
+
+    /* Media Queries for Responsive Design */
+    @media (max-width: 992px) {
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Include navbar.html using fetch API -->
+<div id="navbar-container"></div>
+
+<!-- Hero Parallax Section -->
+<section class="parallax-section" style="background-image: url('exp1.jpg');">
+  <div class="parallax-content">
+    <h1>Discover Local Experiences Like Never Before</h1>
+    <p>Explore hidden gems, unique cultures, and authentic stories from real travelers and locals.</p>
+    <a href="explore%20experiences.html" class="btn">Start Exploring</a>
+  </div>
+</section>
+
+<!-- Black Frame Section - Introduction -->
+<section class="black-frame">
+  <div class="frame-container">
+    <h2>Explore Your Way</h2>
+    <p>Dive into a world of authentic travel experiences handpicked by locals and seasoned travelers. Filter by location to discover hidden gems in your dream destination, browse by category to find activities that match your interests, or explore themed collections for inspiration. Each experience comes with insider tips, stunning visuals, and real stories that will transform your journey into something truly extraordinary.</p>
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery-section">
+  <div class="gallery-container">
+    <h2>Experience the Magic of Local Travel</h2>
+    <div class="gallery">
+      <div class="gallery-item">
+        <img src="exp_img-src1.jpg" alt="Local Market">
+      </div>
+      <div class="gallery-item">
+        <img src="exp_img-src.jpg" alt="Hiking Trail">
+      </div>
+      <div class="gallery-item">
+        <img src="exp_img-src3.jpg" alt="Street Food">
+      </div>
+      <div class="gallery-item">
+        <img src="exp_img-src4.jpg" alt="Historical Site">
+      </div>
+      <div class="gallery-item">
+        <img src="exp_img-src5jpg.avif" alt="Beach Sunset">
+      </div>
+      <div class="gallery-item">
+        <img src="exp_img-src6.avif" alt="Night Market">
+      </div>
+      <div class="gallery-item">
+        <img src="exp_img-src7jpg.jpg" alt="Local Festival">
+      </div>
+      <div class="gallery-item">
+        <img src="exp_img-src8.jpg" alt="Hidden Waterfall">
+      </div>
+      <div class="gallery-item">
+        <img src="home-Rajasthani Artisans.jpg" alt="Village Life">
+      </div>
+      <div class="gallery-item">
+        <img src="exp_img-src9.jpg" alt="Urban Adventure">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Second Parallax Section -->
+<section class="parallax-section" style="background-image: url('exp2.jpg');">
+  <div class="parallax-content">
+    <h1>Curated Travel Experiences by Locals</h1>
+    <p>Get recommendations from real travelers and locals who know the best-kept secrets of every destination.</p>
+    <a href="experience%20details.html" class="btn">Browse Experiences</a>
+  </div>
+</section>
+
+<!-- Black Frame Section - Categories -->
+<section id="categories" class="category-section">
+  <div class="category-container">
+    <h2>Find Experiences By Category</h2>
+    <div class="category-grid">
+      <div class="category-card">
+        <div class="category-image">
+          <img src="collab1.jpg" alt="Adventure">
+        </div>
+        <div class="category-content">
+          <h3>Adventure</h3>
+          <a href="category%20adventure.html" class="btn">Explore</a>
+        </div>
+      </div>
+      <div class="category-card">
+        <div class="category-image">
+          <img src="find partner-Old Delhi's.avif" alt="Food & Culture">
+        </div>
+        <div class="category-content">
+          <h3>Food & Culture</h3>
+          <a href="cultural%20food.html" class="btn">Explore</a>
+        </div>
+      </div>
+      <div class="category-card">
+        <div class="category-image">
+          <img src="find-partner-parellex1.jpg" alt="Offbeat Destinations">
+        </div>
+        <div class="category-content">
+          <h3>Offbeat Destinations</h3>
+          <a href="offbeat.html" class="btn">Explore</a>
+        </div>
+      </div>
+      <div class="category-card">
+        <div class="category-image">
+          <img src="home8.jpg" alt="City Walks">
+        </div>
+        <div class="category-content">
+          <h3>City Walks</h3>
+          <a href="#city-walks" class="btn">Explore</a>
+        </div>
+      </div>
+      <div class="category-card">
+        <div class="category-image">
+          <img src="home3.jpg" alt="Nature Escapes">
+        </div>
+        <div class="category-content">
+          <h3>Nature Escapes</h3>
+          <a href="" class="btn">Explore</a>
+        </div>
+      </div>
+      <div class="category-card">
+        <div class="category-image">
+          <img src="experiences1.jpg" alt="Local Workshops">
+        </div>
+        <div class="category-content">
+          <h3>Local Workshops</h3>
+          <a href="#workshops" class="btn">Explore</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Continuous Parallax Section 1 -->
+<section class="parallax-section" style="background-image: url('exp3.jpg');">
+  <div class="parallax-content">
+    <h1>Hidden Gems Unlocked</h1>
+    <p>Discover secret spots that only locals know about in destinations around the world.</p>
+    <a href="hidden%20gems.html" class="btn">Find Hidden Experiences</a>
+  </div>
+</section>
+
+<!-- Continuous Parallax Section 2 -->
+<section class="parallax-section" style="background-image: url('exp4.jpg');">
+  <div class="parallax-content">
+    <h1>Cultural & Food Tours</h1>
+    <p>Taste authentic local cuisine and immerse yourself in rich cultural traditions.</p>
+    <a href="cultural%20food.html" class="btn">Explore Food Culture</a>
+  </div>
+</section>
+
+<!-- Continuous Parallax Section 3 -->
+<section class="parallax-section" style="background-image: url('exp5.jpg');">
+  <div class="parallax-content">
+    <h1>Offbeat Adventures</h1>
+    <p>Step off the beaten path and create memories that will last a lifetime.</p>
+    <a href="category%20adventure.html" class="btn">Discover Adventures</a>
+  </div>
+</section>
+
+<!-- Reviews Section -->
+<section class="reviews-section">
+  <div class="reviews-container">
+    <h2>What Travelers Say About Us</h2>
+    <div class="reviews-slider">
+      <div class="review-card active">
+        <p class="review-text">"The local cooking class in Bangkok was the highlight of my trip! I would have never found this gem without this platform. The host was welcoming and I learned so much about Thai cuisine."</p>
+        <p class="reviewer">- Sarah J., United Kingdom</p>
+      </div>
+      <div class="review-card">
+        <p class="review-text">"Thanks to the recommendations here, I discovered a hidden waterfall in Bali that wasn't packed with tourists. The local guide shared stories about the area that made the experience even more special."</p>
+        <p class="reviewer">- Michael L., Australia</p>
+      </div>
+      <div class="review-card">
+        <p class="review-text">"The street art tour in Mexico City was incredible! The local perspective made all the difference. I saw parts of the city I would have never explored on my own."</p>
+        <p class="reviewer">- Elena M., Spain</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final Parallax Section -->
+<section class="parallax-section" style="background-image: url('exp6.jpg');">
+  <div class="parallax-content">
+    <h1>Start Your Journey Today!</h1>
+    <p>Find experiences that inspire you, and create your own travel story.</p>
+    <a href="explore%20experiences.html" class="btn">Discover Now</a>
+  </div>
+</section>
+
+<!-- Include footer.html using fetch API -->
+<div id="footer-container"></div>
+
+<script>
+  // Load navbar and footer components
+  document.addEventListener('DOMContentLoaded', function() {
+    // Function to fetch and insert HTML content
+    async function includeHTML(url, targetElementId) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch ${url}: ${response.status}`);
+        }
+        const html = await response.text();
+        document.getElementById(targetElementId).innerHTML = html;
+
+        // Execute any scripts in the included HTML
+        const scripts = document.getElementById(targetElementId).getElementsByTagName('script');
+        for (let i = 0; i < scripts.length; i++) {
+          const script = document.createElement('script');
+          script.textContent = scripts[i].textContent;
+          document.body.appendChild(script);
+        }
+      } catch (error) {
+        console.error(`Error including HTML from ${url}:`, error);
+      }
+    }
+
+    // Include navbar and footer
+    includeHTML('navbar.html', 'navbar-container');
+    includeHTML('footer.html', 'footer-container');
+
+    // Gallery scroll
+    const gallery = document.querySelector('.gallery');
+    if (gallery) {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        gallery.addEventListener('mousedown', (e) => {
+            isDown = true;
+            gallery.style.cursor = 'grabbing';
+            startX = e.pageX - gallery.offsetLeft;
+            scrollLeft = gallery.scrollLeft;
+        });
+
+        gallery.addEventListener('mouseleave', () => {
+            isDown = false;
+            gallery.style.cursor = 'grab';
+        });
+
+        gallery.addEventListener('mouseup', () => {
+            isDown = false;
+            gallery.style.cursor = 'grab';
+        });
+
+        gallery.addEventListener('mousemove', (e) => {
+            if(!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - gallery.offsetLeft;
+            const walk = (x - startX) * 2;
+            gallery.scrollLeft = scrollLeft - walk;
+        });
+    }
+
+    // Review slider
+    const reviewCards = document.querySelectorAll('.review-card');
+    let currentReview = 0;
+
+    function showReview(n) {
+        reviewCards.forEach(card => {
+            card.classList.remove('active');
+        });
+        reviewCards[n].classList.add('active');
+    }
+
+    function nextReview() {
+        currentReview++;
+        if (currentReview >= reviewCards.length) {
+            currentReview = 0;
+        }
+        showReview(currentReview);
+    }
+
+    // Auto-rotate reviews
+    if (reviewCards.length > 0) {
+        setInterval(nextReview, 5000);
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Offers | Local Lens India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .hotel-offers {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .hotel-offers h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .hotel-offers-intro {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+        
+        .hotel-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .hotel-card {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            border-radius: 4px;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .hotel-info h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .hotel-location {
+            color: #ff6b00;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .hotel-description {
+            margin-bottom: 1rem;
+        }
+        
+        .hotel-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hotel-tag {
+            background-color: #222;
+            color: #fff;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+        
+        .hotel-cta {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        
+        .offer-type {
+            background-color: #ff6b00;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .filters {
+            background-color: #111;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+        }
+        
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .filter-group select {
+            padding: 0.75rem;
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 4px;
+        }
+        
+        .filter-btn {
+            align-self: flex-end;
+            margin-top: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hotel-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .hotel-cta {
+                align-items: flex-start;
+            }
+            
+            .filters-container {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include the navbar dynamically -->
+    <div id="navbar-container"></div>
+
+    <!-- Hero Section with Parallax Effect -->
+    <section class="hero parallax" style="background-image: url('/api/placeholder/1200/600');">
+        <div class="overlay"></div>
+        <div class="hero-content parallax-content">
+            <h1>Luxury Hotel Collaborations in India</h1>
+            <p>Connect with top-tier accommodations across India seeking authentic travel content creators.</p>
+        </div>
+    </section>
+
+    <!-- Hotel Offers Section -->
+    <section class="hotel-offers">
+        <div class="container">
+            <div class="hotel-offers-intro">
+                <h2>Partner with India's Finest Hotels</h2>
+                <p>Discover collaboration opportunities with renowned hotels and boutique properties across India. From heritage palaces to eco-retreats, find your perfect partnership.</p>
+            </div>
+            
+            <!-- Filters Section -->
+            <div class="filters">
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="region">Region</label>
+                        <select id="region">
+                            <option value="">All Regions</option>
+                            <option value="north">North India</option>
+                            <option value="south">South India</option>
+                            <option value="east">East India</option>
+                            <option value="west">West India</option>
+                            <option value="northeast">Northeast India</option>
+                            <option value="central">Central India</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="type">Property Type</label>
+                        <select id="type">
+                            <option value="">All Types</option>
+                            <option value="heritage">Heritage Property</option>
+                            <option value="luxury">Luxury Hotel</option>
+                            <option value="boutique">Boutique Stay</option>
+                            <option value="resort">Resort</option>
+                            <option value="eco">Eco-Retreat</option>
+                            <option value="homestay">Homestay</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="offer">Collaboration Type</label>
+                        <select id="offer">
+                            <option value="">All Offers</option>
+                            <option value="barter">Barter Stay</option>
+                            <option value="paid">Paid Collaboration</option>
+                            <option value="ambassador">Brand Ambassador</option>
+                            <option value="social">Social Media Content</option>
+                        </select>
+                    </div>
+                    <button class="btn filter-btn">Apply Filters</button>
+                </div>
+            </div>
+            
+            <!-- Hotel Listings -->
+            <div class="hotel-list">
+                <!-- Hotel 1 -->
+                <div class="hotel-card">
+                    <div class="hotel-info">
+                        <h3>Taj Lake Palace</h3>
+                        <span class="hotel-location">Udaipur, Rajasthan</span>
+                        <p class="hotel-description">This iconic heritage hotel floating on Lake Pichola seeks content creators to capture its royal splendor and unique experiences. Looking for sophisticated visual storytelling that highlights our traditional boat arrival, heritage walks, and cultural performances.</p>
+                        <div class="hotel-tags">
+                            <span class="hotel-tag">Heritage</span>
+                            <span class="hotel-tag">Luxury</span>
+                            <span class="hotel-tag">Royal Experience</span>
+                        </div>
+                    </div>
+                    <div class="hotel-cta">
+                        <span class="offer-type">Barter Stay</span>
+                        <a href="#" class="btn btn-white">Apply Now</a>
+                    </div>
+                </div>
+                
+                <!-- Hotel 2 -->
+                <div class="hotel-card">
+                    <div class="hotel-info">
+                        <h3>Spice Village Eco Resort</h3>
+                        <span class="hotel-location">Thekkady, Kerala</span>
+                        <p class="hotel-description">Nestled in the Cardamom Hills of Kerala, our eco-friendly retreat is looking for nature and wellness bloggers to showcase our sustainable practices, spice plantation tours, and Ayurvedic treatments. Ideal for creators focused on responsible tourism.</p>
+                        <div class="hotel-tags">
+                            <span class="hotel-tag">Eco-Retreat</span>
+                            <span class="hotel-tag">Wellness</span>
+                            <span class="hotel-tag">Sustainable</span>
+                        </div>
+                    </div>
+                    <div class="hotel-cta">
+                        <span class="offer-type">Paid + Stay</span>
+                        <a href="#" class="btn btn-white">Apply Now</a>
+                    </div>
+                </div>
+                
+                <!-- Hotel 3 -->
+                <div class="hotel-card">
+                    <div class="hotel-info">
+                        <h3>The Himalayan Glamping Retreat</h3>
+                        <span class="hotel-location">Pangot, Uttarakhand</span>
+                        <p class="hotel-description">Luxury tents with panoramic Himalayan views seeking adventure and outdoor content creators. Collaboration includes birdwatching tours, forest treks, and stargazing experiences. Looking for content that captures the blend of wilderness luxury.</p>
+                        <div class="hotel-tags">
+                            <span class="hotel-tag">Glamping</span>
+                            <span class="hotel-tag">Adventure</span>
+                            <span class="hotel-tag">Wildlife</span>
+                        </div>
+                    </div>
+                    <div class="hotel-cta">
+                        <span class="offer-type">Barter Stay</span>
+                        <a href="#" class="btn btn-white">Apply Now</a>
+                    </div>
+                </div>
+                
+                <!-- Hotel 4 -->
+                <div class="hotel-card">
+                    <div class="hotel-info">
+                        <h3>Evolve Back Kuruba Safari Lodge</h3>
+                        <span class="hotel-location">Kabini, Karnataka</span>
+                        <p class="hotel-description">Luxury wildlife resort on the banks of Kabini River seeking wildlife photographers and content creators. Offering exclusive jungle safaris to spot tigers, elephants and rare birds. Ideal for creators who can highlight conservation efforts alongside luxury.</p>
+                        <div class="hotel-tags">
+                            <span class="hotel-tag">Wildlife</span>
+                            <span class="hotel-tag">Safari</span>
+                            <span class="hotel-tag">Conservation</span>
+                        </div>
+                    </div>
+                    <div class="hotel-cta">
+                        <span class="offer-type">Brand Ambassador</span>
+                        <a href="#" class="btn btn-white">Apply Now</a>
+                    </div>
+                </div>
+                
+                <!-- Hotel 5 -->
+                <div class="hotel-card">
+                    <div class="hotel-info">
+                        <h3>Haveli Dharampura</h3>
+                        <span class="hotel-location">Old Delhi</span>
+                        <p class="hotel-description">Award-winning restored heritage haveli in the heart of Old Delhi seeking cultural and food bloggers. Collaboration includes Old Delhi food walks, rooftop dining with Jama Masjid views, and traditional Kathak performances. Perfect for storytellers passionate about heritage preservation.</p>
+                        <div class="hotel-tags">
+                            <span class="hotel-tag">Heritage</span>
+                            <span class="hotel-tag">Culinary</span>
+                            <span class="hotel-tag">Cultural</span>
+                        </div>
+                    </div>
+                    <div class="hotel-cta">
+                        <span class="offer-type">Paid Collaboration</span>
+                        <a href="#" class="btn btn-white">Apply Now</a>
+                    </div>
+                </div>
+                
+                <!-- Hotel 6 -->
+                <div class="hotel-card">
+                    <div class="hotel-info">
+                        <h3>Coconut Lagoon</h3>
+                        <span class="hotel-location">Kumarakom, Kerala</span>
+                        <p class="hotel-description">Traditional Kerala-style resort on the backwaters seeking content creators for our houseboat experiences, traditional cuisine, and village life experiences. Looking for storytellers who can capture the essence of slow travel and authentic Kerala culture.</p>
+                        <div class="hotel-tags">
+                            <span class="hotel-tag">Backwaters</span>
+                            <span class="hotel-tag">Cultural</span>
+                            <span class="hotel-tag">Cuisine</span>
+                        </div>
+                    </div>
+                    <div class="hotel-cta">
+                        <span class="offer-type">Barter Stay</span>
+                        <a href="#" class="btn btn-white">Apply Now</a>
+                    </div>
+                </div>
+                
+                <!-- Hotel 7 -->
+                <div class="hotel-card">
+                    <div class="hotel-info">
+                        <h3>Taj Falaknuma Palace</h3>
+                        <span class="hotel-location">Hyderabad, Telangana</span>
+                        <p class="hotel-description">Former palace of the Nizam seeking luxury travel influencers to showcase royal Hyderabadi hospitality. Collaboration includes royal afternoon tea, heritage walks, and fine dining experiences. Ideal for creators with sophisticated aesthetic who can capture palatial grandeur.</p>
+                        <div class="hotel-tags">
+                            <span class="hotel-tag">Palace</span>
+                            <span class="hotel-tag">Luxury</span>
+                            <span class="hotel-tag">Heritage</span>
+                        </div>
+                    </div>
+                    <div class="hotel-cta">
+                        <span class="offer-type">Paid + Stay</span>
+                        <a href="#" class="btn btn-white">Apply Now</a>
+                    </div>
+                </div>
+                
+                <!-- Hotel 8 -->
+                <div class="hotel-card">
+                    <div class="hotel-info">
+                        <h3>Chettinadu Mansion</h3>
+                        <span class="hotel-location">Karaikudi, Tamil Nadu</span>
+                        <p class="hotel-description">110-year-old heritage property in the land of Chettinad seeking bloggers interested in architectural heritage and regional cuisine. Collaboration includes Chettinad cooking classes, antique collection tours, and village craft experiences.</p>
+                        <div class="hotel-tags">
+                            <span class="hotel-tag">Heritage</span>
+                            <span class="hotel-tag">Culinary</span>
+                            <span class="hotel-tag">Architecture</span>
+                        </div>
+                    </div>
+                    <div class="hotel-cta">
+                        <span class="offer-type">Barter Stay</span>
+                        <a href="#" class="btn btn-white">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="parallax" style="background-image: url('/api/placeholder/1200/600');">
+        <div class="overlay"></div>
+        <div class="parallax-content">
+            <h2>Are You a Hotel Owner?</h2>
+            <p>List your property and connect with India's top travel content creators.</p>
+            <a href="#" class="btn btn-white">List Your Hotel</a>
+        </div>
+    </section>
+
+    <!-- Include the footer dynamically -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Function to load components dynamically
+        async function loadComponent(url, containerId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${url}`);
+                }
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading component from ${url}:`, error);
+            }
+        }
+
+        // Load components when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            loadComponent('navbar.html', 'navbar-container');
+            loadComponent('footer.html', 'footer-container');
+        });
+    </script>
+</body>
+</html>

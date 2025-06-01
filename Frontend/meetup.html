@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meetups & Events - Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            background-color: #000;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #FF9933;
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #FFFFFF;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 153, 51, 0.3);
+        }
+
+        .btn.outline {
+            background: transparent;
+            border: 2px solid #FF9933;
+            color: #FF9933;
+        }
+
+        .btn.outline:hover {
+            background: #FF9933;
+            color: #000;
+        }
+
+        /* Meetups Header Parallax */
+        .meetups-header {
+            background-image: url('m1.webp');
+            height: 70vh;
+            position: relative;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .meetups-header .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .meetups-header .content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        .meetups-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .meetups-header p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 2rem 0;
+            position: sticky;
+            top: 80px;
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .filter-item {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filter-item select,
+        .filter-item input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #222;
+            color: #fff;
+        }
+
+        /* Upcoming Events Section */
+        .upcoming-events {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, #FF9933, #FFFFFF, #138808);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .event-card {
+            background-color: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .event-image {
+            height: 200px;
+            position: relative;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .event-date {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FF9933;
+            color: #000;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-weight: 700;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+        }
+
+        .event-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .event-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .event-meta i {
+            margin-right: 0.3rem;
+            color: #FF9933;
+        }
+
+        .event-description {
+            margin-bottom: 1rem;
+            color: #aaa;
+        }
+
+        .event-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background-color: #333;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .tag.adventure {
+            background-color: #e74c3c;
+        }
+
+        .tag.food {
+            background-color: #f39c12;
+        }
+
+        .tag.culture {
+            background-color: #9b59b6;
+        }
+
+        .tag.photography {
+            background-color: #3498db;
+        }
+
+        .event-host {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+        }
+
+        .host-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 0.8rem;
+        }
+
+        .host-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .host-info span {
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .host-name {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .host-type {
+            color: #ccc;
+            font-size: 0.8rem;
+        }
+
+        /* Create Meetup Section */
+        .create-meetup {
+            background-color: #111;
+            padding: 5rem 0;
+        }
+
+        .toggle-form-btn {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .meetup-form {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #222;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .form-active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Past Highlights Parallax */
+        .past-highlights {
+            position: relative;
+            padding: 0;
+            background-image: url('m2.jpg');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .past-highlights .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .highlights-content {
+            position: relative;
+            z-index: 2;
+            padding: 5rem 0;
+        }
+
+        .highlights-slider {
+            display: flex;
+            overflow-x: auto;
+            padding: 2rem 0;
+            gap: 1.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: #FF9933 #333;
+        }
+
+        .highlights-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .highlights-slider::-webkit-scrollbar-track {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        .highlights-slider::-webkit-scrollbar-thumb {
+            background-color: #FF9933;
+            border-radius: 10px;
+        }
+
+        .highlight-item {
+            min-width: 300px;
+            background-color: rgba(17, 17, 17, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .highlight-image {
+            height: 200px;
+        }
+
+        .highlight-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .highlight-content {
+            padding: 1.5rem;
+        }
+
+        .highlight-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .highlight-meta {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        /* My Meetups Section */
+        .my-meetups {
+            padding: 5rem 0;
+            background-color: #111;
+        }
+
+        .tab-container {
+            margin-top: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .tab-buttons {
+            display: flex;
+            background-color: #222;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: #FF9933;
+            color: #000;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            background-color: #222;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .meetup-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .meetup-item {
+            display: flex;
+            background-color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .meetup-thumbnail {
+            width: 120px;
+            height: 120px;
+        }
+
+        .meetup-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .meetup-details {
+            flex: 1;
+            padding: 1rem;
+        }
+
+        .meetup-details h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .meetup-status {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-upcoming {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+
+        .status-past {
+            background-color: #7f8c8d;
+            color: #fff;
+        }
+
+        .meetup-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .meetup-actions button {
+            background-color: transparent;
+            border: none;
+            color: #FF9933;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+
+        .meetup-actions button:hover {
+            background-color: #333;
+        }
+
+        /* Connect Parallax */
+        .connect-section {
+            background-image: url('m3.jpg');
+            height: 50vh;
+            position: relative;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .connect-section .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .connect-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        .connect-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .connect-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .events-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .meetup-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .meetups-header h1 {
+                font-size: 2.5rem;
+            }
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .filters {
+                flex-direction: column;
+            }
+            .filter-item {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .event-host {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .host-avatar {
+                margin-bottom: 0.5rem;
+            }
+            .meetup-item {
+                flex-direction: column;
+            }
+            .meetup-thumbnail {
+                width: 100%;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- Meetups Header Parallax Section -->
+<section class="meetups-header parallax">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1>Meetups & Events</h1>
+        <p>Connect with travelers, locals, and bloggers through immersive experiences that make travel more meaningful</p>
+        <div class="header-buttons">
+            <a href="#upcoming-events" class="btn">Browse Events</a>
+            <a href="#create-meetup" class="btn outline">Host Meetup</a>
+        </div>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="filter-section">
+    <div class="container">
+        <div class="filters">
+            <div class="filter-item">
+                <select id="location-filter">
+                    <option value="">All Locations</option>
+                    <option value="delhi">Delhi</option>
+                    <option value="mumbai">Mumbai</option>
+                    <option value="kolkata">Kolkata</option>
+                    <option value="jaipur">Jaipur</option>
+                    <option value="goa">Goa</option>
+                    <option value="kerala">Kerala</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <input type="date" id="date-filter">
+            </div>
+            <div class="filter-item">
+                <select id="type-filter">
+                    <option value="">All Event Types</option>
+                    <option value="culture">Cultural Experience</option>
+                    <option value="food">Food & Cuisine</option>
+                    <option value="adventure">Adventure & Outdoors</option>
+                    <option value="photography">Photography Walk</option>
+                    <option value="art">Art & Craft</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <select id="host-filter">
+                    <option value="">All Hosts</option>
+                    <option value="local">Local Guide</option>
+                    <option value="blogger">Travel Blogger</option>
+                    <option value="business">Local Business</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Upcoming Events Section -->
+<section class="upcoming-events" id="upcoming-events">
+    <div class="container">
+        <div class="section-header">
+            <h2>Upcoming Events</h2>
+            <p>Discover authentic experiences led by passionate locals and travel enthusiasts</p>
+        </div>
+        <div class="events-grid">
+            <!-- Event Card 1 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="m4.jpeg" alt="Old Delhi Food Walk">
+                    <div class="event-date">May 15</div>
+                </div>
+                <div class="event-content">
+                    <h3>Old Delhi Food Walk</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 6:00 PM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Chandni Chowk, Delhi</span>
+                    </div>
+                    <div class="event-description">
+                        Explore the bustling streets of Old Delhi and discover authentic flavors from century-old eateries.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag food">Food</span>
+                        <span class="tag culture">Culture</span>
+                    </div>
+                    <a href="joinevent.html" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Rajiv Sharma</span>
+                            <span class="host-type">Local Food Guide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 2 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="m5.jpg" alt="Varanasi Sunrise Photography">
+                    <div class="event-date">May 20</div>
+                </div>
+                <div class="event-content">
+                    <h3>Varanasi Sunrise Photography</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 5:30 AM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Assi Ghat, Varanasi</span>
+                    </div>
+                    <div class="event-description">
+                        Capture the magical sunrise over the Ganges and the spiritual awakening of one of the world's oldest cities.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag photography">Photography</span>
+                        <span class="tag culture">Culture</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Priya Patel</span>
+                            <span class="host-type">Travel Photographer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 3 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="m6.jpg" alt="Himalayan Trek">
+                    <div class="event-date">June 2</div>
+                </div>
+                <div class="event-content">
+                    <h3>Himalayan Day Trek</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 7:00 AM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Manali, Himachal Pradesh</span>
+                    </div>
+                    <div class="event-description">
+                        Join local trekking experts for a breathtaking day hike through lesser-known Himalayan trails.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag adventure">Adventure</span>
+                        <span class="tag photography">Photography</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Vikram Singh</span>
+                            <span class="host-type">Mountain Guide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 4 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="m7.jpeg" alt="Mumbai Street Art Tour">
+                    <div class="event-date">May 27</div>
+                </div>
+                <div class="event-content">
+                    <h3>Mumbai Street Art Tour</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 4:00 PM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Bandra, Mumbai</span>
+                    </div>
+                    <div class="event-description">
+                        Discover Mumbai's vibrant street art scene with insights from local artists and culture experts.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag culture">Culture</span>
+                        <span class="tag photography">Photography</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Neha Kapoor</span>
+                            <span class="host-type">Art Curator</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 5 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="m8.jpeg" alt="Kerala Cooking Class">
+                    <div class="event-date">June 5</div>
+                </div>
+                <div class="event-content">
+                    <h3>Kerala Cooking Class</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 11:00 AM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Fort Kochi, Kerala</span>
+                    </div>
+                    <div class="event-description">
+                        Learn the secrets of authentic Kerala cuisine from a local home chef in a traditional setting.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag food">Food</span>
+                        <span class="tag culture">Culture</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Lakshmi Thomas</span>
+                            <span class="host-type">Home Chef</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 6 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="m9.jpg" alt="Jaipur Heritage Walk">
+                    <div class="event-date">June 10</div>
+                </div>
+                <div class="event-content">
+                    <h3>Jaipur Heritage Walk</h3>
+                    <div class="event-meta">
+                        <span><i class="far fa-clock"></i> 8:00 AM</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Old City, Jaipur</span>
+                    </div>
+                    <div class="event-description">
+                        Walk through the Pink City's hidden lanes and discover the stories behind its magnificent architecture.
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag culture">Culture</span>
+                        <span class="tag photography">Photography</span>
+                    </div>
+                    <a href="#" class="btn">Join Event</a>
+                    <div class="event-host">
+                        <div class="host-avatar">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e" alt="Host">
+                        </div>
+                        <div class="host-info">
+                            <span class="host-name">Arjun<span class="host-name">Arjun Mehra</span>
+                            <span class="host-type">Heritage Expert</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Create Meetup Section -->
+<section class="create-meetup" id="create-meetup">
+    <div class="container">
+        <div class="section-header">
+            <h2>Host Your Own Meetup</h2>
+            <p>Share your local knowledge and passion with travelers from around the world</p>
+        </div>
+        <div class="toggle-form-btn">
+            <button class="btn" id="show-form-btn">Create a Meetup</button>
+        </div>
+        <div class="meetup-form" id="meetup-form">
+            <form id="create-meetup-form">
+                <div class="form-group">
+                    <label for="meetup-title">Meetup Title</label>
+                    <input type="text" id="meetup-title" placeholder="Give your meetup a catchy title">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="meetup-date">Date</label>
+                        <input type="date" id="meetup-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="meetup-time">Time</label>
+                        <input type="time" id="meetup-time">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="meetup-location">Location</label>
+                    <input type="text" id="meetup-location" placeholder="Where will the meetup take place?">
+                </div>
+                <div class="form-group">
+                    <label for="meetup-type">Meetup Type</label>
+                    <select id="meetup-type">
+                        <option value="">Select Type</option>
+                        <option value="culture">Cultural Experience</option>
+                        <option value="food">Food & Cuisine</option>
+                        <option value="adventure">Adventure & Outdoors</option>
+                        <option value="photography">Photography Walk</option>
+                        <option value="art">Art & Craft</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="meetup-description">Description</label>
+                    <textarea id="meetup-description" placeholder="Describe your meetup and what participants can expect"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="meetup-image">Upload Cover Image</label>
+                    <input type="file" id="meetup-image">
+                </div>
+                <div class="form-group">
+                    <label for="meetup-capacity">Maximum Participants</label>
+                    <input type="number" id="meetup-capacity" min="1" max="100" value="10">
+                </div>
+                <button type="submit" class="btn">Create Meetup</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Past Highlights Parallax Section -->
+<section class="past-highlights parallax">
+    <div class="overlay"></div>
+    <div class="highlights-content">
+        <div class="container">
+            <div class="section-header">
+                <h2>Past Highlights</h2>
+                <p>Memories from our community's most memorable gatherings</p>
+            </div>
+            <div class="highlights-slider">
+                <!-- Highlight Item 1 -->
+                <div class="highlight-item">
+                    <div class="highlight-image">
+                        <img src="m10.jpg" alt="Street Food Festival">
+                    </div>
+                    <div class="highlight-content">
+                        <h4>Delhi Street Food Festival</h4>
+                        <div class="highlight-meta">
+                            <span><i class="far fa-calendar-alt"></i> April 5, 2025</span>
+                            <span><i class="fas fa-users"></i> 24 Participants</span>
+                        </div>
+                        <p>An unforgettable gastronomic journey through the heart of Delhi, discovering hidden gems and iconic flavors.</p>
+                    </div>
+                </div>
+
+                <!-- Highlight Item 2 -->
+                <div class="highlight-item">
+                    <div class="highlight-image">
+                        <img src="m11.jpeg" alt="Yoga Retreat">
+                    </div>
+                    <div class="highlight-content">
+                        <h4>Rishikesh Yoga Retreat</h4>
+                        <div class="highlight-meta">
+                            <span><i class="far fa-calendar-alt"></i> March 15, 2025</span>
+                            <span><i class="fas fa-users"></i> 18 Participants</span>
+                        </div>
+                        <p>A weekend of mindfulness and rejuvenation by the Ganges with expert yogis and like-minded travelers.</p>
+                    </div>
+                </div>
+
+                <!-- Highlight Item 3 -->
+                <div class="highlight-item">
+                    <div class="highlight-image">
+                        <img src="m12.webp" alt="Holi Festival">
+                    </div>
+                    <div class="highlight-content">
+                        <h4>Traditional Holi Celebration</h4>
+                        <div class="highlight-meta">
+                            <span><i class="far fa-calendar-alt"></i> March 8, 2025</span>
+                            <span><i class="fas fa-users"></i> 35 Participants</span>
+                        </div>
+                        <p>An explosion of colors and joy as travelers experienced the festival of colors with local families.</p>
+                    </div>
+                </div>
+
+                <!-- Highlight Item 4 -->
+                <div class="highlight-item">
+                    <div class="highlight-image">
+                        <img src="m13.cms" alt="Photography Workshop">
+                    </div>
+                    <div class="highlight-content">
+                        <h4>Jaipur Photography Workshop</h4>
+                        <div class="highlight-meta">
+                            <span><i class="far fa-calendar-alt"></i> February 20, 2025</span>
+                            <span><i class="fas fa-users"></i> 15 Participants</span>
+                        </div>
+                        <p>Capturing the essence of the Pink City through expert tips and unique perspectives.</p>
+                    </div>
+                </div>
+
+                <!-- Highlight Item 5 -->
+                <div class="highlight-item">
+                    <div class="highlight-image">
+                        <img src="m14.webp" alt="Goa Beach Cleanup">
+                    </div>
+                    <div class="highlight-content">
+                        <h4>Goa Beach Cleanup</h4>
+                        <div class="highlight-meta">
+                            <span><i class="far fa-calendar-alt"></i> January 10, 2025</span>
+                            <span><i class="fas fa-users"></i> 28 Participants</span>
+                        </div>
+                        <p>Travelers and locals coming together to preserve the beautiful beaches of Goa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- My Meetups Section -->
+<section class="my-meetups" id="my-meetups">
+    <div class="container">
+        <div class="section-header">
+            <h2>My Meetups</h2>
+            <p>Keep track of events you've joined or created</p>
+        </div>
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="joined">Joined Events</button>
+                <button class="tab-btn" data-tab="created">My Created Events</button>
+                <button class="tab-btn" data-tab="past">Past Events</button>
+            </div>
+            <div class="tab-content active" id="joined-tab">
+                <div class="meetup-list">
+                    <!-- Joined Event 1 -->
+                    <div class="meetup-item">
+                        <div class="meetup-thumbnail">
+                            <img src="m4.jpeg" alt="Old Delhi Food Walk">
+                        </div>
+                        <div class="meetup-details">
+                            <h4>Old Delhi Food Walk</h4>
+                            <span class="meetup-status status-upcoming">Upcoming</span>
+                            <div class="meetup-meta">
+                                <span><i class="far fa-calendar-alt"></i> May 15, 2025</span>
+                                <span><i class="far fa-clock"></i> 6:00 PM</span>
+                            </div>
+                            <div class="meetup-actions">
+                                <button><i class="fas fa-info-circle"></i> Details</button>
+                                <button><i class="fas fa-times"></i> Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Joined Event 2 -->
+                    <div class="meetup-item">
+                        <div class="meetup-thumbnail">
+                            <img src="m6.jpg" alt="Himalayan Trek">
+                        </div>
+                        <div class="meetup-details">
+                            <h4>Himalayan Day Trek</h4>
+                            <span class="meetup-status status-upcoming">Upcoming</span>
+                            <div class="meetup-meta">
+                                <span><i class="far fa-calendar-alt"></i> June 2, 2025</span>
+                                <span><i class="far fa-clock"></i> 7:00 AM</span>
+                            </div>
+                            <div class="meetup-actions">
+                                <button><i class="fas fa-info-circle"></i> Details</button>
+                                <button><i class="fas fa-times"></i> Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="created-tab">
+                <div class="meetup-list">
+                    <!-- Created Event 1 -->
+                    <div class="meetup-item">
+                        <div class="meetup-thumbnail">
+                            <img src="m14.webp" alt="Beach Cleanup">
+                        </div>
+                        <div class="meetup-details">
+                            <h4>Beach Cleanup Drive</h4>
+                            <span class="meetup-status status-upcoming">Upcoming</span>
+                            <div class="meetup-meta">
+                                <span><i class="far fa-calendar-alt"></i> May 22, 2025</span>
+                                <span><i class="far fa-clock"></i> 8:00 AM</span>
+                            </div>
+                            <div class="meetup-actions">
+                                <button><i class="fas fa-edit"></i> Edit</button>
+                                <button><i class="fas fa-users"></i> Attendees</button>
+                                <button><i class="fas fa-trash"></i> Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="past-tab">
+                <div class="meetup-list">
+                    <!-- Past Event 1 -->
+                    <div class="meetup-item">
+                        <div class="meetup-thumbnail">
+                            <img src="m10.jpg" alt="Street Food Festival">
+                        </div>
+                        <div class="meetup-details">
+                            <h4>Delhi Street Food Festival</h4>
+                            <span class="meetup-status status-past">Past</span>
+                            <div class="meetup-meta">
+                                <span><i class="far fa-calendar-alt"></i> April 5, 2025</span>
+                                <span><i class="far fa-clock"></i> 4:00 PM</span>
+                            </div>
+                            <div class="meetup-actions">
+                                <button><i class="fas fa-info-circle"></i> Details</button>
+                                <button><i class="fas fa-star"></i> Rate</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Past Event 2 -->
+                    <div class="meetup-item">
+                        <div class="meetup-thumbnail">
+                            <img src="m12.webp" alt="Holi Festival">
+                        </div>
+                        <div class="meetup-details">
+                            <h4>Traditional Holi Celebration</h4>
+                            <span class="meetup-status status-past">Past</span>
+                            <div class="meetup-meta">
+                                <span><i class="far fa-calendar-alt"></i> March 8, 2025</span>
+                                <span><i class="far fa-clock"></i> 10:00 AM</span>
+                            </div>
+                            <div class="meetup-actions">
+                                <button><i class="fas fa-info-circle"></i> Details</button>
+                                <button><i class="fas fa-star"></i> Rate</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Connect Parallax Section -->
+<section class="connect-section parallax">
+    <div class="overlay"></div>
+    <div class="connect-content">
+        <h2>Make Travel More Social</h2>
+        <p>Connect with fellow travelers and local experts to create unforgettable memories together</p>
+        <a href="#" class="btn">Join Our Community</a>
+    </div>
+</section>
+
+<!-- Include header and footer -->
+<script>
+    // Load header and footer
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('nav-placeholder').innerHTML = data;
+        });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load footer (add this to your body)
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // Toggle form visibility
+        const showFormBtn = document.getElementById('show-form-btn');
+        const meetupForm = document.getElementById('meetup-form');
+
+        showFormBtn.addEventListener('click', function() {
+            meetupForm.classList.toggle('form-active');
+            if (meetupForm.classList.contains('form-active')) {
+                showFormBtn.textContent = 'Hide Form';
+            } else {
+                showFormBtn.textContent = 'Create a Meetup';
+            }
+        });
+
+        // Tab functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+
+                // Remove active class from all buttons and content
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding content
+                this.classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animation for section headers
+        gsap.utils.toArray('.section-header').forEach(header => {
+            gsap.from(header, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: header,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Animation for event cards
+        gsap.utils.toArray('.event-card').forEach((card, i) => {
+            gsap.from(card, {
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: i * 0.2,
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                    end: "bottom 15%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Animation for meetup items
+        gsap.utils.toArray('.meetup-item').forEach((item, i) => {
+            gsap.from(item, {
+                opacity: 0,
+                x: -50,
+                duration: 0.6,
+                delay: i * 0.15,
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 85%",
+                    end: "bottom 15%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Animation for highlight items
+        gsap.utils.toArray('.highlight-item').forEach((item, i) => {
+            gsap.from(item, {
+                opacity: 0,
+                scale: 0.9,
+                duration: 0.7,
+                delay: i * 0.1,
+                scrollTrigger: {
+                    trigger: '.highlights-slider',
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Create Meetup Form Animation
+        gsap.from('.meetup-form', {
+            opacity: 0,
+            y: -20,
+            duration: 0.6,
+            paused: true,
+            ease: "power2.out"
+        });
+    });
+</script>
+
+<!-- Add footer placeholder -->
+<div id="footer-placeholder"></div>
+
+</body>
+</html>

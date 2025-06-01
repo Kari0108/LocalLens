@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborator Dashboard | Local Lens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* General styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Navbar styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-image {
+            height: 40px;
+            width: auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #ffa500;
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 3px 0;
+            transition: 0.4s;
+        }
+        
+        /* Dashboard Content Styles */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 60px;
+            min-height: 100vh;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .welcome-text h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .welcome-text h1 span {
+            color: #ffa500;
+        }
+        
+        .welcome-text p {
+            color: #ccc;
+        }
+        
+        .profile-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification-icon {
+            position: relative;
+            margin-right: 20px;
+            cursor: pointer;
+            color: #ccc;
+            font-size: 22px;
+            transition: color 0.3s;
+        }
+        
+        .notification-icon:hover {
+            color: #ffa500;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ffa500;
+            color: #000;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .profile-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .profile-image {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffa500;
+        }
+        
+        /* Dashboard Layout */
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 30px;
+        }
+        
+        /* Sidebar Navigation */
+        .dashboard-sidebar {
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 10px;
+            padding: 30px 0;
+            backdrop-filter: blur(5px);
+        }
+        
+        .sidebar-nav {
+            list-style: none;
+        }
+        
+        .sidebar-nav li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 12px 25px;
+            text-decoration: none;
+            color: #ccc;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar-nav a.active {
+            background-color: rgba(255, 165, 0, 0.1);
+            color: #ffa500;
+            border-left: 3px solid #ffa500;
+        }
+        
+        .sidebar-nav a:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+        
+        .nav-icon {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        /* Main Dashboard Area */
+        .dashboard-main {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-card {
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 10px;
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-card .stat-icon {
+            font-size: 30px;
+            color: #ffa500;
+            margin-bottom: 15px;
+        }
+        
+        .stat-card h3 {
+            font-size: 26px;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card p {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Recent Activities */
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-heading h2 {
+            font-size: 22px;
+        }
+        
+        .view-all {
+            color: #ffa500;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .view-all:hover {
+            text-decoration: underline;
+        }
+        
+        .activity-list {
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 10px;
+            padding: 25px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .activity-icon.comment {
+            background-color: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+        }
+        
+        .activity-icon.like {
+            background-color: rgba(255, 69, 58, 0.2);
+            color: #ff453a;
+        }
+        
+        .activity-icon.share {
+            background-color: rgba(48, 209, 88, 0.2);
+            color: #30d158;
+        }
+        
+        .activity-icon.booking {
+            background-color: rgba(10, 132, 255, 0.2);
+            color: #0a84ff;
+        }
+        
+        .activity-content {
+            flex-grow: 1;
+        }
+        
+        .activity-content h4 {
+            margin-bottom: 5px;
+        }
+        
+        .activity-content p {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .activity-time {
+            color: #777;
+            font-size: 12px;
+        }
+        
+        .activity-actions {
+            display: flex;
+            margin-top: 10px;
+        }
+        
+        .activity-btn {
+            padding: 5px 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: #ccc;
+            margin-right: 10px;
+            font-size: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .activity-btn:hover {
+            background-color: #ffa500;
+            color: #000;
+        }
+        
+        /* Content Submission Section */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .content-card {
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .content-image {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .content-card:hover .content-image img {
+            transform: scale(1.1);
+        }
+        
+        .content-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: rgba(255, 204, 0, 0.8);
+            color: #000;
+        }
+        
+        .status-approved {
+            background-color: rgba(48, 209, 88, 0.8);
+            color: #000;
+        }
+        
+        .status-rejected {
+            background-color: rgba(255, 69, 58, 0.8);
+            color: #000;
+        }
+        
+        .content-info {
+            padding: 20px;
+        }
+        
+        .content-info h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .content-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .content-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .content-btn {
+            padding: 8px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 5px;
+            color: #ccc;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .content-btn.primary {
+            background-color: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+        }
+        
+        .content-btn:hover {
+            background-color: #ffa500;
+            color: #000;
+        }
+        
+        /* New Content Form */
+        .new-content-section {
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 10px;
+            padding: 30px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .new-content-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #ccc;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: #fff;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ffa500;
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover {
+            border-color: #ffa500;
+            background-color: rgba(255, 165, 0, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 30px;
+            color: #ffa500;
+            margin-bottom: 15px;
+        }
+        
+        .upload-text h4 {
+            margin-bottom: 10px;
+        }
+        
+        .upload-text p {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .upload-input {
+            display: none;
+        }
+        
+        .form-submit {
+            grid-column: 1 / -1;
+            text-align: right;
+        }
+        
+        .submit-btn {
+            padding: 12px 25px;
+            background-color: #ffa500;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #ff9000;
+            transform: translateY(-2px);
+        }
+        
+        /* Improved Parallax Background */
+        .parallax-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -2;
+        }
+        
+        .parallax-bg-1 {
+            background-image: url('toursdeal110.jpg');
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 120%;
+            height: 120%;
+            background-size: cover;
+            background-position: center;
+            transform: translateY(0);
+            will-change: transform;
+            z-index: -2;
+        }
+        
+        /* Second Parallax Layer */
+        .parallax-bg-2 {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 120%;
+            height: 120%;
+            transform: translateY(0);
+            will-change: transform;
+            z-index: -1;
+        }
+        
+        /* Dashboard Responsive */
+        @media (max-width: 992px) {
+            .dashboard-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-sidebar {
+                margin-bottom: 30px;
+            }
+            
+            .sidebar-nav {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            
+            .sidebar-nav li {
+                margin: 0;
+                flex-grow: 1;
+            }
+            
+            .sidebar-nav a {
+                justify-content: center;
+                padding: 15px 10px;
+                text-align: center;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+            }
+            
+            .sidebar-nav a.active {
+                border-left: none;
+                border-bottom: 3px solid #ffa500;
+            }
+            
+            .nav-icon {
+                margin-right: 0;
+                margin-bottom: 5px;
+                font-size: 20px;
+                display: block;
+                width: 100%;
+            }
+            
+            .new-content-form {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 40px;
+                transition: all 0.5s ease;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 0 0 20px 0;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .profile-actions {
+                margin-top: 20px;
+                align-self: flex-end;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Footer styles */
+        footer {
+            background-color: #111;
+            padding: 60px 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            color: #fff;
+        }
+        
+        .footer-column p {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffa500;
+        }
+        
+        .social-icons {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #333;
+            color: #fff;
+            margin-right: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: #ffa500;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            margin-top: 20px;
+        }
+        
+        .footer-bottom p {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 992px) {
+            .footer-column {
+                min-width: 45%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Improved Parallax Background with Two Layers -->
+    <div class="parallax-container">
+        <div class="parallax-bg-1"></div>
+        <div class="parallax-bg-2"></div>
+    </div>
+    
+    <div class="content-wrapper">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="logo.jpeg" class="logo">
+                    <img src="/api/placeholder/160/40" alt="LOCAL LENS" class="logo-image">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="local-experiences.html">Experiences</a></li>
+                    <li><a href="collaborations.html">Collaborations</a></li>
+                    <li><a href="meetups-events.html">Meetups & Events</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="menu-toggle">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Dashboard Container -->
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <div class="welcome-text">
+                    <h1>Welcome back, <span>Priya Sharma</span></h1>
+                    <p>Connect with us to share local experiences and stories across India</p>
+                </div>
+                <div class="profile-actions">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <div class="profile-dropdown">
+                        <img src="collab-dash-sara.jpg" alt="Profile" class="profile-image">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-content">
+                <!-- Dashboard Sidebar -->
+                <div class="dashboard-sidebar">
+                    <ul class="sidebar-nav">
+                        <li><a href="#" class="active"><i class="fas fa-home nav-icon"></i> Dashboard</a></li>
+                        <li><a href="#"><i class="fas fa-camera nav-icon"></i> My Content</a></li>
+                        <li><a href="#"><i class="fas fa-calendar-alt nav-icon"></i> Events</a></li>
+                        <li><a href="#"><i class="fas fa-comments nav-icon"></i> Messages</a></li>
+                        <li><a href="#"><i class="fas fa-money-bill-wave nav-icon"></i> Earnings</a></li>
+                        <li><a href="#"><i class="fas fa-cog nav-icon"></i> Settings</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle nav-icon"></i> Help</a></li>
+                        <li><a href="#"><i class="fas fa-sign-out-alt nav-icon"></i> Logout</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Main Dashboard Area -->
+                <div class="dashboard-main">
+                    <!-- Stats Section -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <h3>24</h3>
+                            <p>Content Submissions</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h3>1,247</h3>
+                            <p>Total Engagements</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>368</h3>
+                            <p>Followers</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h3>4.8</h3>
+                            <p>Average Rating</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Activity Section -->
+                    <div class="recent-activity-section">
+                        <div class="section-heading">
+                            <h2>Recent Activity</h2>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon comment">
+                                    <i class="fas fa-comment"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>New Comment</h4>
+                                    <p>Rahul commented on your photo "Sunrise at Gateway of India"</p>
+                                    <span class="activity-time">2 hours ago</span>
+                                    <div class="activity-actions">
+                                        <a href="#" class="activity-btn">Reply</a>
+                                        <a href="#" class="activity-btn">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon like">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>New Likes</h4>
+                                    <p>Your story "Hidden Gems of Old Delhi" received 15 new likes</p>
+                                    <span class="activity-time">Yesterday</span>
+                                    <div class="activity-actions">
+                                        <a href="#" class="activity-btn">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon share">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>Content Shared</h4>
+                                    <p>Your photo "Street Art in Kochi" was shared by the LocalLens official account</p>
+                                    <span class="activity-time">2 days ago</span>
+                                    <div class="activity-actions">
+                                        <a href="#" class="activity-btn">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon booking">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>New Experience Booking</h4>
+                                    <p>Someone booked your "Varanasi Ghats Photography Workshop" experience</p>
+                                    <span class="activity-time">3 days ago</span>
+                                    <div class="activity-actions">
+                                        <a href="#" class="activity-btn">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- My Content Section -->
+                    <div class="my-content-section">
+                        <div class="section-heading">
+                            <h2>My Content</h2>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <div class="content-grid">
+                            <div class="content-card">
+                                <div class="content-image">
+                                    <img src="home-mumbai by nights.jpg" alt="Mumbai Skyline">
+                                    <div class="content-status status-approved">Approved</div>
+                                </div>
+                                <div class="content-info">
+                                    <h3>Mumbai Skyline at Sunset</h3>
+                                    <div class="content-meta">
+                                        <span><i class="fas fa-eye"></i> 678 views</span>
+                                        <span><i class="fas fa-heart"></i> 142 likes</span>
+                                    </div>
+                                    <div class="content-actions">
+                                        <button class="content-btn">Edit</button>
+                                        <button class="content-btn primary">View Stats</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-card">
+                                <div class="content-image">
+                                    <img src="find partner-Old Delhi's.avif" alt="Jaipur Food Tour">
+                                    <div class="content-status status-pending">Pending</div>
+                                </div>
+                                <div class="content-info">
+                                    <h3>Street Food Tour in Jaipur</h3>
+                                    <div class="content-meta">
+                                        <span><i class="fas fa-eye"></i> 0 views</span>
+                                        <span><i class="fas fa-heart"></i> 0 likes</span>
+                                    </div>
+                                    <div class="content-actions">
+                                        <button class="content-btn">Edit</button>
+                                        <button class="content-btn primary">View Status</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-card">
+                                <div class="content-image">
+                                    <img src="salem.jpg" alt="Goa Beaches">
+                                    <div class="content-status status-approved">Approved</div>
+                                </div>
+                                <div class="content-info">
+                                    <h3>Hidden Beaches of South Goa</h3>
+                                    <div class="content-meta">
+                                        <span><i class="fas fa-eye"></i> 529 views</span>
+                                        <span><i class="fas fa-heart"></i> 98 likes</span>
+                                    </div>
+                                    <div class="content-actions">
+                                        <button class="content-btn">Edit</button>
+                                        <button class="content-btn primary">View Stats</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- New Content Submission -->
+                    <div class="new-content-section">
+                        <div class="section-heading">
+                            <h2>Submit New Content</h2>
+                        </div>
+                        <form class="new-content-form">
+                            <div class="form-group">
+                                <label for="content-title">Title</label>
+                                <input type="text" id="content-title" placeholder="Enter content title">
+                            </div>
+                            <div class="form-group">
+                                <label for="content-category">Category</label>
+                                <select id="content-category">
+                                    <option value="">Select category</option>
+                                    <option value="travel-guide">Travel Guide</option>
+                                    <option value="experience">Local Experience</option>
+                                    <option value="food">Food & Cuisine</option>
+                                    <option value="culture">Culture & Traditions</option>
+                                    <option value="photography">Photography</option>
+                                    <option value="story">Personal Story</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="content-location">Location</label>
+                                <input type="text" id="content-location" placeholder="Enter location">
+                            </div>
+                            <div class="form-group">
+                                <label for="content-tags">Tags (comma separated)</label>
+                                <input type="text" id="content-tags" placeholder="photography, street, architecture, etc.">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="content-description">Description</label>
+                                <textarea id="content-description" placeholder="Write detailed description here..."></textarea>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Upload Media</label>
+                                <div class="upload-area">
+                                    <div class="upload-icon">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                    </div>
+                                    <div class="upload-text">
+                                        <h4>Drag & Drop files here</h4>
+                                        <p>or click to browse from your computer</p>
+                                    </div>
+                                    <input type="file" class="upload-input" multiple>
+                                </div>
+                            </div>
+                            <div class="form-submit">
+                                <button type="submit" class="submit-btn">Submit Content</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>About Local Lens</h3>
+                    <p>Local Lens is a platform connecting travelers with authentic local experiences and stories across India, powered by our network of passionate local content creators.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Explore Experiences</a></li>
+                        <li><a href="#">Become a Creator</a></li>
+                        <li><a href="#">Events & Meetups</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Destinations</h3>
+                    <ul>
+                        <li><a href="#">Delhi & NCR</a></li>
+                        <li><a href="#">Mumbai</a></li>
+                        <li><a href="#">Bangalore</a></li>
+                        <li><a href="#">Kolkata</a></li>
+                        <li><a href="#">Chennai</a></li>
+                        <li><a href="#">View All</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Local Lens India Pvt Ltd<br>42 Innovation Hub, Koramangala<br>Bangalore, India 560095</p>
+                    <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                    <p><i class="fas fa-envelope"></i> info@locallens.in</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Local Lens India. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Parallax effect
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            document.querySelector('.parallax-bg-1').style.transform = `translateY(${scrollY * 0.2}px)`;
+            document.querySelector('.parallax-bg-2').style.transform = `translateY(${scrollY * 0.1}px)`;
+        });
+        
+        // Upload functionality
+        const uploadArea = document.querySelector('.upload-area');
+        const uploadInput = document.querySelector('.upload-input');
+        
+        uploadArea.addEventListener('click', () => {
+            uploadInput.click();
+        });
+        
+        uploadInput.addEventListener('change', function() {
+            // In a real application, you would handle file uploads here
+            if (this.files.length > 0) {
+                const fileNames = Array.from(this.files).map(file => file.name).join(', ');
+                alert(`Selected files: ${fileNames}`);
+            }
+        });
+        
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        // Highlight drop area when item is dragged over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        // Handle dropped files
+        uploadArea.addEventListener('drop', handleDrop, false);
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        function highlight() {
+            uploadArea.classList.add('highlight');
+        }
+        
+        function unhighlight() {
+            uploadArea.classList.remove('highlight');
+        }
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                const fileNames = Array.from(files).map(file => file.name).join(', ');
+                alert(`Dropped files: ${fileNames}`);
+                // In a real application, you would handle file uploads here
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Experiences | Local Lens India</title>
+  <link rel="stylesheet" href="css.css">
+  <style>
+    /* Additional styles for this page */
+    .parallax-section {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: scroll;
+      overflow: hidden;
+    }
+
+    .parallax-content {
+      text-align: center;
+      max-width: 900px;
+      padding: 0 2rem;
+      z-index: 2;
+    }
+
+    .filter-bar {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 3rem;
+    }
+
+    .filter-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .filter-group {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .filter-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .filter-group select {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #222;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .filter-group select:focus {
+      outline: none;
+      border-color: #FF9933;
+    }
+
+    .filter-button {
+      background-color: #FF9933;
+      color: #000;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .filter-button:hover {
+      background-color: #fff;
+    }
+
+    .experiences-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .experience-card {
+      background-color: rgba(20, 20, 20, 0.7);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: transform 0.3s ease;
+      border: 1px solid #333;
+    }
+
+    .experience-card:hover {
+      transform: translateY(-5px);
+      border-color: #FF9933;
+    }
+
+    .experience-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .experience-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    .experience-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag {
+      background-color: rgba(255, 153, 51, 0.2);
+      color: #FF9933;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .experience-snippet {
+      color: #aaa;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .view-btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background-color: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .view-btn:hover {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .page-controls {
+      display: flex;
+      justify-content: center;
+      margin-top: 3rem;
+      gap: 1rem;
+    }
+
+    .page-btn {
+      padding: 0.5rem 1rem;
+      background-color: #222;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .page-btn:hover, .page-btn.active {
+      background-color: #FF9933;
+    }
+
+    /* Media Queries */
+    @media (max-width: 992px) {
+      .experiences-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .filter-container {
+        flex-direction: column;
+      }
+
+      .filter-group {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .experiences-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Include navbar.html using fetch API -->
+<div id="navbar-container"></div>
+
+<!-- Hero Parallax Section -->
+<section class="parallax-section" style="background-image: url('ee1.jpg');">
+  <div class="overlay"></div>
+  <div class="parallax-content">
+    <h1>Explore Authentic Indian Experiences</h1>
+    <p>Discover hidden gems, cultural treasures, and unforgettable adventures across the diverse landscapes of India</p>
+  </div>
+</section>
+
+<!-- Main Content Section -->
+<section class="frame py-8">
+  <div class="container">
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <h3 class="mb-3">Find Your Perfect Experience</h3>
+      <div class="filter-container">
+        <div class="filter-group">
+          <label for="location">Location</label>
+          <select id="location">
+            <option value="">All Locations</option>
+            <option value="north">North India</option>
+            <option value="south">South India</option>
+            <option value="east">East India</option>
+            <option value="west">West India</option>
+            <option value="central">Central India</option>
+            <option value="northeast">Northeast India</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="category">Category</label>
+          <select id="category">
+            <option value="">All Categories</option>
+            <option value="adventure">Adventure</option>
+            <option value="food">Food & Cuisine</option>
+            <option value="culture">Culture & Heritage</option>
+            <option value="nature">Nature & Wildlife</option>
+            <option value="spiritual">Spiritual Journeys</option>
+            <option value="festivals">Festivals & Celebrations</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="contributor">Contributor Type</label>
+          <select id="contributor">
+            <option value="">All Contributors</option>
+            <option value="local">Local Resident</option>
+            <option value="traveler">Traveler</option>
+            <option value="expert">Cultural Expert</option>
+            <option value="guide">Tour Guide</option>
+          </select>
+        </div>
+        <div class="filter-group" style="display: flex; align-items: flex-end;">
+          <button class="filter-button">Apply Filters</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experiences Grid -->
+    <div class="experiences-grid">
+      <!-- Experience Card 1 -->
+      <div class="experience-card">
+        <h3 class="experience-title">Dawn at the Varanasi Ghats</h3>
+        <div class="experience-meta">
+          <span>By: Priya Sharma (Local)</span>
+          <span>Varanasi, Uttar Pradesh</span>
+        </div>
+        <div class="experience-tags">
+          <span class="tag">Spiritual</span>
+          <span class="tag">Cultural</span>
+          <span class="tag">Heritage</span>
+        </div>
+        <p class="experience-snippet">Experience the magical sunrise at the ancient ghats of Varanasi, where rituals that have remained unchanged for centuries unfold along the sacred Ganges. Witness morning aarti, boat rides, and the spiritual awakening of one of the world's oldest living cities.</p>
+        <a href="experience-details.html" class="view-btn">View Details</a>
+      </div>
+
+      <!-- Experience Card 2 -->
+      <div class="experience-card">
+        <h3 class="experience-title">Trekking the Valley of Flowers</h3>
+        <div class="experience-meta">
+          <span>By: Rahul Khanna (Guide)</span>
+          <span>Uttarakhand</span>
+        </div>
+        <div class="experience-tags">
+          <span class="tag">Adventure</span>
+          <span class="tag">Nature</span>
+          <span class="tag">Hiking</span>
+        </div>
+        <p class="experience-snippet">A breathtaking journey through one of India's most spectacular national parks. The Valley of Flowers transforms into a riot of colors during monsoon with over 500 species of wildflowers, rare medicinal plants, and stunning Himalayan vistas.</p>
+        <a href="experience-details.html" class="view-btn">View Details</a>
+      </div>
+
+      <!-- Experience Card 3 -->
+      <div class="experience-card">
+        <h3 class="experience-title">Old Delhi Food Walk</h3>
+        <div class="experience-meta">
+          <span>By: Arjun Mehra (Food Expert)</span>
+          <span>Delhi</span>
+        </div>
+        <div class="experience-tags">
+          <span class="tag">Food</span>
+          <span class="tag">Cultural</span>
+          <span class="tag">Urban</span>
+        </div>
+        <p class="experience-snippet">Navigate the labyrinthine lanes of Chandni Chowk and Jama Masjid area to discover culinary treasures hidden in the heart of Old Delhi. From 200-year-old sweet shops to legendary kebab stalls and the perfect butter chicken, this food walk is a gastronomic adventure.</p>
+        <a href="experience-details.html" class="view-btn">View Details</a>
+      </div>
+
+      <!-- Experience Card 4 -->
+      <div class="experience-card">
+        <h3 class="experience-title">Spice Plantations of Munnar</h3>
+        <div class="experience-meta">
+          <span>By: Maya Thomas (Local Farmer)</span>
+          <span>Kerala</span>
+        </div>
+        <div class="experience-tags">
+          <span class="tag">Nature</span>
+          <span class="tag">Food</span>
+          <span class="tag">Agriculture</span>
+        </div>
+        <p class="experience-snippet">Explore the aromatic world of spice plantations in the verdant hills of Munnar. Learn about traditional cultivation methods of cardamom, pepper, cinnamon, and vanilla while taking in the breathtaking views of tea gardens that stretch to the horizon.</p>
+        <a href="experience-details.html" class="view-btn">View Details</a>
+      </div>
+
+      <!-- Experience Card 5 -->
+      <div class="experience-card">
+        <h3 class="experience-title">Pushkar Camel Fair</h3>
+        <div class="experience-meta">
+          <span>By: Vikram Singh (Cultural Expert)</span>
+          <span>Rajasthan</span>
+        </div>
+        <div class="experience-tags">
+          <span class="tag">Festival</span>
+          <span class="tag">Cultural</span>
+          <span class="tag">Rural</span>
+        </div>
+        <p class="experience-snippet">Immerse yourself in the vibrant spectacle of Rajasthan's most famous fair. Beyond the camel trading and competitions, discover the lesser-known rituals, folk performances, and artisan markets that make this desert festival a cultural treasure.</p>
+        <a href="experience-details.html" class="view-btn">View Details</a>
+      </div>
+
+      <!-- Experience Card 6 -->
+      <div class="experience-card">
+        <h3 class="experience-title">Monastic Life in Ladakh</h3>
+        <div class="experience-meta">
+          <span>By: Tenzin Dorje (Local Guide)</span>
+          <span>Ladakh</span>
+        </div>
+        <div class="experience-tags">
+          <span class="tag">Spiritual</span>
+          <span class="tag">Cultural</span>
+          <span class="tag">Mountain</span>
+        </div>
+        <p class="experience-snippet">Discover the ancient Buddhist traditions preserved in the remote monasteries of Ladakh. Witness morning prayers, sacred masked dances, and participate in meditation sessions while surrounded by the breathtaking landscapes of the Trans-Himalayan region.</p>
+        <a href="experience-details.html" class="view-btn">View Details</a>
+      </div>
+
+      <!-- Experience Card 7 -->
+      <div class="experience-card">
+        <h3 class="experience-title">Backwaters of Alleppey</h3>
+        <div class="experience-meta">
+          <span>By: Joseph Mathew (Houseboat Owner)</span>
+          <span>Kerala</span>
+        </div>
+        <div class="experience-tags">
+          <span class="tag">Nature</span>
+          <span class="tag">Cultural</span>
+          <span class="tag">Relaxation</span>
+        </div>
+        <p class="experience-snippet">Navigate the serene labyrinth of Kerala's backwaters on a traditional houseboat. Experience the rhythm of life along the water, visiting villages accessible only by boat, watching local fishing techniques, and savoring authentic Kerala cuisine prepared fresh onboard.</p>
+        <a href="experience-details.html" class="view-btn">View Details</a>
+      </div>
+
+      <!-- Experience Card 8 -->
+      <div class="experience-card">
+        <h3 class="experience-title">Tribal Villages of Bastar</h3>
+        <div class="experience-meta">
+          <span>By: Nisha Kujur (Anthropologist)</span>
+          <span>Chhattisgarh</span>
+        </div>
+        <div class="experience-tags">
+          <span class="tag">Cultural</span>
+          <span class="tag">Off-Beat</span>
+          <span class="tag">Indigenous</span>
+        </div>
+        <p class="experience-snippet">Journey through the remote Bastar region to meet indigenous tribes who maintain their unique cultural identity, art forms, and sustainable lifestyles. Learn about their distinctive Ghotul system, bell metal crafts, and ancient forest knowledge systems.</p>
+        <a href="experience-details.html" class="view-btn">View Details</a>
+      </div>
+
+      <!-- Experience Card 9 -->
+      <div class="experience-card">
+        <h3 class="experience-title">Coffee Estates of Coorg</h3>
+        <div class="experience-meta">
+          <span>By: Akshay Gowda (Estate Owner)</span>
+          <span>Karnataka</span>
+        </div>
+        <div class="experience-tags">
+          <span class="tag">Nature</span>
+          <span class="tag">Food</span>
+          <span class="tag">Agricultural</span>
+        </div>
+        <p class="experience-snippet">Experience the journey from bean to cup in the misty hills of Coorg. Walk through shade-grown coffee plantations, learn traditional harvesting methods, participate in bean sorting, and savor the unique flavor profiles of South Indian coffee varieties.</p>
+        <a href="experience-details.html" class="view-btn">View Details</a>
+      </div>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="page-controls">
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn">Next →</button>
+    </div>
+  </div>
+</section>
+
+<!-- Include footer.html using fetch API -->
+<div id="footer-container"></div>
+
+<script>
+  // Load navbar and footer components
+  document.addEventListener('DOMContentLoaded', function() {
+    // Function to fetch and insert HTML content
+    async function includeHTML(url, targetElementId) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch ${url}: ${response.status}`);
+        }
+        const html = await response.text();
+        document.getElementById(targetElementId).innerHTML = html;
+
+        // Execute any scripts in the included HTML
+        const scripts = document.getElementById(targetElementId).getElementsByTagName('script');
+        for (let i = 0; i < scripts.length; i++) {
+          const script = document.createElement('script');
+          script.textContent = scripts[i].textContent;
+          document.body.appendChild(script);
+        }
+      } catch (error) {
+        console.error(`Error including HTML from ${url}:`, error);
+      }
+    }
+
+    // Include navbar and footer
+    includeHTML('navbar.html', 'navbar-container');
+    includeHTML('footer.html', 'footer-container');
+  });
+</script>
+</body>
+</html>

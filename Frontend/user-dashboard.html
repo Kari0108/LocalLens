@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Local Lens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            background-color: #000;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #FF9933;
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #FFFFFF;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 153, 51, 0.3);
+        }
+
+        .btn.outline {
+            background: transparent;
+            border: 2px solid #FF9933;
+            color: #FF9933;
+        }
+
+        .btn.outline:hover {
+            background: #FF9933;
+            color: #000;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, #FF9933, #FFFFFF, #138808);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Header/Navigation Styles */
+        .header {
+            background-color: rgba(0, 0, 0, 0.9);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            top: 0;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background-color: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .logo-text span {
+            color: #FF9933;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 1.5rem;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #FF9933;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #FF9933;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .notification-icon {
+            position: relative;
+            margin-right: 1.5rem;
+            cursor: pointer;
+        }
+
+        .notification-icon i {
+            font-size: 1.2rem;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .notification-icon:hover i {
+            color: #FF9933;
+        }
+
+        .notification-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #FF9933;
+            color: #000;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .profile-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #FF9933;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger-line {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            background-image: url('');
+            height: 50vh;
+            position: relative;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 76px; /* Add space for fixed header */
+        }
+
+        .dashboard-header .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .dashboard-header .content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .dashboard-header p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* User Profile Section */
+        .user-profile {
+            padding: 3rem 0;
+            background-color: #111;
+        }
+
+        .profile-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+           border: 3px solid #FF9933;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .profile-info h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .profile-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-meta-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-meta-item i {
+            color: #FF9933;
+            margin-right: 0.5rem;
+        }
+
+        .quick-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background-color: #222;
+            padding: 1rem;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            color: #FF9933;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+       
+        .travel-history {
+            padding: 5rem 0;
+            background-color: #000;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #333;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 5px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item.left {
+            left: 0;
+        }
+
+        .timeline-item.right {
+            left: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #FF9933;
+            border: 4px solid #333;
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .timeline-item.left::after {
+            right: -10px;
+        }
+
+        .timeline-item.right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 1.5rem;
+            background-color: #222;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+        }
+
+        .timeline-item.left .timeline-content::after {
+            right: -20px;
+            border-left-color: #222;
+        }
+
+        .timeline-item.right .timeline-content::after {
+            left: -20px;
+            border-right-color: #222;
+        }
+
+        .timeline-date {
+            color: #FF9933;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-image {
+            width: 100%;
+            height: 180px;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .timeline-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-content:hover .timeline-image img {
+            transform: scale(1.05);
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .timeline-text {
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background-color: #333;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .tag.adventure {
+            background-color: #e74c3c;
+        }
+
+        .tag.food {
+            background-color: #f39c12;
+        }
+
+        .tag.culture {
+            background-color: #9b59b6;
+        }
+
+        .tag.photography {
+            background-color: #3498db;
+        }
+
+        /* Recommendations Section */
+        .recommendations {
+            padding: 5rem 0;
+            background-color: #111;
+        }
+
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .recommendation-card {
+            background-color: #222;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .recommendation-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .recommendation-image {
+            height: 200px;
+            position: relative;
+        }
+
+        .recommendation-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .recommendation-content {
+            padding: 1.5rem;
+        }
+
+        .recommendation-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .recommendation-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .recommendation-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .recommendation-meta i {
+            margin-right: 0.3rem;
+            color: #FF9933;
+        }
+
+        .recommendation-match {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(46, 204, 113, 0.9);
+            color: #fff;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Upcoming Itinerary Section */
+        .upcoming-itinerary {
+            padding: 5rem 0;
+            background-color: #000;
+        }
+
+        .itinerary-card {
+            background-color: #222;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .itinerary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .itinerary-title h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .itinerary-date {
+            color: #FF9933;
+            font-weight: bold;
+        }
+
+        .itinerary-status {
+            background-color: #3498db;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .itinerary-days {
+            margin-top: 2rem;
+        }
+
+        .day-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .day-header {
+            background-color: #333;
+            padding: 0.8rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-activities {
+            padding-left: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #333;
+        }
+
+        .activity-time {
+            width: 80px;
+            color: #FF9933;
+            font-weight: bold;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-details h5 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .activity-location {
+            color: #ccc;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-location i {
+            margin-right: 0.3rem;
+            color: #FF9933;
+        }
+
+        .activity-description {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Actions */
+        .dashboard-actions {
+            padding: 3rem 0;
+            background-color: #111;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            max-width: 250px;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            background-color: #222;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .action-btn i {
+            font-size: 2.5rem;
+            color: #FF9933;
+            margin-bottom: 1rem;
+        }
+
+        .action-btn h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .action-btn p {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #111;
+            padding: 4rem 0 2rem;
+            color: #fff;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #FF9933, #FFFFFF, #138808);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #FF9933;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a:hover {
+            color: #FF9933;
+        }
+
+        .footer-links a i {
+            margin-right: 0.5rem;
+            color: #FF9933;
+            font-size: 0.8rem;
+        }
+
+        .footer-subscribe {
+            margin-top: 1rem;
+        }
+
+        .subscribe-form {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .subscribe-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .subscribe-input:focus {
+            outline: none;
+        }
+
+        .subscribe-btn {
+            background-color: #FF9933;
+            color: #000;
+            border: none;
+            padding: 0 1rem;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .subscribe-btn:hover {
+            background-color: #fff;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: #FF9933;
+            transform: translateY(-5px);
+        }
+
+        .social-icon i {
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .social-icon:hover i {
+            color: #000;
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-bottom-links {
+            margin-top: 1rem;
+        }
+
+        .footer-bottom-links a {
+            color: #ccc;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #FF9933;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .recommendations-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .timeline::after {
+                left: 31px;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-item.right {
+                left: 0;
+            }
+            .timeline-item.left::after,
+            .timeline-item.right::after {
+                left: 21px;
+            }
+            .timeline-item.left .timeline-content::after,
+            .timeline-item.right .timeline-content::after {
+                left: -20px;
+                border-right-color: #222;
+                border-left-color: transparent;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 76px;
+                flex-direction: column;
+                background-color: rgba(0, 0, 0, 0.95);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                height: 100vh;
+                padding-top: 2rem;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-item {
+                margin: 1.5rem 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active .hamburger-line:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .hamburger-line:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .hamburger-line:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 2.5rem;
+            }
+            .recommendations-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-meta {
+                justify-content: center;
+            }
+            .itinerary-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .quick-stats {
+                flex-direction: column;
+            }
+            .activity-item {
+                flex-direction: column;
+            }
+            .activity-time {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header/Navigation -->
+<header class="header">
+    <div class="nav-container">
+        <div class="logo">
+            <img src="logo.jpeg" alt="Local Lens Logo">
+           
+        </div>
+        
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="About.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="EXPERIENCES.html" class="nav-link">Experiences</a>
+            </li>
+            <li class="nav-item">
+                <a href="COLLABORATIONS.html" class="nav-link">Collaborations</a>
+            </li>
+            <li class="nav-item">
+                <a href="meetup.html" class="nav-link">Meetup</a>
+            </li>
+            <li class="nav-item">
+                <a href="aboutus.html" class="nav-link">AboutUs</a>
+            </li>
+            <li class="nav-item">
+                <a href="contact.html" class="nav-link">Contact</a>
+            </li>
+
+        </ul>
+        
+        <div class="user-actions">
+            <div class="notification-icon">
+                <i class="fas fa-bell"></i>
+                <span class="notification-count">3</span>
+            </div>
+            <div class="profile-dropdown">
+                <div class="profile-icon">
+                    <img src="rohit_sharma.jpeg" alt="User Profile">
+                </div>
+            </div>
+            <div class="hamburger">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Dashboard Header Section -->
+<section class="dashboard-header parallax">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1>Welcome Back, Rahul!</h1>
+        <p>Continue exploring incredible destinations in India and create personalized travel memories</p>
+        <div class="header-buttons">
+            <a href="#recommendations" class="btn">New Recommendations</a>
+            <a href="#itinerary" class="btn outline">View Itinerary</a>
+        </div>
+    </div>
+</section>
+
+<!-- User Profile Section -->
+<section class="user-profile">
+    <div class="container">
+        <div class="profile-container">
+            <div class="profile-avatar">
+                <img src="rohit_sharma.jpeg" alt="User Profile">
+            </div>
+            <div class="profile-info">
+                <h2<h2>Rahul Sharma</h2>
+                <div class="profile-meta">
+                    <div class="profile-meta-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>New Delhi, India</span>
+                    </div>
+                    <div class="profile-meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Member since April 2022</span>
+                    </div>
+                    <div class="profile-meta-item">
+                        <i class="fas fa-star"></i>
+                        <span>Premium Traveler</span>
+                    </div>
+                </div>
+                <p>Adventure enthusiast and cultural explorer with a passion for discovering hidden gems across India. Food lover and photography hobbyist.</p>
+                <div class="quick-stats">
+                    <div class="stat-card">
+                        <h3>24</h3>
+                        <p>Places Visited</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>56</h3>
+                        <p>Photos Shared</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>18</h3>
+                        <p>Reviews Posted</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>8</h3>
+                        <p>Badges Earned</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Travel History Section -->
+<section class="travel-history" id="history">
+    <div class="container">
+        <div class="section-header">
+            <h2>Your Travel Journey</h2>
+            <p>A timeline of your memorable adventures and cultural experiences across India</p>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <div class="timeline-date">February 2025</div>
+                    <div class="timeline-image">
+                        <img src="home-Varanasi Ghats.jpg" alt="Varanasi Ghats">
+                    </div>
+                    <h4 class="timeline-title">Spiritual Journey in Varanasi</h4>
+                    <p class="timeline-text">Experienced the ancient traditions and spiritual aura at the ghats of Varanasi. Witnessed the mesmerizing Ganga Aarti ceremony and explored the narrow lanes of the old city.</p>
+                    <div class="timeline-tags">
+                        <span class="tag culture">Culture</span>
+                        <span class="tag photography">Photography</span>
+                    </div>
+                    <a href="#" class="btn outline">View Details</a>
+                </div>
+            </div>
+            
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <div class="timeline-date">December 2024</div>
+                    <div class="timeline-image">
+                        <img src="sea.jpeg" alt="Goa Beaches">
+                    </div>
+                    <h4 class="timeline-title">Beach Escapade in Goa</h4>
+                    <p class="timeline-text">Relaxed on the pristine beaches of South Goa, explored Portuguese architecture in Old Goa, and enjoyed the vibrant nightlife and delicious seafood cuisine.</p>
+                    <div class="timeline-tags">
+                        <span class="tag adventure">Adventure</span>
+                        <span class="tag food">Food</span>
+                    </div>
+                    <a href="#" class="btn outline">View Details</a>
+                </div>
+            </div>
+            
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <div class="timeline-date">October 2024</div>
+                    <div class="timeline-image">
+                        <img src="social-campain1.jpg" alt="Rajasthan Palace">
+                    </div>
+                    <h4 class="timeline-title">Royal Heritage Tour in Rajasthan</h4>
+                    <p class="timeline-text">Explored majestic palaces, imposing forts, and rich cultural heritage in Jaipur, Udaipur, and Jodhpur. Experienced traditional Rajasthani cuisine and folk performances.</p>
+                    <div class="timeline-tags">
+                        <span class="tag culture">Culture</span>
+                        <span class="tag food">Food</span>
+                        <span class="tag photography">Photography</span>
+                    </div>
+                    <a href="#" class="btn outline">View Details</a>
+                </div>
+            </div>
+            
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <div class="timeline-date">July 2024</div>
+                    <div class="timeline-image">
+                        <img src="home-Kerala Backwaters.jpg" alt="Kerala Backwaters">
+                    </div>
+                    <h4 class="timeline-title">Serene Backwaters of Kerala</h4>
+                    <p class="timeline-text">Cruised through the tranquil backwaters on a traditional houseboat, experienced Ayurvedic treatments, and enjoyed the lush green landscapes and spice plantations.</p>
+                    <div class="timeline-tags">
+                        <span class="tag adventure">Adventure</span>
+                        <span class="tag culture">Culture</span>
+                    </div>
+                    <a href="#" class="btn outline">View Details</a>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="#" class="btn">View All Travels</a>
+        </div>
+    </div>
+</section>
+
+<!-- Recommendations Section -->
+<section class="recommendations" id="recommendations">
+    <div class="container">
+        <div class="section-header">
+            <h2>Personalized For You</h2>
+            <p>Discover new destinations and experiences tailored to your travel preferences</p>
+        </div>
+        
+        <div class="recommendations-grid">
+            <div class="recommendation-card">
+                <div class="recommendation-image">
+                    <img src="collabration4.jpg" alt="Darjeeling">
+                    <div class="recommendation-match">94% Match</div>
+                </div>
+                <div class="recommendation-content">
+                    <h3>Darjeeling Tea Plantations</h3>
+                    <div class="recommendation-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> West Bengal</span>
+                        <span><i class="fas fa-calendar-alt"></i> Best in Spring</span>
+                    </div>
+                    <p>Experience the lush tea gardens, breathtaking Himalayan views, and colonial charm of Darjeeling. Perfect for photography enthusiasts and nature lovers.</p>
+                    <a href="#" class="btn outline">Explore More</a>
+                </div>
+            </div>
+            
+            <div class="recommendation-card">
+                <div class="recommendation-image">
+                    <img src="home-Himalayan Highlands.jpg" alt="Ladakh">
+                    <div class="recommendation-match">91% Match</div>
+                </div>
+                <div class="recommendation-content">
+                    <h3>Adventure in Ladakh</h3>
+                    <div class="recommendation-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Jammu & Kashmir</span>
+                        <span><i class="fas fa-calendar-alt"></i> Best in Summer</span>
+                    </div>
+                    <p>Discover the stark beauty of high-altitude deserts, ancient monasteries, and thrilling mountain passes in this Himalayan wonderland.</p>
+                    <a href="#" class="btn outline">Explore More</a>
+                </div>
+            </div>
+            
+            <div class="recommendation-card">
+                <div class="recommendation-image">
+                    <img src="find-partner-hampi.jpg" alt="Hampi">
+                    <div class="recommendation-match">87% Match</div>
+                </div>
+                <div class="recommendation-content">
+                    <h3>Historical Ruins of Hampi</h3>
+                    <div class="recommendation-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Karnataka</span>
+                        <span><i class="fas fa-calendar-alt"></i> Best in Winter</span>
+                    </div>
+                    <p>Explore the UNESCO World Heritage Site featuring fascinating temple ruins, boulder-strewn landscapes, and remnants of the mighty Vijayanagara Empire.</p>
+                    <a href="#" class="btn outline">Explore More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Upcoming Itinerary Section -->
+<section class="upcoming-itinerary" id="itinerary">
+    <div class="container">
+        <div class="section-header">
+            <h2>Your Upcoming Adventure</h2>
+            <p>Carefully planned experiences for your next journey</p>
+        </div>
+        
+        <div class="itinerary-card">
+            <div class="itinerary-header">
+                <div class="itinerary-title">
+                    <h3>Mystical Northeast: Meghalaya & Assam</h3>
+                    <div class="itinerary-date">May 15 - May 25, 2025</div>
+                </div>
+                <div class="itinerary-status">Confirmed</div>
+            </div>
+            
+            <div class="itinerary-overview">
+                <p>Immerse yourself in the lush landscapes, living root bridges, and unique tribal cultures of Northeast India. This 10-day journey takes you through misty hills, cascading waterfalls, and vibrant wildlife sanctuaries.</p>
+            </div>
+            
+            <div class="itinerary-days">
+                <div class="day-item">
+                    <div class="day-header">
+                        <span>Day 1: Arrival in Guwahati</span>
+                        <span>May 15, 2025</span>
+                    </div>
+                    <div class="day-activities">
+                        <div class="activity-item">
+                            <div class="activity-time">10:30 AM</div>
+                            <div class="activity-details">
+                                <h5>Arrival at Lokpriya Gopinath Bordoloi Airport</h5>
+                                <div class="activity-location"><i class="fas fa-map-marker-alt"></i> Guwahati, Assam</div>
+                                <div class="activity-description">Private transfer to your hotel in the city center.</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-time">2:00 PM</div>
+                            <div class="activity-details">
+                                <h5>Visit Kamakhya Temple</h5>
+                                <div class="activity-location"><i class="fas fa-map-marker-alt"></i> Nilachal Hill, Guwahati</div>
+                                <div class="activity-description">Explore one of the oldest and most revered Shakti temples in India.</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-time">6:00 PM</div>
+                            <div class="activity-details">
+                                <h5>Brahmaputra River Cruise</h5>
+                                <div class="activity-location"><i class="fas fa-map-marker-alt"></i> Umananda Ghat</div>
+                                <div class="activity-description">Evening cruise with dinner and cultural performances.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="day-item">
+                    <div class="day-header">
+                        <span>Day 2: Guwahati to Shillong</span>
+                        <span>May 16, 2025</span>
+                    </div>
+                    <div class="day-activities">
+                        <div class="activity-item">
+                            <div class="activity-time">8:00 AM</div>
+                            <div class="activity-details">
+                                <h5>Breakfast & Checkout</h5>
+                                <div class="activity-location"><i class="fas fa-map-marker-alt"></i> Hotel Rajkamal</div>
+                                <div class="activity-description">Enjoy a traditional Assamese breakfast before departure.</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-time">9:30 AM</div>
+                            <div class="activity-details">
+                                <h5>Drive to Shillong</h5>
+                                <div class="activity-location"><i class="fas fa-map-marker-alt"></i> Via NH27</div>
+                                <div class="activity-description">Scenic 3-hour journey to the Scotland of the East with a stop at Umiam Lake.</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-time">2:00 PM</div>
+                            <div class="activity-details">
+                                <h5>Visit Don Bosco Museum</h5>
+                                <div class="activity-location"><i class="fas fa-map-marker-alt"></i> Mawlai, Shillong</div>
+                                <div class="activity-description">Discover the rich cultural heritage of Northeast India's indigenous tribes.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="day-item">
+                    <div class="day-header">
+                        <span>Day 3: Cherrapunji Excursion</span>
+                        <span>May 17, 2025</span>
+                    </div>
+                    <div class="day-activities">
+                        <div class="activity-item">
+                            <div class="activity-time">7:00 AM</div>
+                            <div class="activity-details">
+                                <h5>Day Trip to Cherrapunji</h5>
+                                <div class="activity-location"><i class="fas fa-map-marker-alt"></i> East Khasi Hills</div>
+                                <div class="activity-description">Visit the wettest place on Earth featuring stunning waterfalls and living root bridges.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn">View Full Itinerary</a>
+                <a href="#" class="btn outline">Modify Plans</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dashboard Actions Section -->
+<section class="dashboard-actions">
+    <div class="container">
+        <div class="section-header">
+            <h2>Travel Tools & Resources</h2>
+            <p>Everything you need to plan, organize, and enhance your travel experiences</p>
+        </div>
+        
+        <div class="action-buttons">
+            <div class="action-btn">
+                <i class="fas fa-compass"></i>
+                <h4>Trip Planner</h4>
+                <p>Create custom itineraries with local insights</p>
+            </div>
+            
+            <div class="action-btn">
+                <i class="fas fa-language"></i>
+                <h4>Phrase Guide</h4>
+                <p>Essential local phrases for your destinations</p>
+            </div>
+            
+            <div class="action-btn">
+                <i class="fas fa-map-marked-alt"></i>
+                <h4>Interactive Maps</h4>
+                <p>Discover hidden gems and local favorites</p>
+            </div>
+            
+            <div class="action-btn">
+                <i class="fas fa-user-friends"></i>
+                <h4>Connect Locals</h4>
+                <p>Chat with residents for authentic advice</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About LocalLens</h3>
+                <p>Connecting travelers with authentic local experiences across India. Our platform helps you discover hidden gems through the eyes of locals.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Destinations</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Experiences</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Community</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Travel Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Travel Guides</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Local Cuisine</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Cultural Tips</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Photography Spots</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Sustainable Travel</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Safety Information</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe to receive personalized travel recommendations and exclusive offers.</p>
+                <div class="footer-subscribe">
+                    <form class="subscribe-form">
+                        <input type="email" class="subscribe-input" placeholder="Your Email Address">
+                        <button type="submit" class="subscribe-btn"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                    <p>Join 50,000+ travel enthusiasts</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 LocalLens. All Rights Reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.header');
+        if(window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+    
+    // Initialize GSAP animations
+    document.addEventListener('DOMContentLoaded', () => {
+        // Register ScrollTrigger plugin
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Profile section animation
+        gsap.from('.profile-avatar', {
+            scrollTrigger: {
+                trigger: '.user-profile',
+                start: 'top 80%'
+            },
+            x: -100,
+            opacity: 0,
+            duration: 1
+        });
+        
+        gsap.from('.profile-info', {
+            scrollTrigger: {
+                trigger: '.user-profile',
+                start: 'top 80%'
+            },
+            x: 100,
+            opacity: 0,
+            duration: 1
+        });
+        
+        // Stats animation
+        gsap.from('.stat-card', {
+            scrollTrigger: {
+                trigger: '.quick-stats',
+                start: 'top 90%'
+            },
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            duration: 0.8
+        });
+        
+        // Timeline animation
+        gsap.from('.timeline-item', {
+            scrollTrigger: {
+                trigger: '.travel-history',
+                start: 'top 70%'
+            },
+            opacity: 0,
+            y: 100,
+            stagger: 0.3,
+            duration: 1
+        });
+        
+        // Recommendation cards animation
+        gsap.from('.recommendation-card', {
+            scrollTrigger: {
+                trigger: '.recommendations',
+                start: 'top 70%'
+            },
+            opacity: 0,
+            y: 80,
+            stagger: 0.3,
+            duration: 0.8
+        });
+        
+        // Action buttons animation
+        gsap.from('.action-btn', {
+            scrollTrigger: {
+                trigger: '.dashboard-actions',
+                start: 'top 80%'
+            },
+            scale: 0.8,
+            opacity: 0,
+            stagger: 0.2,
+            duration: 0.6
+        });
+    });
+</script>
+
+</body>
+</html>

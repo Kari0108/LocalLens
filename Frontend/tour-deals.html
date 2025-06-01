@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Collaboration Deals | Local Lens India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .tour-deals {
+            background-color: #000;
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .tour-deals-intro {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+        
+        .tour-deals h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filters {
+            background-color: #111;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+        
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 180px;
+        }
+        
+        .filter-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .filter-group select {
+            padding: 0.75rem;
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 4px;
+        }
+        
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .filter-tag {
+            background-color: #333;
+            color: #fff;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-tag:hover, .filter-tag.active {
+            background-color: #ff6b00;
+        }
+        
+        .tour-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tour-card {
+            background-color: #111;
+            border: 1px solid #333;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .tour-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tour-card-header {
+            position: relative;
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .tour-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: #ff6b00;
+            color: #fff;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        
+        .tour-card-body {
+            padding: 1.5rem;
+        }
+        
+        .tour-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tour-location {
+            color: #ff6b00;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .tour-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .tour-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tour-tag {
+            background-color: #222;
+            color: #fff;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+        
+        .tour-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #333;
+            padding-top: 1.25rem;
+            margin-top: 1rem;
+        }
+        
+        .tour-company {
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .tour-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-container {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include the navbar dynamically -->
+    <div id="navbar-container"></div>
+
+    <!-- Hero Section with Parallax Effect -->
+    <section class="hero parallax" style="background-image: url('/api/placeholder/1200/600');">
+        <div class="overlay"></div>
+        <div class="hero-content parallax-content">
+            <h1>Tour Operator Collaborations</h1>
+            <p>Connect with India's finest tour operators seeking content creators to showcase authentic local experiences.</p>
+        </div>
+    </section>
+
+    <!-- Tour Deals Main Section -->
+    <section class="tour-deals">
+        <div class="container">
+            <div class="tour-deals-intro">
+                <h2>Discover Exclusive Indian Tour Partnerships</h2>
+                <p>From spiritual retreats in Rishikesh to food walks in Old Delhi, wildlife safaris in Ranthambore to backwater cruises in Kerala — find tour operators looking for authentic storytellers to showcase India's diverse experiences.</p>
+            </div>
+            
+
+            <!-- Tour Listings Grid -->
+            <div class="tour-grid">
+                <!-- Tour 1 -->
+                <div class="tour-card">
+                    <div class="tour-card-header" style="background-image: url('/api/placeholder/400/250');">
+                        <span class="tour-badge">Featured</span>
+                    </div>
+                    <div class="tour-card-body">
+                        <h3 class="tour-name">Sacred Varanasi Experience</h3>
+                        <span class="tour-location">Varanasi, Uttar Pradesh</span>
+                        <p class="tour-description">Seeking content creators to document our sunrise boat rides on the Ganges, traditional Ganga Aarti ceremonies, and hidden alleyway walks through India's oldest living city.</p>
+                        <div class="tour-tags">
+                            <span class="tour-tag">Spiritual</span>
+                            <span class="tour-tag">Cultural</span>
+                            <span class="tour-tag">Heritage</span>
+                        </div>
+                        <div class="tour-footer">
+                            <span class="tour-company">Banaras Walks</span>
+                            <a href="#" class="btn btn-white">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tour 2 -->
+                <div class="tour-card">
+                    <div class="tour-card-header" style="background-image: url('/api/placeholder/400/250');">
+                        <span class="tour-badge">Paid</span>
+                    </div>
+                    <div class="tour-card-body">
+                        <h3 class="tour-name">Spice Plantation Tour</h3>
+                        <span class="tour-location">Munnar & Thekkady, Kerala</span>
+                        <p class="tour-description">Looking for food and travel bloggers to capture our authentic spice plantation tours, traditional harvesting techniques, and farm-to-table cooking experiences in the Western Ghats.</p>
+                        <div class="tour-tags">
+                            <span class="tour-tag">Culinary</span>
+                            <span class="tour-tag">Eco-tourism</span>
+                            <span class="tour-tag">Cultural</span>
+                        </div>
+                        <div class="tour-footer">
+                            <span class="tour-company">Kerala Spice Trails</span>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tour 3 -->
+                <div class="tour-card">
+                    <div class="tour-card-header" style="background-image: url('/api/placeholder/400/250');">
+                        <span class="tour-badge">Barter</span>
+                    </div>
+                    <div class="tour-card-body">
+                        <h3 class="tour-name">Ladakh Monastery Trek</h3>
+                        <span class="tour-location">Leh, Ladakh</span>
+                        <p class="tour-description">Adventure travel content creators needed for our 7-day monastery trek featuring Thiksey, Hemis and Lamayuru monasteries, traditional homestays, and interactions with Buddhist monks.</p>
+                        <div class="tour-tags">
+                            <span class="tour-tag">Adventure</span>
+                            <span class="tour-tag">Spiritual</span>
+                            <span class="tour-tag">Himalayan</span>
+                        </div>
+                        <div class="tour-footer">
+                            <span class="tour-company">Himalayan Footprints</span>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tour 4 -->
+                <div class="tour-card">
+                    <div class="tour-card-header" style="background-image: url('/api/placeholder/400/250');">
+                        <span class="tour-badge">Ambassador</span>
+                    </div>
+                    <div class="tour-card-body">
+                        <h3 class="tour-name">Royal Rajasthan Heritage Tour</h3>
+                        <span class="tour-location">Jaipur, Jodhpur & Udaipur</span>
+                        <p class="tour-description">Seeking long-term ambassador to showcase our luxury heritage tours including palace stays, traditional crafts experiences, and private cultural performances across Rajasthan.</p>
+                        <div class="tour-tags">
+                            <span class="tour-tag">Heritage</span>
+                            <span class="tour-tag">Luxury</span>
+                            <span class="tour-tag">Cultural</span>
+                        </div>
+                        <div class="tour-footer">
+                            <span class="tour-company">Royal Expeditions</span>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tour 5 -->
+                <div class="tour-card">
+                    <div class="tour-card-header" style="background-image: url('/api/placeholder/400/250');">
+                        <span class="tour-badge">Paid</span>
+                    </div>
+                    <div class="tour-card-body">
+                        <h3 class="tour-name">Old Delhi Food Walk</h3>
+                        <span class="tour-location">Delhi</span>
+                        <p class="tour-description">Food bloggers and photographers needed to capture our curated culinary journey through Old Delhi's hidden gems - from parathe wali gali to centuries-old kebab shops and secret sweet stalls.</p>
+                        <div class="tour-tags">
+                            <span class="tour-tag">Culinary</span>
+                            <span class="tour-tag">Urban</span>
+                            <span class="tour-tag">Heritage</span>
+                        </div>
+                        <div class="tour-footer">
+                            <span class="tour-company">Delhi Food Walks</span>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tour 6 -->
+                <div class="tour-card">
+                    <div class="tour-card-header" style="background-image: url('/api/placeholder/400/250');">
+                        <span class="tour-badge">Barter</span>
+                    </div>
+                    <div class="tour-card-body">
+                        <h3 class="tour-name">Pushkar Camel Fair Experience</h3>
+                        <span class="tour-location">Pushkar, Rajasthan</span>
+                        <p class="tour-description">Documentary-style content creators sought for our authentic Pushkar Camel Fair experience, including traditional folk performances, camel races, and rural Rajasthani culture.</p>
+                        <div class="tour-tags">
+                            <span class="tour-tag">Festival</span>
+                            <span class="tour-tag">Cultural</span>
+                            <span class="tour-tag">Rural</span>
+                        </div>
+                        <div class="tour-footer">
+                            <span class="tour-company">Rajasthan Rural Tours</span>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tour 7 -->
+                <div class="tour-card">
+                    <div class="tour-card-header" style="background-image: url('/api/placeholder/400/250');">
+                        <span class="tour-badge">Featured</span>
+                    </div>
+                    <div class="tour-card-body">
+                        <h3 class="tour-name">Tiger Safari Experience</h3>
+                        <span class="tour-location">Ranthambore, Rajasthan</span>
+                        <p class="tour-description">Wildlife photographers and conservation bloggers needed to document our sustainable wildlife safaris, focusing on tiger conservation efforts and local community involvement.</p>
+                        <div class="tour-tags">
+                            <span class="tour-tag">Wildlife</span>
+                            <span class="tour-tag">Conservation</span>
+                            <span class="tour-tag">Photography</span>
+                        </div>
+                        <div class="tour-footer">
+                            <span class="tour-company">Wild India Expeditions</span>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tour 8 -->
+                <div class="tour-card">
+                    <div class="tour-card-header" style="background-image: url('/api/placeholder/400/250');">
+                        <span class="tour-badge">Paid</span>
+                    </div>
+                    <div class="tour-card-body">
+                        <h3 class="tour-name">Yoga & Digital Detox Retreat</h3>
+                        <span class="tour-location">Rishikesh, Uttarakhand</span>
+                        <p class="tour-description">Wellness content creators needed for our 10-day yoga retreat featuring traditional hatha and ashtanga practices, meditation by the Ganges, and Ayurvedic treatments.</p>
+                        <div class="tour-tags">
+                            <span class="tour-tag">Wellness</span>
+                            <span class="tour-tag">Spiritual</span>
+                            <span class="tour-tag">Himalayan</span>
+                        </div>
+                        <div class="tour-footer">
+                            <span class="tour-company">Himalayan Yoga Sanctuary</span>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tour 9 -->
+                <div class="tour-card">
+                    <div class="tour-card-header" style="background-image: url('/api/placeholder/400/250');">
+                        <span class="tour-badge">Barter</span>
+                    </div>
+                    <div class="tour-card-body">
+                        <h3 class="tour-name">Hornbill Festival Experience</h3>
+                        <span class="tour-location">Kohima, Nagaland</span>
+                        <p class="tour-description">Culture and travel bloggers invited to document the vibrant Hornbill Festival, featuring 16 Naga tribes, traditional music, dance performances, and indigenous food experiences.</p>
+                        <div class="tour-tags">
+                            <span class="tour-tag">Festival</span>
+                            <span class="tour-tag">Cultural</span>
+                            <span class="tour-tag">Northeast</span>
+                        </div>
+                        <div class="tour-footer">
+                            <span class="tour-company">Northeast Explorations</span>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tour 10 -->
+                <div class="tour-card">
+                    <div class="tour-card-header" style="background-image: url('/api/placeholder/400/250');">
+                        <span class="tour-badge">Ambassador</span>
+                    </div>
+                    <div class="tour-card-body">
+                        <h3 class="tour-name">Coffee Plantation Experience</h3>
+                        <span class="tour-location">Chikmagalur, Karnataka</span>
+                        <p class="tour-description">Seeking food and sustainability bloggers for our immersive coffee plantation tours featuring bean-to-cup experiences, Western Ghats treks, and homestays with local coffee growing families.</p>
+                        <div class="tour-tags">
+                            <span class="tour-tag">Culinary</span>
+                            <span class="tour-tag">Eco-tourism</span>
+                            <span class="tour-tag">Rural</span>
+                        </div>
+                        <div class="tour-footer">
+                            <span class="tour-company">South Indian Coffee Trails</span>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tour 11 -->
+                <div class="tour-card">
+                    <div class="tour-card-header" style="background-image: url('/api/placeholder/400/250');">
+                        <span class="tour-badge">Paid</span>
+                    </div>
+                    <div class="tour-card-body">
+                        <h3 class="tour-name">Kaziranga Wildlife Safari</h3>
+                        <span class="tour-location">Kaziranga, Assam</span>
+                        <p class="tour-description">Wildlife photographers and conservationists needed to showcase our ethical rhino safaris, conservation efforts, and local Assamese cultural exchanges in and around Kaziranga National Park.</p>
+                        <div class="tour-tags">
+                            <span class="tour-tag">Wildlife</span>
+                            <span class="tour-tag">Northeast</span>
+                            <span class="tour-tag">Conservation</span>
+                        </div>
+                        <div class="tour-footer">
+                            <span class="tour-company">Assam Eco Tours</span>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tour 12 -->
+                <div class="tour-card">
+                    <div class="tour-card-header" style="background-image: url('/api/placeholder/400/250');">
+                        <span class="tour-badge">Barter</span>
+                    </div>
+                    <div class="tour-card-body">
+                        <h3 class="tour-name">Hampi Heritage Exploration</h3>
+                        <span class="tour-location">Hampi, Karnataka</span>
+                        <p class="tour-description">History and architecture bloggers sought for our immersive Hampi tours featuring expert archeological guides, sunrise photography at Vittala Temple, and local village experiences.</p>
+                        <div class="tour-tags">
+                            <span class="tour-tag">Heritage</span>
+                            <span class="tour-tag">Historical</span>
+                            <span class="tour-tag">Photography</span>
+                        </div>
+                        <div class="tour-footer">
+                            <span class="tour-company">Karnataka Heritage Tours</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Include the footer dynamically -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Function to load components dynamically
+        async function loadComponent(url, containerId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${url}`);
+                }
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading component from ${url}:`, error);
+            }
+        }
+
+        // Load components when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            loadComponent('navbar.html', 'navbar-container');
+            loadComponent('footer.html', 'footer-container');
+            
+            // Simple filter tag functionality
+            const filterTags = document.querySelectorAll('.filter-tag');
+            filterTags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    filterTags.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    // In a real implementation, this would filter the tours
+                });
+            });
+        });
+    </script>
+</body>
+</html>

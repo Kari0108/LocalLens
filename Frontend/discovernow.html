@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Your Journey | Local Lens India</title>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        /* Additional styles not found in css.css */
+        .parallax-section {
+          position: relative;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-attachment: scroll;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          overflow: hidden;
+        }
+
+        .parallax-content {
+          text-align: center;
+          max-width: 900px;
+          padding: 0 2rem;
+          z-index: 2;
+        }
+
+        .black-frame {
+          background-color: #000;
+          padding: 8rem 0;
+          position: relative;
+        }
+
+        .frame-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          text-align: center;
+        }
+
+        .cta-section {
+          background-color: #000;
+          padding: 5rem 0;
+        }
+
+        .cta-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          text-align: center;
+        }
+
+        .cta-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+          margin-top: 3rem;
+        }
+
+        .cta-card {
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          padding: 2rem;
+          text-align: center;
+          transition: transform 0.3s ease;
+        }
+
+        .cta-card:hover {
+          transform: translateY(-10px);
+        }
+
+        .cta-icon {
+          font-size: 3rem;
+          margin-bottom: 1.5rem;
+          color: #FF9933;
+        }
+
+        .cta-content h3 {
+          margin-bottom: 1rem;
+          color: #fff;
+        }
+
+        .cta-content p {
+          margin-bottom: 1.5rem;
+          color: #ccc;
+        }
+
+        .btn-orange {
+          display: inline-block;
+          padding: 15px 30px;
+          background-color: #FF9933;
+          border: 2px solid #FF9933;
+          color: #fff;
+          text-decoration: none;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+
+        .btn-orange:hover {
+          background-color: transparent;
+          color: #FF9933;
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 992px) {
+          .cta-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 576px) {
+          .cta-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Include navbar.html using fetch API -->
+<div id="navbar-container"></div>
+
+<!-- Hero Parallax Section -->
+<section class="parallax-section" style="background-image: url('e14.avif');">
+    <div class="parallax-content">
+        <h1>Discover the Soul of India</h1>
+        <p>From the misty mountains of the Himalayas to the serene backwaters of Kerala, embark on a journey through India's diverse landscapes and rich cultural tapestry.</p>
+        <a href="#start-journey" class="btn">Begin Your Adventure</a>
+    </div>
+</section>
+
+<!-- Black Frame Section - Introduction -->
+<section class="black-frame">
+    <div class="frame-container">
+        <h2>Namaste, Traveler!</h2>
+        <p>India is not just a destination; it's an experience that awakens all your senses. The vibrant colors of Rajasthan, the spiritual aura of Varanasi, the gastronomic delights of Old Delhi, and the tranquil beauty of Kerala's backwaters - each corner of this ancient land tells a unique story. Let us guide you through the authentic Indian experiences that go beyond the typical tourist trail, connecting you with local communities and unveiling the true essence of Incredible India.</p>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section id="start-journey" class="cta-section">
+    <div class="cta-container">
+        <h2>Begin Your Indian Journey</h2>
+        <div class="cta-grid">
+            <div class="cta-card">
+                <div class="cta-icon">🧭</div>
+                <div class="cta-content">
+                    <h3>Explore Experiences</h3>
+                    <p>Discover curated experiences from hidden yoga retreats in Rishikesh to secret food trails in Chandni Chowk, Delhi. Find adventures tailored to your interests across India's diverse regions.</p>
+                    <a href="explore-experiences.html" class="btn-orange">Find Adventures</a>
+                </div>
+            </div>
+            <div class="cta-card">
+                <div class="cta-icon">✍️</div>
+                <div class="cta-content">
+                    <h3>Share Your Story</h3>
+                    <p>Did you discover a hidden gem in the bylanes of Jaipur? Or a peaceful spot in the Western Ghats? Share your authentic Indian travel stories and help fellow travelers experience the real India.</p>
+                    <a href="share-story.html" class="btn-orange">Tell Your Tale</a>
+                </div>
+            </div>
+            <div class="cta-card">
+                <div class="cta-icon">👥</div>
+                <div class="cta-content">
+                    <h3>Join the Community</h3>
+                    <p>Connect with fellow travelers and local guides who share your passion for exploring India's cultural richness, from the bustling metros to remote villages.</p>
+                    <a href="join-community.html" class="btn-orange">Connect Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- First Parallax Section -->
+<section class="parallax-section" style="background-image: url('dn1.jpg');">
+    <div class="parallax-content">
+        <h1>Spiritual Journeys</h1>
+        <p>From the ghats of Varanasi to the Golden Temple of Amritsar, embark on a spiritual odyssey through India's sacred sites.</p>
+        <a href="spiritual-journeys.html" class="btn">Discover Spiritual India</a>
+    </div>
+</section>
+
+<!-- Second Parallax Section -->
+<section class="parallax-section" style="background-image: url('dn2.jpg');">
+    <div class="parallax-content">
+        <h1>Culinary Expeditions</h1>
+        <p>Taste the flavors of India through regional cuisines - from the spicy street food of Mumbai to the royal dishes of Lucknow.</p>
+        <a href="culinary-experiences.html" class="btn">Explore Indian Flavors</a>
+    </div>
+</section>
+
+<!-- Third Parallax Section -->
+<section class="parallax-section" style="background-image: url('e7.jpg');">
+    <div class="parallax-content">
+        <h1>Off-Beat Destinations</h1>
+        <p>Explore lesser-known gems like the living root bridges of Meghalaya, the ancient step wells of Gujarat, and the hidden valleys of Spiti.</p>
+        <a href="offbeat-india.html" class="btn">Discover Hidden India</a>
+    </div>
+</section>
+
+<!-- Final CTA Black Frame Section -->
+<section class="black-frame">
+    <div class="frame-container">
+        <h2>Ready to Experience the Real India?</h2>
+        <p>India isn't just a place on the map; it's a journey of discovery, connection, and transformation. Whether you're drawn to the snow-capped peaks of Ladakh, the sun-kissed beaches of Goa, the architectural marvels of Hampi, or the vibrant festivals of Pushkar, your Indian adventure awaits. Start your journey today and create memories that will last a lifetime.</p>
+        <a href="plan-journey.html" class="btn-orange mt-4">Start Planning Now</a>
+    </div>
+</section>
+
+<!-- Include footer.html using fetch API -->
+<div id="footer-container"></div>
+
+<script>
+    // Load navbar and footer components
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to fetch and insert HTML content
+      async function includeHTML(url, targetElementId) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.status}`);
+          }
+          const html = await response.text();
+          document.getElementById(targetElementId).innerHTML = html;
+
+          // Execute any scripts in the included HTML
+          const scripts = document.getElementById(targetElementId).getElementsByTagName('script');
+          for (let i = 0; i < scripts.length; i++) {
+            const script = document.createElement('script');
+            script.textContent = scripts[i].textContent;
+            document.body.appendChild(script);
+          }
+        } catch (error) {
+          console.error(`Error including HTML from ${url}:`, error);
+        }
+      }
+
+      // Include navbar and footer
+      includeHTML('navbar.html', 'navbar-container');
+      includeHTML('footer.html', 'footer-container');
+
+      // Add scroll event listener for parallax effect
+      window.addEventListener('scroll', function() {
+        const parallaxSections = document.querySelectorAll('.parallax-section');
+
+        parallaxSections.forEach(section => {
+          const distance = window.scrollY;
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+
+          if (distance > sectionTop - window.innerHeight && distance < sectionTop + sectionHeight) {
+            // Create smoother parallax effect without fixed attachment
+            const yPos = -(distance - sectionTop) * 0.2;
+            section.style.backgroundPosition = `center ${yPos}px`;
+          }
+        });
+      });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogger Dashboard | Local Lens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.9);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            color: #fff;
+            padding: 30px 0;
+            z-index: 100;
+            transition: all 0.3s;
+        }
+        
+        .brand {
+            padding: 0 25px 30px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .brand h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .brand p {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .user-profile {
+            padding: 25px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #555;
+            margin: 0 auto 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+        
+        .user-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .user-info p {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .nav-menu {
+            padding: 25px 0;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 15px 25px;
+            color: #ddd;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-item i {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        
+        .logout {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            padding: 0 25px;
+        }
+        
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ddd;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+            transition: all 0.3s;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h2 {
+            font-size: 28px;
+            color: #333;
+        }
+        
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            border-color: #555;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+        
+        /* Dashboard Section */
+        .dashboard-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .dashboard-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Analytic Cards */
+        .analytics-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #f2f7ff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-icon i {
+            font-size: 24px;
+            color: #4a6cf7;
+        }
+        
+        .card h3 {
+            font-size: 16px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        
+        .card h2 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .card p {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .card .trend {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .card .trend i {
+            margin-right: 5px;
+        }
+        
+        .card .trend.up {
+            color: #28c76f;
+        }
+        
+        .card .trend.down {
+            color: #ea5455;
+        }
+        
+        /* Content Management */
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .content-table thead {
+            background-color: #f9f9f9;
+        }
+        
+        .content-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .content-table td {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+        }
+        
+        .content-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .content-status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-published {
+            background-color: rgba(40, 199, 111, 0.1);
+            color: #28c76f;
+        }
+        
+        .status-draft {
+            background-color: rgba(253, 172, 65, 0.1);
+            color: #fdac41;
+        }
+        
+        .action-btn {
+            padding: 5px 10px;
+            background-color: transparent;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-right: 5px;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .action-btn.edit:hover {
+            border-color: #4a6cf7;
+            color: #4a6cf7;
+        }
+        
+        .action-btn.delete:hover {
+            border-color: #ea5455;
+            color: #ea5455;
+        }
+        
+        /* Collaborations */
+        .collaboration-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .collab-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .collab-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .collab-header {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .collab-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background-color: #f3f3f3;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #555;
+        }
+        
+        .collab-info h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .collab-info p {
+            color: #777;
+            font-size: 13px;
+        }
+        
+        .collab-content {
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .collab-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .collab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .collab-btn.accept {
+            background-color: rgba(40, 199, 111, 0.1);
+            color: #28c76f;
+        }
+        
+        .collab-btn.accept:hover {
+            background-color: rgba(40, 199, 111, 0.2);
+        }
+        
+        .collab-btn.reject {
+            background-color: rgba(234, 84, 85, 0.1);
+            color: #ea5455;
+        }
+        
+        .collab-btn.reject:hover {
+            background-color: rgba(234, 84, 85, 0.2);
+        }
+        
+        .collab-btn.view {
+            background-color: rgba(74, 108, 247, 0.1);
+            color: #4a6cf7;
+        }
+        
+        .collab-btn.view:hover {
+            background-color: rgba(74, 108, 247, 0.2);
+        }
+        
+        /* Itinerary Tool */
+        .itinerary-builder {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #4a6cf7;
+            outline: none;
+            box-shadow: 0 0 5px rgba(74, 108, 247, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            background-color: #4a6cf7;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #3557d8;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #4a6cf7;
+            color: #4a6cf7;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(74, 108, 247, 0.1);
+        }
+        
+        /* Reviews */
+        .review-item {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .reviewer {
+            display: flex;
+            align-items: center;
+        }
+        
+        .reviewer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f3f3f3;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #555;
+        }
+        
+        .reviewer-info h4 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+        
+        .reviewer-info p {
+            color: #777;
+            font-size: 13px;
+        }
+        
+        .review-rating {
+            display: flex;
+            align-items: center;
+        }
+        
+        .review-rating i {
+            color: #fdac41;
+            margin-right: 2px;
+        }
+        
+        .review-content {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .review-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Login Section CSS from the provided code */
+        .login-section {
+            min-height: 100vh;
+            padding: 120px 0 60px;
+            background-color: #000;
+            background-image: url('travel-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+        
+        .login-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+        
+        /* Login form specific styles */
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 42px;
+            cursor: pointer;
+            color: #aaa;
+            font-size: 14px;
+            font-weight: 500;
+            user-select: none;
+            transition: color 0.3s;
+        }
+        
+        .password-toggle:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">
+            <h1>Local Lens</h1>
+            <p>Blogger Dashboard</p>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar" id="userInitials"></div>
+            <div class="user-info">
+                <h3 id="userName">Loading...</h3>
+                <p id="userLocation">Loading...</p>
+            </div>
+        </div>
+        
+        <div class="nav-menu">
+            <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </a>
+            <a href="#content" class="nav-item" data-section="content">
+                <i class="fas fa-file-alt"></i> Content
+            </a>
+            <a href="#collaborations" class="nav-item" data-section="collaborations">
+                <i class="fas fa-handshake"></i> Collaborations
+            </a>
+            <a href="#itinerary" class="nav-item" data-section="itinerary">
+                <i class="fas fa-map-marked-alt"></i> Itinerary
+            </a>
+            <a href="#reviews" class="nav-item" data-section="reviews">
+                <i class="fas fa-star"></i> Reviews
+            </a>
+            <a href="#settings" class="nav-item" data-section="settings">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+        </div>
+        
+        <div class="logout">
+            <a href="login.html" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h2>Welcome, <span id="headerUserName">Blogger</span>!</h2>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search...">
+            </div>
+        </div>
+        
+        <!-- Dashboard Section -->
+        <div class="dashboard-section active" id="dashboard">
+            <div class="analytics-cards">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Followers</h3>
+                    <h2>8,492</h2>
+                    <div class="trend up">
+                        <i class="fas fa-arrow-up"></i> 12.5% this month
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Profile Views</h3>
+                    <h2>24,756</h2>
+                    <div class="trend up">
+                        <i class="fas fa-arrow-up"></i> 8.2% this month
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h3>Engagement</h3>
+                    <h2>3,945</h2>
+                    <div class="trend up">
+                        <i class="fas fa-arrow-up"></i> 5.7% this month
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>Post Shares</h3>
+                    <h2>1,286</h2>
+                    <div class="trend down">
+                        <i class="fas fa-arrow-down"></i> 2.3% this month
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Popular Content</h3>
+                <table class="content-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Views</th>
+                            <th>Likes</th>
+                            <th>Shares</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Top 10 Hidden Gems in Bali</td>
+                            <td>Apr 10, 2025</td>
+                            <td>5,245</td>
+                            <td>432</td>
+                            <td>187</td>
+                        </tr>
+                        <tr>
+                            <td>Ultimate Guide to Thai Street Food</td>
+                            <td>Mar 28, 2025</td>
+                            <td>4,127</td>
+                            <td>378</td>
+                            <td>156</td>
+                        </tr>
+                        <tr>
+                            <td>Sustainable Travel: Tips for Eco-Friendly Adventures</td>
+                            <td>Mar 15, 2025</td>
+                            <td>3,854</td>
+                            <td>321</td>
+                            <td>142</td>
+                        </tr>
+                        <tr>
+                            <td>Photography Guide for Travel Bloggers</td>
+                            <td>Feb 27, 2025</td>
+                            <td>3,541</td>
+                            <td>287</td>
+                            <td>129</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Content Management Section -->
+        <div class="dashboard-section" id="content">
+            <div class="header">
+                <h2>Content Management</h2>
+                <button class="btn">+ Create New Post</button>
+            </div>
+            
+            <table class="content-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Views</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Top 10 Hidden Gems in Bali</td>
+                        <td>Destinations</td>
+                        <td>Apr 10, 2025</td>
+                        <td><span class="content-status status-published">Published</span></td>
+                        <td>5,245</td>
+                        <td>
+                            <button class="action-btn edit">Edit</button>
+                            <button class="action-btn delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ultimate Guide to Thai Street Food</td>
+                        <td>Food</td>
+                        <td>Mar 28, 2025</td>
+                        <td><span class="content-status status-published">Published</span></td>
+                        <td>4,127</td>
+                        <td>
+                            <button class="action-btn edit">Edit</button>
+                            <button class="action-btn delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sustainable Travel: Tips for Eco-Friendly Adventures</td>
+                        <td>Tips</td>
+                        <td>Mar 15, 2025</td>
+                        <td><span class="content-status status-published">Published</span></td>
+                        <td>3,854</td>
+                        <td>
+                            <button class="action-btn edit">Edit</button>
+                            <button class="action-btn delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Photography Guide for Travel Bloggers</td>
+                        <td>Tips</td>
+                        <td>Feb 27, 2025</td>
+                        <td><span class="content-status status-published">Published</span></td>
+                        <td>3,541</td>
+                        <td>
+                            <button class="action-btn edit">Edit</button>
+                            <button class="action-btn delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7 Days in Japan: The Perfect Itinerary</td>
+                        <td>Itineraries</td>
+                        <td>Feb 15, 2025</td>
+                        <td><span class="content-status status-published">Published</span></td>
+                        <td>3,287</td>
+                        <td>
+                            <button class="action-btn edit">Edit</button>
+                            <button class="action-btn delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Budget Travel: How to Explore Europe for Less</td>
+                        <td>Tips</td>
+                        <td>Jan 30, 2025</td>
+                        <td><span class="content-status status-published">Published</span></td>
+                        <td>2,976</td>
+                        <td>
+                            <button class="action-btn edit">Edit</button>
+                            <button class="action-btn delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Solo Female Travel Safety Tips</td>
+                        <td>Tips</td>
+                        <td>Apr 15, 2025</td>
+                        <td><span class="content-status status-draft">Draft</span></td>
+                        <td>-</td>
+                        <td>
+                            <button class="action-btn edit">Edit</button>
+                            <button class="action-btn delete">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Collaborations Section -->
+        <div class="dashboard-section" id="collaborations">
+            <div class="header">
+                <h2>Collaboration Hub</h2>
+                <button class="btn">Find New Collaborations</button>
+            </div>
+            
+            <h3 style="margin-bottom: 20px;">Active Collaborations</h3>
+            <div class="collaboration-cards">
+                <div class="collab-card">
+                    <div class="collab-header">
+                        <div class="collab-logo">
+                            <i class="fas fa-hotel"></i>
+                        </div>
+                        <div class="collab-info">
+                            <h3>Luxury Resorts Partnership</h3>
+                            <p>Ends on May 15, 2025</p>
+                        </div>
+                    </div>
+                    <div class="collab-content">
+                        <p>Create content featuring our luxury eco-resort properties in Southeast Asia. All accommodations and experiences provided.</p>
+                    </div>
+                    <div class="collab-actions">
+                        <button class="collab-btn view">View Details</button>
+                    </div>
+                </div>
+                
+                <div class="collab-card">
+                    <div class="collab-header">
+                        <div class="collab-logo">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="collab-info">
+                            <h3>Camera Brand Sponsorship</h3>
+                            <p>Ends on Jun 30, 2025</p>
+                        </div>
+                    </div>
+                    <div class="collab-content">
+                        <p>Showcase our newest camera equipment in your travel photography. Includes $1,500 payment and equipment loan.</p>
+                    </div>
+                    <div class="collab-actions">
+                        <button class="collab-btn view">View Details</button>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 style="margin: 30px 0 20px;">Pending Collaboration Requests</h3>
+            <div class="collaboration-cards">
+                <div class="collab-card">
+                    <div class="collab-header">
+                        <div class="collab-logo">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <div class="collab-info">
+                            <h3>SkyWings Airlines</h3>
+                            <p>Expires in 5 days</p>
+                        </div>
+                    </div>
+                    <div class="collab-content">
+                        <p>Promote our new direct flights to Southeast Asian destinations. Includes 2 round-trip business class tickets and $1,000 payment for content creation.</p>
+                    </div>
+                    <div class="collab-actions">
+                        <button class="collab-btn accept">Accept</button>
+                        <button class="collab-btn reject">Decline</button>
+                    </div>
+                </div>
+                
+                <div class="collab-card">
+                    <div class="collab-header">
+                        <div class="collab-logo">
+                            <i class="fas fa-suitcase"></i>
+                        </div>
+                        <div class="collab-info">
+                            <h3>TravelGear Co.</h3>
+                            <p>Expires in 7 days</p>
+                        </div>
+                    </div>
+                    <div class="collab-content">
+                        <p>Review our new travel backpack collection. Includes free products worth $500 and affiliate commission structure.</p>
+                    </div>
+                    <div class="collab-actions">
+                        <button class="collab-btn accept">Accept</button>
+                        <button class="collab-btn reject">Decline</button>
+                    </div>
+                </div>
+                
+                <div class="collab-card">
+                    <div class="collab-header">
+                        <div class="collab-logo">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="collab-info">
+                            <h3>Global Food Guide</h3>
+                            <p>Expires in 3 days</p>
+                        </div>
+                    </div>
+                    <div class="collab-content">
+                        <p>Guest writing opportunity for our food travel series. $300 per article with possibility for recurring partnership.</p>
+                    </div>
+                    <div class="collab-actions">
+                        <button class="collab-btn accept">Accept</button>
+                        <button class="collab-btn reject">Decline</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Itinerary Builder Section -->
+        <div class="dashboard-section" id="itinerary">
+            <div class="header">
+                <h2>Itinerary Builder</h2>
+            </div>
+            
+            <div class="itinerary-builder">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="itinerary-title">Itinerary Title</label>
+                        <input type="text" id="itinerary-title" placeholder="e.g. 7 Days in Bali: The Ultimate Guide">
+                    </div>
+                    <div class="form-group">
+                        <label for="itinerary-location">Location</label>
+                        <input type="text" id="itinerary-location" placeholder="e.g. Bali, Indonesia">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="itinerary-duration">Duration</label>
+                        <select id="itinerary-duration">
+                            <option value="">Select duration</option>
+                            <option value="weekend">Weekend (2-3 days)</option>
+                            <option value="short">Short Trip (4-6 days)</option>
+                            <option value="week">One Week</option>
+                            <option value="long">Extended Trip (8-14 days)</option>
+                            <option value="extended">Long Journey (15+ days)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="itinerary-type">Travel Type</label>
+                        <select id="itinerary-type">
+                            <option value="">Select travel type</option>
+                            <option value="solo">Solo Travel</option>
+                            <option value="couple">Couples</option>
+                            <option value="family">Family-Friendly</option>
+                            <option value="friends">Group of Friends</option>
+                            <option value="luxury">Luxury</option>
+                            <option value="budget">Budget</option>
+                            <option value="adventure">Adventure</option>
+                            <option value="culture">Cultural Experience</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="itinerary-description">Description</label>
+                    <textarea id="itinerary-description" placeholder="Provide a brief overview of this itinerary..."></textarea>
+                </div>
+                
+                <h3 style="margin: 20px 0 15px;">Day Planning</h3>
+                
+                <!-- Day 1 -->
+                <div class="card" style="margin-bottom: 20px;">
+                    <h3 style="margin-bottom: 15px;">Day 1</h3>
+                    
+                    <div class="form-group">
+                        <label>Day Title</label>
+                        <input type="text" placeholder="e.g. Arrival & Beach Exploration">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Morning Activities</label>
+                        <textarea placeholder="What to do in the morning..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Afternoon Activities</label>
+                        <textarea placeholder="What to do in the afternoon..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Evening Activities</label>
+                        <textarea placeholder="What to do in the evening..."></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Accommodation</label>
+                            <input type="text" placeholder="Where to stay...">
+                        </div>
+                        <div class="form-group">
+                            <label>Transportation</label>
+                            <input type="text" placeholder="How to get around...">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Food Recommendations</label>
+                        <textarea placeholder="Where to eat..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tips & Notes</label>
+                        <textarea placeholder="Additional information..."></textarea>
+                    </div>
+                </div>
+                
+                <button class="btn" style="margin-right: 10px; margin-bottom: 20px;">+ Add Another Day</button>
+                <button class="btn btn-outline" style="margin-bottom: 20px;">Preview Itinerary</button>
+                
+                <div style="text-align: right;">
+                    <button class="btn">Save Itinerary</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reviews Section -->
+        <div class="dashboard-section" id="reviews">
+            <div class="header">
+                <h2>Reviews & Feedback</h2>
+                <div>
+                    <select style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; margin-right: 10px;">
+                        <option value="all">All Reviews</option>
+                        <option value="recent">Recent Reviews</option>
+                        <option value="positive">Positive Reviews</option>
+                        <option value="negative">Critical Reviews</option>
+                        <option value="responded">Responded</option>
+                        <option value="unresponded">Not Responded</option>
+                    </select>
+                    <button class="btn btn-outline">Export Reviews</button>
+                </div>
+            </div>
+            
+            <div class="review-item">
+                <div class="review-header">
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">JD</div>
+                        <div class="reviewer-info">
+                            <h4>John Davis</h4>
+                            <p>April 15, 2025</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <p>Your Bali guide was incredibly helpful for planning my honeymoon! We followed most of your recommendations and had the trip of a lifetime. The hidden beach spot you mentioned was definitely the highlight of our trip. Thank you so much!</p>
+                </div>
+                <div class="review-actions">
+                    <button class="action-btn">Reply</button>
+                    <button class="action-btn">Pin to Profile</button>
+                </div>
+            </div>
+            
+            <div class="review-item">
+                <div class="review-header">
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">AW</div>
+                        <div class="reviewer-info">
+                            <h4>Alice Wong</h4>
+                            <p>April 12, 2025</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <p>The food guide for Thailand was spot on! I tried almost every dish you recommended and they were all amazing. The only suggestion I would make is to include more vegetarian options as I struggled a bit with that. Otherwise, fantastic content!</p>
+                </div>
+                <div class="review-actions">
+                    <button class="action-btn">Reply</button>
+                    <button class="action-btn">Pin to Profile</button>
+                </div>
+            </div>
+            
+            <div class="review-item">
+                <div class="review-header">
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">RM</div>
+                        <div class="reviewer-info">
+                            <h4>Robert Martinez</h4>
+                            <p>April 8, 2025</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <p>I found your Japan itinerary a bit rushed. Seven days is simply not enough to experience Japan properly, especially with the day trips you suggested. I would recommend splitting it into Tokyo and Kyoto focused guides instead of trying to cover so much ground. The restaurant recommendations were excellent though!</p>
+                </div>
+                <div class="review-actions">
+                    <button class="action-btn">Reply</button>
+                    <button class="action-btn">Pin to Profile</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Settings Section -->
+        <div class="dashboard-section" id="settings">
+            <div class="header">
+                <h2>Account Settings</h2>
+            </div>
+            
+            <div class="card" style="margin-bottom: 30px;">
+                <h3 style="margin-bottom: 20px;">Profile Information</h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="settings-name">Full Name</label>
+                        <input type="text" id="settings-name" placeholder="Your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="settings-username">Username</label>
+                        <input type="text" id="settings-username" placeholder="Your username">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="settings-email">Email Address</label>
+                        <input type="email" id="settings-email" placeholder="Your email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="settings-phone">Phone Number</label>
+                        <input type="tel" id="settings-phone" placeholder="Your phone number">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="settings-bio">Bio</label>
+                    <textarea id="settings-bio" placeholder="Tell the world about yourself..."></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="settings-location">Location</label>
+                        <input type="text" id="settings-location" placeholder="Your location">
+                    </div>
+                    <div class="form-group">
+                        <label for="settings-website">Website</label>
+                        <input type="url" id="settings-website" placeholder="Your website URL">
+                    </div>
+                </div>
+                
+                <button class="btn" style="margin-top: 10px;">Save Changes</button>
+            </div>
+            
+            <div class="card" style="margin-bottom: 30px;">
+                <h3 style="margin-bottom: 20px;">Social Media Links</h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Instagram</label>
+                        <input type="text" placeholder="Your Instagram username">
+                    </div>
+                    <div class="form-group">
+                        <label>Twitter</label>
+                        <input type="text" placeholder="Your Twitter handle">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Facebook</label>
+                        <input type="text" placeholder="Your Facebook page">
+                    </div>
+                    <div class="form-group">
+                        <label>YouTube</label>
+                        <input type="text" placeholder="Your YouTube channel">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>TikTok</label>
+                        <input type="text" placeholder="Your TikTok username">
+                    </div>
+                    <div class="form-group">
+                        <label>Pinterest</label>
+                        <input type="text" placeholder="Your Pinterest account">
+                    </div>
+                </div>
+                
+                <button class="btn" style="margin-top: 10px;">Save Changes</button>
+            </div>
+            
+            <div class="card">
+                <h3 style="margin-bottom: 20px;">Account Security</h3>
+                
+                <div class="form-group">
+                    <label for="settings-current-password">Current Password</label>
+                    <input type="password" id="settings-current-password" placeholder="Enter your current password">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="settings-new-password">New Password</label>
+                        <input type="password" id="settings-new-password" placeholder="Enter new password">
+                    </div>
+                    <div class="form-group">
+                        <label for="settings-confirm-password">Confirm New Password</label>
+                        <input type="password" id="settings-confirm-password" placeholder="Confirm new password">
+                    </div>
+                </div>
+                
+                <button class="btn" style="margin-top: 10px;">Update Password</button>
+                
+                <div style="margin-top: 30px;">
+                    <h4 style="margin-bottom: 15px;">Two-Factor Authentication</h4>
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                        <span style="margin-left: 10px;">Enable Two-Factor Authentication</span>
+                    </div>
+                    <button class="btn btn-outline">Setup Two-Factor Authentication</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Dummy data for demo purposes
+        const userData = {
+            name: "Sophie Chen",
+            location: "Travel Blogger | Singapore",
+            initials: "SC"
+        };
+        
+        // Set user data in the UI
+        document.getElementById('userName').textContent = userData.name;
+        document.getElementById('userLocation').textContent = userData.location;
+        document.getElementById('userInitials').textContent = userData.initials;
+        document.getElementById('headerUserName').textContent = userData.name.split(' ')[0];
+        
+        // Tab navigation
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.dashboard-section');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all items
+                navItems.forEach(navItem => navItem.classList.remove('active'));
+                sections.forEach(section => section.classList.remove('active'));
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Show corresponding section
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+        
+        // Add form submit handlers, search functionality, and other interactivity here
+    </script>
+</body>
+</html>

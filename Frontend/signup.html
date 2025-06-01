@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Local Lens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <style>
+        .signup-section {
+            min-height: 100vh;
+            padding: 120px 0 60px;
+            background-color: #000;
+            background-image: url('travel-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .signup-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .signup-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .signup-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .signup-header h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .signup-header p {
+            color: #aaa;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #fff;
+            outline: none;
+        }
+
+        /* Password toggle button styles */
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 41px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 10;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .password-toggle:hover {
+            color: #fff;
+        }
+
+        .password-field-container {
+            position: relative;
+        }
+
+        .signup-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .signup-btn:hover {
+            background-color: orange;
+            color: #000;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .success-message {
+            color: #6bff6b;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+        }
+
+        /* Tabs for user type selection */
+        .signup-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            background-color: #000;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .signup-tab {
+            padding: 12px 25px;
+            background-color: transparent;
+            border: none;
+            color: #aaa;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            flex: 1;
+            text-align: center;
+        }
+
+        .signup-tab.active {
+            color: #fff;
+            background-color: #ff8c00; /* Orange background for active tab */
+            border-bottom: none;
+        }
+
+        .signup-tab:hover:not(.active) {
+            color: #fff;
+            background-color: rgba(255, 140, 0, 0.3); /* Semi-transparent orange for hover */
+        }
+
+        .login-link-container {
+            text-align: center;
+            margin-top: 20px;
+            color: #aaa;
+        }
+
+        .login-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .login-link:hover {
+            color: orange;
+        }
+
+        @media (max-width: 768px) {
+            .signup-container {
+                padding: 25px;
+                margin: 0 20px;
+            }
+
+            .signup-header h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Include the navbar dynamically -->
+<div id="navbar-container"></div>
+
+<!-- Signup Section -->
+<section class="signup-section">
+    <div class="signup-container">
+        <div class="signup-tabs">
+            <button type="button" class="signup-tab" data-tab="collaborator">Collaborator</button>
+            <button type="button" class="signup-tab active" data-tab="blogger">Blogger</button>
+            <button type="button" class="signup-tab" data-tab="user">User</button>
+        </div>
+
+        <div class="signup-header">
+            <h2 id="signupTitle">Blogger Sign Up</h2>
+            <p id="signupSubtitle">Create your blogging account</p>
+        </div>
+
+        <form id="signupForm">
+            <div class="input-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" required>
+            </div>
+
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="password-field-container">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <button type="button" id="togglePassword" class="password-toggle">SHOW</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="password-field-container">
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                    <button type="button" id="toggleConfirmPassword" class="password-toggle">SHOW</button>
+                </div>
+            </div>
+
+            <button type="submit" class="signup-btn">Sign Up</button>
+
+            <div id="errorMessage" class="error-message">
+                Error message will appear here.
+            </div>
+
+            <div id="successMessage" class="success-message">
+                Account created successfully!
+            </div>
+
+            <div class="login-link-container">
+                Already have an account? <a href="login.html" class="login-link">Login</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Include the footer dynamically -->
+<div id="footer-container"></div>
+
+<script>
+    // Load navbar
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading navbar:', error);
+        });
+
+    // Load footer
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading footer:', error);
+        });
+
+    // Set up current user type - default to blogger since that tab is active
+    let currentUserType = 'blogger';
+
+    // Tab switching functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelectorAll('.signup-tab');
+        const signupTitle = document.getElementById('signupTitle');
+        const signupSubtitle = document.getElementById('signupSubtitle');
+
+        // Add click event to tabs
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+
+                // Add active class to clicked tab
+                this.classList.add('active');
+
+                // Set current user type
+                currentUserType = this.getAttribute('data-tab');
+
+                // Update title and subtitle
+                if (currentUserType === 'collaborator') {
+                    signupTitle.textContent = 'Collaborator Sign Up';
+                    signupSubtitle.textContent = 'Create your collaboration account';
+                } else if (currentUserType === 'blogger') {
+                    signupTitle.textContent = 'Blogger Sign Up';
+                    signupSubtitle.textContent = 'Create your blogging account';
+                } else {
+                    signupTitle.textContent = 'User Sign Up';
+                    signupSubtitle.textContent = 'Create your user account';
+                }
+
+                // Clear form fields and messages
+                document.getElementById('signupForm').reset();
+                document.getElementById('errorMessage').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'none';
+            });
+        });
+    });
+
+    // Password toggle functionality for both password fields
+    document.addEventListener('DOMContentLoaded', function() {
+        // Setup toggle for first password field
+        setupPasswordToggle('togglePassword', 'password');
+
+        // Setup toggle for confirm password field
+        setupPasswordToggle('toggleConfirmPassword', 'confirmPassword');
+
+        function setupPasswordToggle(toggleId, passwordId) {
+            const toggleButton = document.getElementById(toggleId);
+            const passwordField = document.getElementById(passwordId);
+            const passwordContainer = passwordField.parentElement;
+
+            if (toggleButton && passwordField) {
+                // Toggle on click
+                toggleButton.addEventListener('click', function(event) {
+                    // Prevent form submission
+                    event.preventDefault();
+
+                    // Toggle password visibility
+                    if (passwordField.type === 'password') {
+                        passwordField.type = 'text';
+                        toggleButton.textContent = 'HIDE';
+                    } else {
+                        passwordField.type = 'password';
+                        toggleButton.textContent = 'SHOW';
+                    }
+
+                    // Set focus back to password field
+                    setTimeout(function() {
+                        // Focus on the field
+                        passwordField.focus();
+
+                        // Move cursor to end of input
+                        const valueLength = passwordField.value.length;
+                        passwordField.setSelectionRange(valueLength, valueLength);
+                    }, 10);
+                });
+
+                // Show toggle button on hover
+                passwordContainer.addEventListener('mouseenter', function() {
+                    toggleButton.style.opacity = '1';
+                });
+
+                // Hide toggle button when not hovering
+                passwordContainer.addEventListener('mouseleave', function() {
+                    if (document.activeElement !== passwordField) {
+                        toggleButton.style.opacity = '0.7';
+                    }
+                });
+
+                // Show toggle when field is focused
+                passwordField.addEventListener('focus', function() {
+                    toggleButton.style.opacity = '1';
+                });
+
+                // Hide toggle when field loses focus
+                passwordField.addEventListener('blur', function() {
+                    if (!passwordContainer.matches(':hover')) {
+                        toggleButton.style.opacity = '0.7';
+                    }
+                });
+            }
+        }
+    });
+
+    // Function to validate email format
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    // Function to validate username format (alphanumeric and underscore only)
+    function isValidUsername(username) {
+        const usernameRegex = /^[a-zA-Z0-9_]+$/;
+        return usernameRegex.test(username);
+    }
+
+    // Signup form validation and submission
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const fullname = document.getElementById('fullname').value.trim();
+        const username = document.getElementById('username').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const location = document.getElementById('location').value.trim();
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+
+        // Reset messages
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+
+        // Validate inputs
+        if (!fullname || !username || !email || !location || !password || !confirmPassword) {
+            showError('All fields are required');
+            return;
+        }
+
+        if (!isValidUsername(username)) {
+            showError('Username can only contain letters, numbers, and underscores');
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            showError('Please enter a valid email address');
+            return;
+        }
+
+        if (password.length < 6) {
+            showError('Password must be at least 6 characters long');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            showError('Passwords do not match');
+            return;
+        }
+
+        // If validation passes, prepare data for submission
+        const userData = {
+            fullname,
+            username,
+            email,
+            location,
+            password,
+            role: currentUserType
+        };
+
+        // Send data to the server
+        fetch('/api/auth/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Show success message
+                successMessage.textContent = 'Account created successfully!';
+                successMessage.style.display = 'block';
+
+                // Clear form
+                document.getElementById('signupForm').reset();
+
+                // Redirect to login page after 2 seconds
+                setTimeout(function() {
+                    window.location.href = 'login.html';
+                }, 2000);
+            } else {
+                // Show error message
+                showError(data.message || 'An error occurred. Please try again.');
+            }
+        })
+        .catch(error => {
+            showError('Server error. Please try again later.');
+            console.error('Error:', error);
+        });
+
+        // Function to show error message
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+
+            // Auto-hide error message after 5 seconds
+            setTimeout(function() {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+    });
+</script>
+</body>
+</html>
