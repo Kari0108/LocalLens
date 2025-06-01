@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature Escapes in India | Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        /* Additional styles not found in css.css */
+        .parallax-section {
+          position: relative;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-attachment: scroll;
+          overflow: hidden;
+        }
+
+        .parallax-content {
+          text-align: center;
+          max-width: 900px;
+          padding: 0 2rem;
+          z-index: 2;
+        }
+
+        .black-frame {
+          background-color: #000;
+          padding: 8rem 0;
+          position: relative;
+        }
+
+        .frame-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          text-align: center;
+        }
+
+        .experiences-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+          margin-top: 3rem;
+        }
+
+        .experience-card {
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          overflow: hidden;
+          padding: 1.5rem;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .experience-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .experience-location {
+          color: #FF9933;
+          font-size: 0.9rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+          display: block;
+        }
+
+        .experience-title {
+          font-size: 1.5rem;
+          margin-bottom: 1rem;
+          color: #fff;
+        }
+
+        .experience-excerpt {
+          color: #ccc;
+          margin-bottom: 1.5rem;
+          line-height: 1.6;
+        }
+
+        .btn-small {
+          padding: 8px 20px;
+          font-size: 0.9rem;
+        }
+
+        .tag-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+        }
+
+        .tag {
+          background-color: rgba(255, 153, 51, 0.2);
+          color: #FF9933;
+          padding: 4px 10px;
+          border-radius: 20px;
+          font-size: 0.8rem;
+        }
+
+        /* Special styling for nature experiences */
+        .nature-icon {
+          width: 40px;
+          height: 40px;
+          background: linear-gradient(135deg, #138808, #4CAF50);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 1rem;
+          font-size: 1.2rem;
+        }
+
+        .wildlife-icon { background: linear-gradient(135deg, #FF6B35, #F7931E); }
+        .mountain-icon { background: linear-gradient(135deg, #5D4E75, #8E7CC3); }
+        .water-icon { background: linear-gradient(135deg, #1976D2, #42A5F5); }
+        .forest-icon { background: linear-gradient(135deg, #2E7D32, #66BB6A); }
+        .desert-icon { background: linear-gradient(135deg, #FF8F00, #FFB74D); }
+        .coastal-icon { background: linear-gradient(135deg, #0288D1, #4FC3F7); }
+        .valley-icon { background: linear-gradient(135deg, #689F38, #9CCC65); }
+        .heritage-icon { background: linear-gradient(135deg, #5D4037, #8D6E63); }
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 992px) {
+          .experiences-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 576px) {
+          .experiences-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Include navbar.html using fetch API -->
+<div id="navbar-container"></div>
+
+<!-- Hero Parallax Section -->
+<section class="parallax-section" style="background-image: url('m9.jpg');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h1>Nature Escapes in India</h1>
+        <p>Immerse yourself in India's pristine wilderness, from misty hill stations to untouched forests, serene backwaters, and majestic mountain ranges.</p>
+    </div>
+</section>
+
+<!-- Black Frame Section - Introduction -->
+<section class="black-frame">
+    <div class="frame-container">
+        <h2>Discover India's Natural Treasures</h2>
+        <p>India's incredible biodiversity spans from the snow-capped Himalayas to the tropical Western Ghats, from the Thar Desert's golden sands to the lush forests of Northeast India. Experience tranquil sunrise over the Ganges, wildlife safaris in ancient forests, peaceful tea plantation walks, and pristine beach sunsets. Our curated nature escapes reveal India's most breathtaking landscapes and hidden natural gems.</p>
+
+        <div class="experiences-grid">
+            <div class="experience-card">
+                <div class="mountain-icon">🏔️</div>
+                <span class="experience-location">Munnar, Kerala</span>
+                <h3 class="experience-title">Tea Plantation Sunrise Trek</h3>
+                <div class="tag-container">
+                    <span class="tag">Hill Station</span>
+                    <span class="tag">Easy Trek</span>
+                    <span class="tag">Photography</span>
+                </div>
+                <p class="experience-excerpt">Walk through emerald tea gardens at dawn with mist rolling over the Western Ghats. Experience traditional tea plucking, visit local plantations, and witness spectacular sunrise views from Top Station overlooking Tamil Nadu's plains.</p>
+            </div>
+
+            <div class="experience-card">
+                <div class="wildlife-icon">🐅</div>
+                <span class="experience-location">Jim Corbett National Park, Uttarakhand</span>
+                <h3 class="experience-title">Royal Bengal Tiger Safari</h3>
+                <div class="tag-container">
+                    <span class="tag">Wildlife</span>
+                    <span class="tag">Safari</span>
+                    <span class="tag">Conservation</span>
+                </div>
+                <p class="experience-excerpt">Venture into India's oldest national park in search of the majestic Royal Bengal Tiger. Explore diverse ecosystems along the Ramganga River with expert naturalists sharing conservation stories and wildlife behavior insights.</p>
+            </div>
+
+            <div class="experience-card">
+                <div class="water-icon">🛶</div>
+                <span class="experience-location">Alleppey, Kerala</span>
+                <h3 class="experience-title">Backwater Houseboat Journey</h3>
+                <div class="tag-container">
+                    <span class="tag">Waterways</span>
+                    <span class="tag">Cultural</span>
+                    <span class="tag">Relaxation</span>
+                </div>
+                <p class="experience-excerpt">Cruise through Kerala's tranquil backwaters aboard traditional houseboats. Witness village life along canals, spot kingfishers and herons, enjoy fresh coconut water, and experience the peaceful rhythm of rural Kerala.</p>
+            </div>
+
+            <div class="experience-card">
+                <div class="forest-icon">🌲</div>
+                <span class="experience-location">Coorg, Karnataka</span>
+                <h3 class="experience-title">Coffee Plantation Forest Walk</h3>
+                <div class="tag-container">
+                    <span class="tag">Coffee Trails</span>
+                    <span class="tag">Bird Watching</span>
+                    <span class="tag">Plantation Stay</span>
+                </div>
+                <p class="experience-excerpt">Discover the Scotland of India through aromatic coffee plantations nestled in rainforest. Learn about traditional coffee cultivation, spot Malabar hornbills, and stay in heritage plantation bungalows with local Kodava families.</p>
+            </div>
+
+            <div class="experience-card">
+                <div class="valley-icon">🏞️</div>
+                <span class="experience-location">Valley of Flowers, Uttarakhand</span>
+                <h3 class="experience-title">Alpine Meadow Flower Trek</h3>
+                <div class="tag-container">
+                    <span class="tag">UNESCO Site</span>
+                    <span class="tag">Alpine Flora</span>
+                    <span class="tag">Monsoon Special</span>
+                </div>
+                <p class="experience-excerpt">Trek through this UNESCO World Heritage site carpeted with rare Himalayan flowers. Experience blue poppies, cobra lilies, and snow lotus in their natural habitat while learning about high-altitude ecology from local guides.</p>
+            </div>
+
+            <div class="experience-card">
+                <div class="coastal-icon">🏝️</div>
+                <span class="experience-location">Neil Island, Andaman</span>
+                <h3 class="experience-title">Pristine Beach Island Hopping</h3>
+                <div class="tag-container">
+                    <span class="tag">Pristine Beaches</span>
+                    <span class="tag">Snorkeling</span>
+                    <span class="tag">Marine Life</span>
+                </div>
+                <p class="experience-excerpt">Explore untouched coral beaches with crystal-clear waters perfect for snorkeling. Discover natural rock formations at Laxmanpur Beach, witness bioluminescent plankton at night, and enjoy fresh seafood with local fishing communities.</p>
+            </div>
+
+            <div class="experience-card">
+                <div class="desert-icon">🐪</div>
+                <span class="experience-location">Rann of Kutch, Gujarat</span>
+                <h3 class="experience-title">White Desert Full Moon Experience</h3>
+                <div class="tag-container">
+                    <span class="tag">Salt Desert</span>
+                    <span class="tag">Full Moon</span>
+                    <span class="tag">Cultural</span>
+                </div>
+                <p class="experience-excerpt">Experience the surreal white salt desert under moonlight during the Rann Utsav. Witness flamingo migrations, explore traditional craft villages, and enjoy folk performances under star-filled skies in this unique ecosystem.</p>
+            </div>
+
+            <div class="experience-card">
+                <div class="wildlife-icon">🦏</div>
+                <span class="experience-location">Kaziranga National Park, Assam</span>
+                <h3 class="experience-title">One-Horned Rhino Conservation Safari</h3>
+                <div class="tag-container">
+                    <span class="tag">UNESCO Site</span>
+                    <span class="tag">Rhino Conservation</span>
+                    <span class="tag">Wetlands</span>
+                </div>
+                <p class="experience-excerpt">Discover the world's largest population of one-horned rhinoceros in Assam's grasslands. Experience elephant safaris through tall grasses, boat rides on the Brahmaputra, and learn about successful conservation efforts with local communities.</p>
+            </div>
+
+            <div class="experience-card">
+                <div class="mountain-icon">⛰️</div>
+                <span class="experience-location">Nainital, Uttarakhand</span>
+                <h3 class="experience-title">Lake District Boating and Hiking</h3>
+                <div class="tag-container">
+                    <span class="tag">Lake Views</span>
+                    <span class="tag">Boating</span>
+                    <span class="tag">Hill Station</span>
+                </div>
+                <p class="experience-excerpt">Explore the Lake District of India with serene boat rides on Naini Lake surrounded by seven hills. Hike to Snow View Point for Himalayan panoramas, visit local markets, and experience colonial-era charm in this beloved hill station.</p>
+            </div>
+
+            <div class="experience-card">
+                <div class="forest-icon">🌿</div>
+                <span class="experience-location">Silent Valley, Kerala</span>
+                <h3 class="experience-title">Pristine Rainforest Discovery</h3>
+                <div class="tag-container">
+                    <span class="tag">Rainforest</span>
+                    <span class="tag">Endemic Species</span>
+                    <span class="tag">Research</span>
+                </div>
+                <p class="experience-excerpt">Venture into one of India's last remaining pristine rainforests with no human settlements. Discover rare endemic species like the lion-tailed macaque, experience the forest's natural silence, and learn about biodiversity conservation efforts.</p>
+            </div>
+
+            <div class="experience-card">
+                <div class="water-icon">💧</div>
+                <span class="experience-location">Athirapally Falls, Kerala</span>
+                <h3 class="experience-title">Niagara of India Waterfall Trek</h3>
+                <div class="tag-container">
+                    <span class="tag">Waterfalls</span>
+                    <span class="tag">Monsoon Trek</span>
+                    <span class="tag">Forest Bath</span>
+                </div>
+                <p class="experience-excerpt">Trek to the spectacular 80-foot Athirapally Falls through dense Sholayar forests. Experience the power of monsoon waterfalls, spot endemic bird species, and enjoy natural forest bathing in the mist of cascading waters.</p>
+            </div>
+
+            <div class="experience-card">
+                <div class="heritage-icon">🕌</div>
+                <span class="experience-location">Sundarbans, West Bengal</span>
+                <h3 class="experience-title">Mangrove Tiger Reserve Cruise</h3>
+                <div class="tag-container">
+                    <span class="tag">Mangroves</span>
+                    <span class="tag">Royal Bengal Tiger</span>
+                    <span class="tag">Boat Safari</span>
+                </div>
+                <p class="experience-excerpt">Navigate the world's largest mangrove forest in search of the elusive Royal Bengal Tiger. Experience unique tidal ecosystems, spot saltwater crocodiles, and learn about traditional fishing communities living in harmony with this UNESCO World Heritage site.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Second Parallax Section -->
+<section class="parallax-section" style="background-image: url('m9.jpg');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h1>Connect with Nature's Rhythm</h1>
+        <p>Join fellow nature enthusiasts and local guides to explore India's most serene and unspoiled natural wonders.</p>
+        <a href="join%20collaborations.html" class="btn">Join Our Nature Community</a>
+    </div>
+</section>
+
+<!-- Include footer.html using fetch API -->
+<div id="footer-container"></div>
+
+<script>
+    // Load navbar and footer components
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to fetch and insert HTML content
+      async function includeHTML(url, targetElementId) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.status}`);
+          }
+          const html = await response.text();
+          document.getElementById(targetElementId).innerHTML = html;
+
+          // Execute any scripts in the included HTML
+          const scripts = document.getElementById(targetElementId).getElementsByTagName('script');
+          for (let i = 0; i < scripts.length; i++) {
+            const script = document.createElement('script');
+            script.textContent = scripts[i].textContent;
+            document.body.appendChild(script);
+          }
+        } catch (error) {
+          console.error(`Error including HTML from ${url}:`, error);
+        }
+      }
+
+      // Include navbar and footer
+      includeHTML('navbar.html', 'navbar-container');
+      includeHTML('footer.html', 'footer-container');
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Workshops in India | Local Lens</title>
+  <link rel="stylesheet" href="css.css">
+  <style>
+    /* Additional styles not found in css.css */
+    .parallax-section {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: scroll;
+      overflow: hidden;
+    }
+
+    .parallax-content {
+      text-align: center;
+      max-width: 900px;
+      padding: 0 2rem;
+      z-index: 2;
+    }
+
+    .black-frame {
+      background-color: #000;
+      padding: 8rem 0;
+      position: relative;
+    }
+
+    .frame-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .experiences-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .experience-card {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .experience-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .experience-location {
+      color: #FF9933;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .experience-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .experience-excerpt {
+      color: #ccc;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .btn-small {
+      padding: 8px 20px;
+      font-size: 0.9rem;
+    }
+
+    .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tag {
+      background-color: rgba(255, 153, 51, 0.2);
+      color: #FF9933;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    /* Workshop-specific styling */
+    .workshop-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #FF9933, #FFB366);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 1.2rem;
+    }
+
+    /* Media Queries for Responsive Design */
+    @media (max-width: 992px) {
+      .experiences-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .experiences-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Include navbar.html using fetch API -->
+<div id="navbar-container"></div>
+
+<!-- Hero Parallax Section -->
+<section class="parallax-section" style="background-image: url('collabration1.jpg');">
+  <div class="overlay"></div>
+  <div class="parallax-content">
+    <h1>Local Workshops in India</h1>
+    <p>Immerse yourself in India's rich cultural heritage through authentic hands-on workshops led by master artisans and local experts.</p>
+  </div>
+</section>
+
+<!-- Black Frame Section - Introduction -->
+<section class="black-frame">
+  <div class="frame-container">
+    <h2>Master Ancient Arts & Crafts</h2>
+    <p>India's cultural tapestry is woven with centuries-old traditions passed down through generations. From pottery making in Khurja to block printing in Jaipur, miniature painting in Udaipur to silk weaving in Varanasi - learn directly from master craftsmen who have dedicated their lives to preserving these timeless arts. Our curated workshops offer authentic experiences where you'll create your own masterpieces while understanding the cultural significance behind each technique.</p>
+
+    <div class="experiences-grid">
+      <div class="experience-card">
+        <div class="workshop-icon">🏺</div>
+        <span class="experience-location">Khurja, Uttar Pradesh</span>
+        <h3 class="experience-title">Traditional Blue Pottery Workshop</h3>
+        <div class="tag-container">
+          <span class="tag">Pottery</span>
+          <span class="tag">Beginner-Friendly</span>
+          <span class="tag">Heritage Craft</span>
+        </div>
+        <p class="experience-excerpt">Learn the ancient art of blue pottery from master potters in India's ceramic capital. Shape clay on traditional wheels, apply signature cobalt glazes, and understand the Persian-influenced techniques that make Khurja pottery world-famous.</p>
+        <a href="#" class="btn btn-small">Book Workshop</a>
+      </div>
+
+      <div class="experience-card">
+        <div class="workshop-icon">🎨</div>
+        <span class="experience-location">Jaipur, Rajasthan</span>
+        <h3 class="experience-title">Block Printing & Natural Dyeing</h3>
+        <div class="tag-container">
+          <span class="tag">Textile Arts</span>
+          <span class="tag">Natural Materials</span>
+          <span class="tag">Rajasthani Craft</span>
+        </div>
+        <p class="experience-excerpt">Master the intricate art of hand block printing using traditional wooden blocks carved by local artisans. Learn natural dyeing techniques with indigo, turmeric, and pomegranate to create authentic Rajasthani textiles.</p>
+        <a href="#" class="btn btn-small">Book Workshop</a>
+      </div>
+
+      <div class="experience-card">
+        <div class="workshop-icon">🖼️</div>
+        <span class="experience-location">Udaipur, Rajasthan</span>
+        <h3 class="experience-title">Miniature Painting Masterclass</h3>
+        <div class="tag-container">
+          <span class="tag">Fine Arts</span>
+          <span class="tag">Mewar Style</span>
+          <span class="tag">Historical Art</span>
+        </div>
+        <p class="experience-excerpt">Study the delicate Mewar style of miniature painting with descendants of royal court artists. Use traditional brushes made from squirrel hair and natural pigments to create intricate scenes depicting Indian mythology and court life.</p>
+        <a href="#" class="btn btn-small">Book Workshop</a>
+      </div>
+
+      <div class="experience-card">
+        <div class="workshop-icon">🧵</div>
+        <span class="experience-location">Varanasi, Uttar Pradesh</span>
+        <h3 class="experience-title">Banarasi Silk Weaving Experience</h3>
+        <div class="tag-container">
+          <span class="tag">Silk Weaving</span>
+          <span class="tag">Luxury Craft</span>
+          <span class="tag">Ancient Technique</span>
+        </div>
+        <p class="experience-excerpt">Witness the magic of Banarasi silk creation in the holy city's traditional weaving quarters. Learn basic weaving techniques on handlooms and understand the intricate brocade work that makes these sarees world-renowned.</p>
+        <a href="#" class="btn btn-small">Book Workshop</a>
+      </div>
+
+      <div class="experience-card">
+        <div class="workshop-icon">🥘</div>
+        <span class="experience-location">Old Delhi, Delhi</span>
+        <h3 class="experience-title">Mughlai Cooking Masterclass</h3>
+        <div class="tag-container">
+          <span class="tag">Culinary Arts</span>
+          <span class="tag">Mughal Cuisine</span>
+          <span class="tag">Traditional Recipes</span>
+        </div>
+        <p class="experience-excerpt">Cook authentic Mughlai delicacies in the narrow lanes of Old Delhi with families who have preserved royal recipes for generations. Master biryani, kebabs, and kormas using traditional clay ovens and age-old spice blending techniques.</p>
+        <a href="#" class="btn btn-small">Book Workshop</a>
+      </div>
+
+      <div class="experience-card">
+        <div class="workshop-icon">🎭</div>
+        <span class="experience-location">Kathakali, Kerala</span>
+        <h3 class="experience-title">Traditional Kathakali Makeup & Performance</h3>
+        <div class="tag-container">
+          <span class="tag">Performing Arts</span>
+          <span class="tag">Classical Dance</span>
+          <span class="tag">Cultural Heritage</span>
+        </div>
+        <p class="experience-excerpt">Learn the elaborate art of Kathakali makeup and basic mudras from master performers in Kerala's cultural heartland. Understand the mythology behind this 17th-century dance form while applying traditional face paints and costumes.</p>
+        <a href="#" class="btn btn-small">Book Workshop</a>
+      </div>
+
+      <div class="experience-card">
+        <div class="workshop-icon">🔨</div>
+        <span class="experience-location">Thanjavur, Tamil Nadu</span>
+        <h3 class="experience-title">Bronze Casting & Chola Sculptures</h3>
+        <div class="tag-container">
+          <span class="tag">Metal Arts</span>
+          <span class="tag">Sculpture</span>
+          <span class="tag">Chola Dynasty</span>
+        </div>
+        <p class="experience-excerpt">Master the lost-wax casting technique used to create exquisite Chola bronze sculptures. Work with traditional tools and methods to craft small deity figures while learning about the spiritual significance of each form.</p>
+        <a href="#" class="btn btn-small">Book Workshop</a>
+      </div>
+
+      <div class="experience-card">
+        <div class="workshop-icon">🌾</div>
+        <span class="experience-location">Srinagar, Kashmir</span>
+        <h3 class="experience-title">Pashmina Weaving & Embroidery</h3>
+        <div class="tag-container">
+          <span class="tag">Luxury Textiles</span>
+          <span class="tag">Kashmiri Craft</span>
+          <span class="tag">High Altitude Wool</span>
+        </div>
+        <p class="experience-excerpt">Experience the delicate art of Pashmina weaving using the finest Changthanghi goat wool. Learn traditional Kashmiri embroidery patterns like Sozni and Aari work from artisans whose families have practiced this craft for centuries.</p>
+        <a href="#" class="btn btn-small">Book Workshop</a>
+      </div>
+
+      <div class="experience-card">
+        <div class="workshop-icon">📜</div>
+        <span class="experience-location">Mysore, Karnataka</span>
+        <h3 class="experience-title">Sandalwood Carving & Incense Making</h3>
+        <div class="tag-container">
+          <span class="tag">Wood Carving</span>
+          <span class="tag">Aromatics</span>
+          <span class="tag">Sacred Arts</span>
+        </div>
+        <p class="experience-excerpt">Carve intricate designs into fragrant Mysore sandalwood while learning about its cultural and spiritual significance. Create traditional incense sticks and oils using authentic recipes passed down through generations of perfumers.</p>
+        <a href="#" class="btn btn-small">Book Workshop</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Second Parallax Section -->
+<section class="parallax-section" style="background-image: url('collabration1.jpg');">
+  <div class="overlay"></div>
+  <div class="parallax-content">
+    <h1>Preserve India's Living Traditions</h1>
+    <p>Join our community of culture enthusiasts and help keep India's ancient arts alive for future generations.</p>
+    <a href="#" class="btn">Explore All Workshops</a>
+  </div>
+</section>
+
+<!-- Include footer.html using fetch API -->
+<div id="footer-container"></div>
+
+<script>
+  // Load navbar and footer components
+  document.addEventListener('DOMContentLoaded', function() {
+    // Function to fetch and insert HTML content
+    async function includeHTML(url, targetElementId) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch ${url}: ${response.status}`);
+        }
+        const html = await response.text();
+        document.getElementById(targetElementId).innerHTML = html;
+
+        // Execute any scripts in the included HTML
+        const scripts = document.getElementById(targetElementId).getElementsByTagName('script');
+        for (let i = 0; i < scripts.length; i++) {
+          const script = document.createElement('script');
+          script.textContent = scripts[i].textContent;
+          document.body.appendChild(script);
+        }
+      } catch (error) {
+        console.error(`Error including HTML from ${url}:`, error);
+      }
+    }
+
+    // Include navbar and footer
+    includeHTML('navbar.html', 'navbar-container');
+    includeHTML('footer.html', 'footer-container');
+  });
+</script>
+</body>
+</html>
