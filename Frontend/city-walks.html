@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Walks in India | Local Lens</title>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        /* Additional styles not found in css.css */
+        .parallax-section {
+          position: relative;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-attachment: scroll;
+          overflow: hidden;
+        }
+
+        .parallax-content {
+          text-align: center;
+          max-width: 900px;
+          padding: 0 2rem;
+          z-index: 2;
+        }
+
+        .black-frame {
+          background-color: #000;
+          padding: 8rem 0;
+          position: relative;
+        }
+
+        .frame-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          text-align: center;
+        }
+
+        .experiences-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+          margin-top: 3rem;
+        }
+
+        .experience-card {
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          overflow: hidden;
+          padding: 1.5rem;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .experience-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .experience-location {
+          color: #FF9933;
+          font-size: 0.9rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+          display: block;
+        }
+
+        .experience-title {
+          font-size: 1.5rem;
+          margin-bottom: 1rem;
+          color: #fff;
+        }
+
+        .experience-excerpt {
+          color: #ccc;
+          margin-bottom: 1.5rem;
+          line-height: 1.6;
+        }
+
+        .btn-small {
+          padding: 8px 20px;
+          font-size: 0.9rem;
+        }
+
+        .tag-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+        }
+
+        .tag {
+          background-color: rgba(255, 153, 51, 0.2);
+          color: #FF9933;
+          padding: 4px 10px;
+          border-radius: 20px;
+          font-size: 0.8rem;
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 992px) {
+          .experiences-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 576px) {
+          .experiences-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Include navbar.html using fetch API -->
+<div id="navbar-container"></div>
+
+<!-- Hero Parallax Section -->
+<section class="parallax-section" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 800%22><rect fill=%22%23FF9933%22 width=%221200%22 height=%22800%22/><rect fill=%22%23fff%22 y=%22267%22 width=%221200%22 height=%22266%22/><rect fill=%22%23138808%22 y=%22533%22 width=%221200%22 height=%22267%22/><circle fill=%22%23000080%22 cx=%22600%22 cy=%22400%22 r=%2280%22/></svg>');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h1>City Walks in India</h1>
+        <p>Discover the soul of India through guided heritage walks, street food trails, and cultural explorations in historic cities across the subcontinent.</p>
+    </div>
+</section>
+
+<!-- Black Frame Section - Introduction -->
+<section class="black-frame">
+    <div class="frame-container">
+        <h2>Walk Through Living History</h2>
+        <p>India's cities are open-air museums where every street tells a story. From the narrow gullies of Old Delhi echoing with centuries of history to the colonial architecture of Kolkata, from the royal palaces of Jaipur to the spiritual ghats of Varanasi - each city offers a unique walking experience. Join local guides who know hidden stories, secret recipes, and forgotten tales that bring these ancient streets to life.</p>
+
+        <div class="experiences-grid">
+            <div class="experience-card">
+                <span class="experience-location">Old Delhi, Delhi</span>
+                <h3 class="experience-title">Chandni Chowk Heritage Walk</h3>
+                <div class="tag-container">
+                    <span class="tag">Heritage</span>
+                    <span class="tag">Street Food</span>
+                    <span class="tag">Mughal History</span>
+                </div>
+                <p class="experience-excerpt">Navigate the bustling lanes of 17th-century Chandni Chowk, visiting spice markets, Jain temples, and the iconic Red Fort. Taste authentic paranthe at Paranthe Wali Gali and discover hidden havelis with expert local historians.</p>
+                <a href="#join" class="btn btn-small">Join Now</a>
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Varanasi, Uttar Pradesh</span>
+                <h3 class="experience-title">Sacred Ghats Dawn Walk</h3>
+                <div class="tag-container">
+                    <span class="tag">Spiritual</span>
+                    <span class="tag">Early Morning</span>
+                    <span class="tag">Photography</span>
+                </div>
+                <p class="experience-excerpt">Witness the ancient rituals along the holy Ganges as the city awakens. Walk from Dashashwamedh Ghat to Manikarnika, observing morning prayers, cremation ceremonies, and the timeless cycle of life and death.</p>
+                <a href="#join" class="btn btn-small">Join Now</a>
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Mumbai, Maharashtra</span>
+                <h3 class="experience-title">South Mumbai Art Deco Trail</h3>
+                <div class="tag-container">
+                    <span class="tag">Architecture</span>
+                    <span class="tag">Colonial</span>
+                    <span class="tag">UNESCO</span>
+                </div>
+                <p class="experience-excerpt">Explore the world's second-largest collection of Art Deco buildings after Miami. Walk through Marine Drive, visit the iconic Oval Maidan, and discover the stories behind Bombay's architectural transformation.</p>
+                <a href="#join" class="btn btn-small">Join Now</a>
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Jaipur, Rajasthan</span>
+                <h3 class="experience-title">Pink City Bazaar Walk</h3>
+                <div class="tag-container">
+                    <span class="tag">Royal Heritage</span>
+                    <span class="tag">Shopping</span>
+                    <span class="tag">Handicrafts</span>
+                </div>
+                <p class="experience-excerpt">Stroll through the planned city of Maharaja Jai Singh II, exploring Johari Bazaar for precious gems, Bapu Bazaar for textiles, and learn about traditional Rajasthani crafts from master artisans.</p>
+                <a href="#join" class="btn btn-small">Join Now</a>
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Kolkata, West Bengal</span>
+                <h3 class="experience-title">Colonial Calcutta Walking Tour</h3>
+                <div class="tag-container">
+                    <span class="tag">British Era</span>
+                    <span class="tag">Literature</span>
+                    <span class="tag">Cultural</span>
+                </div>
+                <p class="experience-excerpt">Walk through the former British capital, visiting Victoria Memorial, Writer's Building, and Park Street. Discover Bengali renaissance history and the literary cafes that shaped modern Indian thought.</p>
+                <a href="#join" class="btn btn-small">Join Now</a>
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Hyderabad, Telangana</span>
+                <h3 class="experience-title">Nizami Heritage Circuit</h3>
+                <div class="tag-container">
+                    <span class="tag">Islamic Architecture</span>
+                    <span class="tag">Cuisine</span>
+                    <span class="tag">Pearls</span>
+                </div>
+                <p class="experience-excerpt">Explore the 400-year-old Charminar area, visit traditional pearl markets, taste authentic Hyderabadi biryani, and discover the opulent history of the Nizams in the old city's narrow bylanes.</p>
+                <a href="#join" class="btn btn-small">Join Now</a>
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Mysore, Karnataka</span>
+                <h3 class="experience-title">Palace City Cultural Walk</h3>
+                <div class="tag-container">
+                    <span class="tag">Royal History</span>
+                    <span class="tag">Silk Weaving</span>
+                    <span class="tag">Dasara Festival</span>
+                </div>
+                <p class="experience-excerpt">Discover the cultural capital of Karnataka, exploring Mysore Palace surroundings, traditional silk weaving centers, sandalwood oil shops, and the famous Devaraja Market with local cultural experts.</p>
+                <a href="#join" class="btn btn-small">Join Now</a>
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Pushkar, Rajasthan</span>
+                <h3 class="experience-title">Sacred Lake Temple Walk</h3>
+                <div class="tag-container">
+                    <span class="tag">Pilgrimage</span>
+                    <span class="tag">Desert Town</span>
+                    <span class="tag">Fair Culture</span>
+                </div>
+                <p class="experience-excerpt">Circle the holy Pushkar Lake visiting 52 ghats and 400 temples. Learn about the rare Brahma Temple, experience traditional Rajasthani culture, and understand the significance of this sacred desert oasis.</p>
+                <a href="#join" class="btn btn-small">Join Now</a>
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Kochi, Kerala</span>
+                <h3 class="experience-title">Spice Route Fort Walk</h3>
+                <div class="tag-container">
+                    <span class="tag">Maritime History</span>
+                    <span class="tag">Spice Trade</span>
+                    <span class="tag">Multi-cultural</span>
+                </div>
+                <p class="experience-excerpt">Walk through Fort Kochi's layered history, from Chinese fishing nets to Portuguese churches, Dutch palaces to Jewish synagogues. Discover how the spice trade shaped this cosmopolitan port city.</p>
+                <a href="#join" class="btn btn-small">Join Now</a>
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Amritsar, Punjab</span>
+                <h3 class="experience-title">Golden Temple Heritage Walk</h3>
+                <div class="tag-container">
+                    <span class="tag">Sikh Heritage</span>
+                    <span class="tag">Langar</span>
+                    <span class="tag">Partition History</span>
+                </div>
+                <p class="experience-excerpt">Experience the spiritual heart of Sikhism with walks around the Golden Temple complex, participation in community kitchen service, and visits to Jallianwala Bagh to understand Punjab's complex history.</p>
+                <a href="#join" class="btn btn-small">Join Now</a>
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Lucknow, Uttar Pradesh</span>
+                <h3 class="experience-title">Nawabi Culture Evening Walk</h3>
+                <div class="tag-container">
+                    <span class="tag">Awadhi Culture</span>
+                    <span class="tag">Cuisine</span>
+                    <span class="tag">Poetry</span>
+                </div>
+                <p class="experience-excerpt">Stroll through the city of Nawabs, visiting Tunday Kababi for legendary seekh kebabs, exploring Aminabad's chikan embroidery shops, and experiencing the tehzeeb (refined culture) of old Lucknow.</p>
+                <a href="#join" class="btn btn-small">Join Now</a>
+            </div>
+
+            <div class="experience-card">
+                <span class="experience-location">Pondicherry</span>
+                <h3 class="experience-title">French Quarter Heritage Stroll</h3>
+                <div class="tag-container">
+                    <span class="tag">French Colonial</span>
+                    <span class="tag">Ashram</span>
+                    <span class="tag">Fusion Culture</span>
+                </div>
+                <p class="experience-excerpt">Explore the unique blend of French and Tamil cultures in the White Town, visiting Sri Aurobindo Ashram, colonial-era buildings, and experiencing the Mediterranean charm on Indian shores.</p>
+                <a href="#join" class="btn btn-small">Join Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Second Parallax Section -->
+<section class="parallax-section" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 800%22><rect fill=%22%234A90E2%22 width=%221200%22 height=%22800%22/><rect fill=%22%23F5A623%22 x=%22100%22 y=%22100%22 width=%22200%22 height=%22150%22 rx=%2210%22/><rect fill=%22%237ED321%22 x=%22400%22 y=%22200%22 width=%22180%22 height=%22120%22 rx=%2210%22/><rect fill=%22%23D0021B%22 x=%22700%22 y=%22150%22 width=%22150%22 height=%22180%22 rx=%2210%22/><rect fill=%22%23BD10E0%22 x=%22200%22 y=%22400%22 width=%22160%22 height=%22140%22 rx=%2210%22/><rect fill=%22%2350E3C2%22 x=%22500%22 y=%22450%22 width=%22200%22 height=%22100%22 rx=%2210%22/><rect fill=%22%23F8E71C%22 x=%22800%22 y=%22400%22 width=%22140%22 height=%22160%22 rx=%2210%22/></svg>');">
+    <div class="overlay"></div>
+    <div class="parallax-content">
+        <h1>Ready to Explore India's Streets?</h1>
+        <p>Connect with local guides and storytellers to discover the hidden narratives of India's incredible cities.</p>
+        <a href="join%20collaborations.html" class="btn">Join Our Walking Community</a>
+    </div>
+</section>
+
+<!-- Include footer.html using fetch API -->
+<div id="footer-container"></div>
+
+<script>
+    // Load navbar and footer components
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to fetch and insert HTML content
+      async function includeHTML(url, targetElementId) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.status}`);
+          }
+          const html = await response.text();
+          document.getElementById(targetElementId).innerHTML = html;
+
+          // Execute any scripts in the included HTML
+          const scripts = document.getElementById(targetElementId).getElementsByTagName('script');
+          for (let i = 0; i < scripts.length; i++) {
+            const script = document.createElement('script');
+            script.textContent = scripts[i].textContent;
+            document.body.appendChild(script);
+          }
+        } catch (error) {
+          console.error(`Error including HTML from ${url}:`, error);
+        }
+      }
+
+      // Include navbar and footer
+      includeHTML('navbar.html', 'navbar-container');
+      includeHTML('footer.html', 'footer-container');
+    });
+</script>
+</body>
+</html>
