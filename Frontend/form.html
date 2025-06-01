@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Experience | Local Lens</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css.css">
+  <style>
+    .booking-section {
+        min-height: 100vh;
+        padding: 120px 0 60px;
+        background-color: #000;
+        background-image: url('travel-bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: scroll;
+        position: relative;
+    }
+
+    .booking-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1;
+    }
+
+    .booking-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 40px;
+        border: 1px solid #333;
+        border-radius: 8px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .booking-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .booking-header h2 {
+        font-size: 32px;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    .booking-header p {
+        color: #aaa;
+    }
+
+    .booking-tabs {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        margin-bottom: 25px;
+        background-color: #333;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .booking-tab {
+        padding: 12px 15px;
+        background-color: #000;
+        border: none;
+        color: #aaa;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-family: 'Montserrat', sans-serif;
+        text-align: center;
+    }
+
+    .booking-tab.active {
+        color: #fff;
+        background-color: #ff8c00;
+    }
+
+    .booking-tab:hover:not(.active) {
+        color: #fff;
+        background-color: rgba(255, 140, 0, 0.3);
+    }
+
+    .form-container {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.4s ease;
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    .form-container.active {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 1000px;
+    }
+
+    .input-group {
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .input-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #fff;
+        font-weight: 500;
+    }
+
+    .input-group input,
+    .input-group select,
+    .input-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid #333;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 16px;
+        transition: all 0.3s;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus,
+    .input-group textarea:focus {
+        border-color: #fff;
+        outline: none;
+    }
+
+    .input-group select {
+        cursor: pointer;
+    }
+
+    .input-group select option {
+        background-color: #000;
+        color: #fff;
+    }
+
+    .input-group textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .booking-btn {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        background-color: transparent;
+        border: 2px solid #fff;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .booking-btn:hover {
+        background-color: orange;
+        color: #000;
+    }
+
+    .booking-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .error-message {
+        color: #ff6b6b;
+        text-align: center;
+        margin-top: 15px;
+        font-size: 14px;
+        font-weight: 500;
+        display: none;
+    }
+
+    .success-message {
+        color: #6bff6b;
+        text-align: center;
+        margin-top: 15px;
+        font-size: 14px;
+        font-weight: 500;
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .booking-container {
+            padding: 25px;
+            margin: 0 20px;
+        }
+
+        .booking-header h2 {
+            font-size: 28px;
+        }
+
+        .booking-tabs {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .booking-tab {
+            font-size: 12px;
+            padding: 10px 12px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .booking-tabs {
+            grid-template-columns: 1fr;
+        }
+
+        .booking-tab {
+            font-size: 14px;
+            padding: 12px 15px;
+        }
+    }
+  </style>
+</head>
+<body>
+<!-- Include the navbar dynamically -->
+<div id="navbar-container"></div>
+
+<!-- Booking Section -->
+<section class="booking-section">
+  <div class="booking-container">
+    <div class="booking-header">
+      <h2>Book Your Experience</h2>
+      <p>Choose your adventure and fill in the details</p>
+    </div>
+
+    <div class="booking-tabs">
+      <button type="button" class="booking-tab active" data-category="adventure">Adventure</button>
+      <button type="button" class="booking-tab" data-category="food-culture">Food & Culture</button>
+      <button type="button" class="booking-tab" data-category="offbeat">Offbeat Destinations</button>
+      <button type="button" class="booking-tab" data-category="city-walks">City Walks</button>
+      <button type="button" class="booking-tab" data-category="nature">Nature Escapes</button>
+      <button type="button" class="booking-tab" data-category="workshops">Local Workshops</button>
+    </div>
+
+    <div class="form-container active" id="booking-form-container">
+      <form id="bookingForm">
+        <div class="input-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="fullName" required>
+        </div>
+
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="input-group">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+
+        <div class="input-group">
+          <label for="location">Location</label>
+          <input type="text" id="location" name="location" required>
+        </div>
+
+        <div class="input-group">
+          <label for="experience" id="experienceLabel">Select Adventure Experience</label>
+          <select id="experience" name="experience" required>
+            <option value="">Choose an experience...</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="comments">Additional Comments / Requirements</label>
+          <textarea id="comments" name="comments" placeholder="Tell us about any special requirements, dietary restrictions, or other details..."></textarea>
+        </div>
+
+        <button type="submit" class="booking-btn">Book Experience</button>
+
+        <div id="errorMessage" class="error-message">
+          Error message will appear here.
+        </div>
+
+        <div id="successMessage" class="success-message">
+          Booking request submitted successfully!
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Include the footer dynamically -->
+<div id="footer-container"></div>
+
+<script>
+  // Load navbar
+  fetch('navbar.html')
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById('navbar-container').innerHTML = data;
+      })
+      .catch(error => {
+          console.error('Error loading navbar:', error);
+      });
+
+  // Load footer
+  fetch('footer.html')
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById('footer-container').innerHTML = data;
+      })
+      .catch(error => {
+          console.error('Error loading footer:', error);
+      });
+
+  // Experience data
+  const experiences = {
+      'adventure': [
+          'White Water Rafting – Rishikesh',
+          'Skiing Adventure – Solang Valley',
+          'Paragliding – Bir Billing',
+          'Motorcycle Expedition – Spiti Valley',
+          'Jungle Kayaking – Dandeli',
+          'Frozen River Chadar Trek – Ladakh',
+          'Desert Camping – Jaisalmer',
+          'Scuba Diving – Havelock Island',
+          'Caving – Meghalaya'
+      ],
+      'food-culture': [
+          'Old Delhi Food Walk – Chandni Chowk',
+          'Kerala Sadya Masterclass – Kochi',
+          'Bengali Sweets Workshop – Kolkata',
+          'Mumbai Chaat Crawl – Mumbai',
+          'Holi Festival Feast – Mathura',
+          'Hyderabadi Biryani Trail – Hyderabad',
+          'Rajasthani Royal Kitchen – Udaipur',
+          'Durga Puja Food Trail – Kolkata',
+          'Chettinad Spice Journey – Karaikudi'
+      ],
+      'offbeat': [
+          'Spiti Valley – Himachal Pradesh',
+          'Majuli Island – Assam',
+          'Neelakurinji Bloom – Munnar, Kerala',
+          'Mechuka Valley – Arunachal Pradesh',
+          'Chettinad Region – Tamil Nadu',
+          'Hornbill Festival – Kisama, Nagaland',
+          'Rann of Kutch – Gujarat',
+          'Phuktal Monastery – Ladakh',
+          'Meghalaya: Nongriat / Cherrapunji / Mawlynnong'
+      ],
+      'city-walks': [
+          'Chandni Chowk Heritage Walk – Delhi',
+          'Sacred Ghats Dawn Walk – Varanasi',
+          'Art Deco Trail – Mumbai',
+          'Pink City Bazaar Walk – Jaipur',
+          'Colonial Calcutta Tour – Kolkata',
+          'Nizami Heritage Circuit – Hyderabad',
+          'Cultural Walk – Mysore',
+          'Sacred Lake Temple Walk – Pushkar',
+          'Spice Route Fort Walk – Kochi',
+          'Golden Temple Walk – Amritsar',
+          'Nawabi Culture Evening – Lucknow',
+          'French Quarter Stroll – Pondicherry'
+      ],
+      'nature': [
+          'Tea Plantation Sunrise Trek – Munnar, Kerala',
+          'Royal Bengal Tiger Safari – Jim Corbett, Uttarakhand',
+          'Backwater Houseboat Journey – Alleppey, Kerala',
+          'Coffee Plantation Forest Walk – Coorg, Karnataka',
+          'Alpine Meadow Flower Trek – Valley of Flowers, Uttarakhand',
+          'Pristine Beach Island Hopping – Neil Island, Andaman',
+          'White Desert Full Moon Experience – Rann of Kutch, Gujarat',
+          'One-Horned Rhino Conservation Safari – Kaziranga, Assam',
+          'Lake District Boating and Hiking – Nainital, Uttarakhand',
+          'Pristine Rainforest Discovery – Silent Valley, Kerala',
+          'Niagara of India Waterfall Trek – Athirapally Falls, Kerala',
+          'Mangrove Tiger Reserve Cruise – Sundarbans, West Bengal'
+      ],
+      'workshops': [
+          'Blue Pottery Workshop – Jaipur',
+          'Block Printing & Natural Dyeing – Udaipur',
+          'Miniature Painting Masterclass – Varanasi',
+          'Banarasi Silk Weaving – Varanasi',
+          'Mughlai Cooking Masterclass – Old Delhi',
+          'Kathakali Makeup & Performance – Kerala',
+          'Bronze Casting & Chola Sculptures – Thanjavur',
+          'Pashmina Weaving & Embroidery – Srinagar',
+          'Sandalwood Carving & Incense – Mysore'
+      ]
+  };
+
+  // Category labels
+  const categoryLabels = {
+      'adventure': 'Adventure Experience',
+      'food-culture': 'Food & Culture Experience',
+      'offbeat': 'Offbeat Destination',
+      'city-walks': 'City Walk',
+      'nature': 'Nature Escape',
+      'workshops': 'Local Workshop'
+  };
+
+  let currentCategory = 'adventure';
+
+  // Initialize the page
+  document.addEventListener('DOMContentLoaded', function() {
+      updateExperienceDropdown();
+      setupTabSwitching();
+      setupFormSubmission();
+  });
+
+  function updateExperienceDropdown() {
+      const experienceSelect = document.getElementById('experience');
+      const experienceLabel = document.getElementById('experienceLabel');
+
+      // Clear current options
+      experienceSelect.innerHTML = '<option value="">Choose an experience...</option>';
+
+      // Update label
+      experienceLabel.textContent = `Select ${categoryLabels[currentCategory]}`;
+
+      // Add new options
+      experiences[currentCategory].forEach(experience => {
+          const option = document.createElement('option');
+          option.value = experience;
+          option.textContent = experience;
+          experienceSelect.appendChild(option);
+      });
+  }
+
+  function setupTabSwitching() {
+      const tabs = document.querySelectorAll('.booking-tab');
+      const formContainer = document.getElementById('booking-form-container');
+
+      tabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+              // Remove active class from all tabs
+              tabs.forEach(t => t.classList.remove('active'));
+
+              // Add active class to clicked tab
+              this.classList.add('active');
+
+              // Update current category
+              currentCategory = this.getAttribute('data-category');
+
+              // Add fade out effect
+              formContainer.style.opacity = '0';
+              formContainer.style.transform = 'translateY(20px)';
+
+              // Update dropdown after animation
+              setTimeout(() => {
+                  updateExperienceDropdown();
+                  clearForm();
+
+                  // Fade back in
+                  formContainer.style.opacity = '1';
+                  formContainer.style.transform = 'translateY(0)';
+              }, 200);
+          });
+      });
+  }
+
+  function clearForm() {
+      const form = document.getElementById('bookingForm');
+      const inputs = form.querySelectorAll('input, select, textarea');
+
+      inputs.forEach(input => {
+          if (input.type !== 'submit') {
+              input.value = '';
+          }
+      });
+
+      // Hide messages
+      document.getElementById('errorMessage').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'none';
+  }
+
+  function setupFormSubmission() {
+      const form = document.getElementById('bookingForm');
+
+      form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          const formData = new FormData(form);
+          const bookingData = {
+              fullName: formData.get('fullName').trim(),
+              email: formData.get('email').trim(),
+              phone: formData.get('phone').trim(),
+              location: formData.get('location').trim(),
+              experience: formData.get('experience'),
+              comments: formData.get('comments').trim(),
+              category: currentCategory
+          };
+
+          // Validation
+          if (!bookingData.fullName || !bookingData.email || !bookingData.phone ||
+              !bookingData.location || !bookingData.experience) {
+              showError('Please fill in all required fields');
+              return;
+          }
+
+          if (!isValidEmail(bookingData.email)) {
+              showError('Please enter a valid email address');
+              return;
+          }
+
+          // Submit booking (mock API call)
+          submitBooking(bookingData);
+      });
+  }
+
+  function submitBooking(bookingData) {
+      const submitBtn = document.querySelector('.booking-btn');
+      const originalText = submitBtn.textContent;
+
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      // Mock API call
+      setTimeout(() => {
+          // Simulate success
+          showSuccess('Booking request submitted successfully! We will contact you soon.');
+          clearForm();
+
+          // Reset button
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+
+          console.log('Booking data:', bookingData);
+      }, 1500);
+  }
+
+  function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+  }
+
+  function showError(message) {
+      const errorDiv = document.getElementById('errorMessage');
+      const successDiv = document.getElementById('successMessage');
+
+      successDiv.style.display = 'none';
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+          errorDiv.style.display = 'none';
+      }, 5000);
+  }
+
+  function showSuccess(message) {
+      const errorDiv = document.getElementById('errorMessage');
+      const successDiv = document.getElementById('successMessage');
+
+      errorDiv.style.display = 'none';
+      successDiv.textContent = message;
+      successDiv.style.display = 'block';
+
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+          successDiv.style.display = 'none';
+      }, 5000);
+  }
+</script>
+</body>
+</html>
